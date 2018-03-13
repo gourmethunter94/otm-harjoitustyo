@@ -1,0 +1,87 @@
+commit 8b59e56b023bf81295236859b2e49e74cc058969
+Author: Olli Kärki <okarki@ad.helsinki.fi>
+Date:   Tue Mar 13 15:39:04 2018 +0200
+
+    muutoksia eka.txt ja kolmas.txt
+
+ eka.txt    | 7 ++-----
+ kolmas.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 6 deletions(-)
+
+commit 3c21ec7035e09cc1092720e6ae15009dfe51fa92
+Author: Olli Kärki <okarki@ad.helsinki.fi>
+Date:   Tue Mar 13 15:36:57 2018 +0200
+
+    tiedosto.txt nimi muutettu eka.txt
+
+ eka.txt      | 577 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ tiedosto.txt | 577 -----------------------------------------------------------
+ 2 files changed, 577 insertions(+), 577 deletions(-)
+
+commit 6ef96416daba5a391e347daaeba69113841ddabe
+Author: Olli Kärki <okarki@ad.helsinki.fi>
+Date:   Tue Mar 13 15:36:02 2018 +0200
+
+    poistettu toinen.txt
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit cc7a777a5af5f83644354c23b2de15274b28644b
+Author: Olli Kärki <okarki@ad.helsinki.fi>
+Date:   Tue Mar 13 15:32:26 2018 +0200
+
+    tiedosto.txt sisältöä muutettu uudestaan
+
+ .tiedosto.txt.swp | Bin 0 -> 1024 bytes
+ tiedosto.txt      |  52 ++--------------------------------------------------
+ 2 files changed, 2 insertions(+), 50 deletions(-)
+
+commit 2db1a1bf0292d07238e64aad4003f5c9a16df8b1
+Author: Olli Kärki <okarki@ad.helsinki.fi>
+Date:   Tue Mar 13 15:30:39 2018 +0200
+
+    tiedoston sisältöä muutettu!
+
+ tiedosto.txt | 624 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 624 insertions(+)
+
+commit c580c0f668f58acc76798e1b3b50cc1999db3e06
+Author: Olli Kärki <okarki@ad.helsinki.fi>
+Date:   Tue Mar 13 15:26:01 2018 +0200
+
+    many new files
+
+ kolmas.txt               | 2 ++
+ stuff/stuff_tiedosto.txt | 0
+ toinen.txt               | 1 +
+ 3 files changed, 3 insertions(+)
+
+commit 68a46ffbc7e026b73e2a168be043f04f85bbb641
+Author: Olli Kärki <okarki@ad.helsinki.fi>
+Date:   Tue Mar 13 15:20:53 2018 +0200
+
+    kolmas tiedosto
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit a616ba5c9b052f861fd041a28b4ff5cc9a95d1b6
+Author: Olli Kärki <okarki@ad.helsinki.fi>
+Date:   Tue Mar 13 15:19:40 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit b576ec6949e3f937f7635bd25032cb6400568e79
+Author: Olli Kärki <okarki@ad.helsinki.fi>
+Date:   Tue Mar 13 15:17:32 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
