@@ -1,3 +1,5 @@
+This is gitlog.txt
+
 commit 8b59e56b023bf81295236859b2e49e74cc058969
 Author: Olli Kärki <okarki@ad.helsinki.fi>
 Date:   Tue Mar 13 15:39:04 2018 +0200
