@@ -12,7 +12,7 @@ On vain yksi käyttäjäryhmä, ja kaikki pelin ominaisuudet aukeavat kaikille k
 
 Sovelluksella on latausnäkymä, päänäkymä ja käyttäjä voi avata yksi kerrallaan alinäkymiä jotka peittävät osan "hukka tilasta" pää näkymässä.
 
-Tähän tulee kuva !!!!!!!!!!!!!!!
+<img src="https://raw.githubusercontent.com/GourmetHunter/otm-harjoitustyo/master/dokumentaatio/kuvat/kayttoliittyma_luonnos_1.png">
 
 Sovellus aukeaa latausnäkymään, josta se sitten siirtyy automaattisesti päänäkymään. Alinäkymät siis eivät peitä tai estä käyttämästä päänäkymän ominaisuuksia, mutta vain yhtä alinäkymää voi hallinnoida samaan aikaan.
 
