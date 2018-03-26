@@ -27,17 +27,13 @@ Käyttäjä voi hiljentää pelin äänet ja vaihtaa pelin fullscreen muotoon, p
 Pelin ideana on kerätä rahaa, ja edetä tasoissa. Tämä kuitenkin voi alkaa tuntua hieman tylsältä, joten pelin voi resetoida, ja täten saada erikois valuuttaa jota voi käyttää toisessa pelin kaupassa. Ideana on siis pelata peliä useaan kertaan erittäin pitkälle, että pääsee vielä pidemmälle.
 
 - "Loputon" raha
-  - Normaalisti raha rajoittuisi yhteen long tai integer muuttujaan, pelissä kuitenkin on tarkoitus saada sellaisia summia rahoja, että mainitut tietomuodot ovat aivan liian rajallisia, joten toteutetaan erittäinpaljon laajempi tietotyyppi.
-  - Copper -> Silver -> Gold -> Platinum -> Diamond -> ...
+  - Normaalisti raha rajoittuisi yhteen long tai integer muuttujaan, pelissä kuitenkin on tarkoitus saada sellaisia summia raheeta, että mainitut tietomuodot ovat aivan liian rajallisia, joten toteutetaan erittäinpaljon laajempi tietotyyppi.
+  - Copper -> Silver -> Gold -> Platinum -> Diamond -> ... Eli ideana on tehdä olio jossa on taulukko integereitä tai longeja, ja toimivia matemaattisia operaatioita tälle oliolle.
 
 - Näkymät
   - Kauppa 1; Normaali raha
   - Kauppa 2; Pelin resettaamalla kerättävä raha
   - Asetukset
-
-- Automaattinen skaalautuminen
-  - Peli etenee tasoittain, ja tasolta toisella skaalautimisen pitäisi tapahtua algoritmin avulla, ei manuaalisesti säädettäen.
-  - Ostettavien tavara päivitysten hinta skaalautuu sopivasti alkuperäis hinnan mukaan.
 
 ## Jatkokehitys ideoita
 
