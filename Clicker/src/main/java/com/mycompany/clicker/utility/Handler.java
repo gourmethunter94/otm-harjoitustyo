@@ -5,7 +5,8 @@
  */
 package com.mycompany.clicker.utility;
 
-import com.mycompany.clicker.launcher.ClickerApp;
+import com.mycompany.clicker.core.Game;
+import com.mycompany.clicker.display.Display;
 
 /**
  *
@@ -13,18 +14,18 @@ import com.mycompany.clicker.launcher.ClickerApp;
  */
 public class Handler {
     
-    private ClickerApp ca;
+    private Game game;
     
-    public Handler(ClickerApp ca){
-        this.ca = ca;
+    public Handler(Game game){
+        this.game = game;
     }
     
     public int getDisplayWidth(){
-        return ca.getWidth();
+        return game.getWidth();
     }
     
     public int getDisplayHeight(){
-        return ca.getHeight();
+        return game.getHeight();
     }
     
 }
