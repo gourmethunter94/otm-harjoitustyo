@@ -7,13 +7,18 @@ package com.mycompany.clicker.core;
 
 import com.mycompany.clicker.domain.Creature;
 import com.mycompany.clicker.display.Display;
+import com.mycompany.clicker.ui.UI;
+import com.mycompany.clicker.ui.UIButton;
+import com.mycompany.clicker.ui.UIPanel;
+import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Handler;
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
+
 import java.math.BigInteger;
 import java.util.Random;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -21,14 +26,53 @@ import javafx.scene.paint.Color;
  */
 public class Game {
 
+    // variables ---------------------------------------------------------------
     private Display display;
     private Handler handler;
     private Creature currentCreature;
     private Random random;
 
-    private BigInteger damage;
+    private BigInteger clickDamage;
+    private BigInteger damagePerSecond;
     private BigInteger money;
 
+    private int clicks;
+
+    // Game UI Variables -------------------------------------------------------
+    private UI gUI;
+    private UIPanel gBtnPanel;
+    private UIPanel gMnPanel;
+    private UIButton gBtnNShop;
+    private UIButton gBtnSet;
+    private UIButton gBtnSShop;
+    private UIPanel gHPBack;
+    private UIPanel gHPFront;
+    // -------------------------------------------------------------------------
+
+    // Normal Shop UI ----------------------------------------------------------
+    private UI nsUI;
+    private UIPanel nsPanel;
+    private UIButton nsClose;
+    // -------------------------------------------------------------------------
+
+    // Special Shop UI ---------------------------------------------------------
+    private UI ssUI;
+    private UIPanel ssPanel;
+    private UIButton ssClose;
+    // -------------------------------------------------------------------------
+
+    // Settings UI -------------------------------------------------------------
+    private UI setUI;
+    private UIPanel setPanel;
+    private UIButton setClose;
+    // -------------------------------------------------------------------------
+
+    // constructor -------------------------------------------------------------
+
+    /**
+     *
+     * @param display
+     */
     public Game(Display display) {
         this.display = display;
         this.handler = new Handler(this);
@@ -36,53 +80,327 @@ public class Game {
     }
 
     //initialization -----------------------------------------------------------
-    
+
+    /**
+     *Call to initialize the Game, should only be called from Display.
+     */
     public void initialize() {
-        this.newMonster();
-        damage = new BigInteger("1");
+        clickDamage = new BigInteger("1");
+        damagePerSecond = new BigInteger("0");
         money = new BigInteger("0");
+        
+        this.initializeGameUI();
+        this.nShopInitialize();
+        this.sShopInitialize();
+        this.setInitialize();
+
+        this.newMonster();
+
     }
 
-    // update ------------------------------------------------------------------
-    public void update() {
+    private void initializeGameUI() {
+        this.gUI = new UI(this.handler);
+        this.gBtnPanel = new UIPanel(handler, new Rectangle(158, 78, Color.GRAY), 0, 0);
+        this.gMnPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), new Text("Money: 0"), 2, 2);
+        this.gBtnNShop = new UIButton(handler, new Rectangle(50, 50, Color.AZURE), new Text("Shop"), 2, 25, 50, 50);
+        this.gBtnSShop = new UIButton(handler, new Rectangle(50, 50, Color.PINK), new Text("Soul"), 54, 25, 50, 50);
+        this.gBtnSet = new UIButton(handler, new Rectangle(50, 50, Color.BISQUE), new Text("Settings"), 106, 25, 50, 50);
+        this.gHPBack = new UIPanel(handler, new Rectangle(154, 37, Color.GRAY), display.getWidth() / 2 - 77, display.getHeight() / 2 - 125);
+        this.gHPFront = new UIPanel(handler, new Rectangle(150, 33, Color.RED), display.getWidth() / 2 - 75, display.getHeight() / 2 - 123);
+        gUI.addElement(gBtnPanel);
+        gUI.addElement(gMnPanel);
+        gUI.addElement(gBtnNShop);
+        gUI.addElement(gBtnSShop);
+        gUI.addElement(gBtnSet);
+        gUI.addElement(gHPBack);
+        gUI.addElement(gHPFront);
+        gUI.showUI(true);
+    }
 
-        int clicks = display.getMouseClicks();
-        if (clicks > 0) {
-            currentCreature.damage(damage.multiply(new BigInteger("" + clicks)));
-            display.setHpBar(currentCreature.getHpBar());
+    private void nShopInitialize() {
+        this.nsUI = new UI(this.handler);
+        this.nsPanel = new UIPanel(handler, new Rectangle(440, 648, Color.GRAY), new Text("Shop"), 0, 80);
+        this.nsClose = new UIButton(handler, new Rectangle(14, 14, Color.RED), new Text("X"), 424, 82, 14, 14);
+        nsUI.addElement(nsPanel);
+        nsUI.addElement(nsClose);
+    }
+
+    private void sShopInitialize() {
+        this.ssUI = new UI(this.handler);
+        this.ssPanel = new UIPanel(handler, new Rectangle(440, 648, Color.CORNFLOWERBLUE), new Text("Soul Shop"), 0, 80);
+        this.ssClose = new UIButton(handler, new Rectangle(14, 14, Color.MAROON), new Text("X"), 424, 82, 14, 14);
+        ssUI.addElement(ssPanel);
+        ssUI.addElement(ssClose);
+    }
+
+    private void setInitialize() {
+        this.setUI = new UI(this.handler);
+        this.setPanel = new UIPanel(handler, new Rectangle(440, 648, Color.DARKGRAY), new Text("Settings"), 0, 80);
+        this.setClose = new UIButton(handler, new Rectangle(14, 14, Color.LIGHTCORAL), new Text("X"), 424, 82, 14, 14);
+        setUI.addElement(setPanel);
+        setUI.addElement(setClose);
+    }
+
+    // primary update ----------------------------------------------------------
+
+    /**
+     *Update method called as part of Displays AnimationTimer, applyDPS determines if monster should take periodical damage.
+     * @param applyDPS boolean
+     */
+    public void update(boolean applyDPS) {
+        clicks = clicks + display.getMouseClicks();
+
+        // Updating UI ---------------------------------------------------------
+        if(gUI != null){
+            this.updateUI();
+            this.setHpBar();
+        }
+
+        // Updating the game proper --------------------------------------------
+        BigInteger damage = new BigInteger("" + clicks).multiply(clickDamage);
+        if (applyDPS) {
+            damage = damage.add(damagePerSecond);
+        }
+
+        if (damage.compareTo(BigInteger.ZERO) > 0) {
+            currentCreature.damage(damage);
+            currentCreature.setBarSize();
         }
         if (currentCreature.getDead()) {
             this.updateMoney();
             this.newMonster();
         }
+        
+        clicks = 0;
+        
+    }
+
+    // public methods ----------------------------------------------------------
+
+    /**
+     *Used as when level is changed, and and as part of tests.
+     * @param creature Creature
+     */
+    public void setMonster(Creature creature) {
+        if (gUI != null) {
+            if (currentCreature != null) {
+                gUI.removeElement(currentCreature.getView());
+            }
+        }
+        currentCreature = creature;
+        if (gUI != null) {
+            if (gUI.getActive()) {
+                currentCreature.getView().setActive(true);
+            }
+            this.setHpBar();
+        }
+    }
+
+    // Display methods ---------------------------------------------------------
+
+    /**
+     *Adds a Node to the root of Display.
+     * @param node Node
+     */
+    public void addNode(Node node) {
+        this.display.addNode(node);
+    }
+
+    /**
+     *Removes a Node from the root of Display. The node must be part of the root.
+     * @param node Node
+     */
+    public void removeNode(Node node) {
+        this.display.removeNode(node);
     }
 
     // Getters and Setters -----------------------------------------------------
+
+    /**
+     *Returns (base) width of the root of the display. As opposed to true width.
+     * @return int
+     */
     public int getWidth() {
         return display.getWidth();
     }
 
+    /**
+     *Returns (base) height of the root of the display. As opposed to true height.
+     * @return int
+     */
     public int getHeight() {
         return display.getHeight();
     }
 
-    private void newMonster() {
+    /**
+     *Sets new monster (TODO: of currently active level) as new monster.
+     *Takes care of updating of HP bar automatically.
+     */
+    public void newMonster() {
         if (currentCreature != null) {
-            display.removeNode(currentCreature.getView());
+            gUI.removeElement(currentCreature.getView());
         }
         currentCreature = new Creature(handler, "Place Holder", 125, 125, this.randomColor(), new BigInteger("20"), new BigInteger("1"));
-        display.setHpBar(currentCreature.getHpBar());
-        display.addNode(currentCreature.getView());
+        gUI.addElement(currentCreature.getView());
+        if (gUI.getActive()) {
+            currentCreature.getView().setActive(true);
+        }
+        this.setHpBar();
+    }
+
+    /**
+     *Returns the amount of clicks active on the next update. Method should be called from UI.
+     *@return int
+     */
+    public int getClicks() {
+        return clicks;
+    }
+
+    /**
+     *Sets amount of clicks active on the next update.
+     * @param value int
+     */
+    public void setClicks(int value) {
+        this.clicks = value;
+    }
+
+    /**
+     *Returns mouses position on X axis.
+     * @return double
+     */
+    public double getMouseX() {
+        return this.display.getMouseX();
+    }
+
+    /**
+     *Returns mouses position on Y axis.
+     * @return double
+     */
+    public double getMouseY() {
+        return this.display.getMouseY();
+    }
+    
+    /**
+     *Returns current clicking damage.
+     * @return BigInteger
+     */
+    public BigInteger getClickDamage(){
+        return this.clickDamage;
+    }
+    
+    /**
+     *Returns current damage per second (from upgrades, as opposed to a statistic)
+     * @return BigInteger
+     */
+    public BigInteger getDPS(){
+        return this.damagePerSecond;
     }
 
     // private methods ---------------------------------------------------------
+    private void setHpBar() {
+        double size = Commons.baseHPBar * currentCreature.getHpBar();
+        ((Rectangle) this.gHPFront.getView()).setWidth(size);
+    }
+
     private Color randomColor() {
         return Color.color((30.0 + random.nextInt(60)) / 100, (30.0 + random.nextInt(60)) / 100, (30.0 + random.nextInt(60)) / 100);
     }
 
     private void updateMoney() {
         this.money = money.add(currentCreature.getBounty());
-        display.setMoney(this.money);
+        this.gMnPanel.setText("Money: " + Commons.getGameValue(money.toString()));
+    }
+
+    /**
+     *Increases dps by given value.
+     * @param value BigInteger
+     */
+    public void increaseDPS(BigInteger value) {
+        this.damagePerSecond = damagePerSecond.add(value);
+    }
+
+    /**
+     *Increases click damge by given value.
+     * @param value BigInteger
+     */
+    public void increaseCD(BigInteger value) {
+        this.clickDamage = clickDamage.add(value);
+    }
+
+    /**
+     *Sets current value to damage per second, should be used with care.
+     * @param value BigInteger
+     */
+    public void setDPS(BigInteger value) {
+        this.damagePerSecond = value;
+    }
+
+    /**
+     *Sets current value to click damage, should be used with care.
+     * @param value BigInteger
+     */
+    public void setCD(BigInteger value) {
+        this.clickDamage = value;
+    }
+
+    private void updateUI() {
+
+        gUI.update();
+
+        if (gBtnNShop.getClicked()) {
+            clicks = 0;
+            ssUI.showUI(false);
+            setUI.showUI(false);
+            if (nsUI.getActive()) {
+                nsUI.showUI(false);
+            } else {
+                nsUI.showUI(true);
+            }
+        }
+
+        if (gBtnSShop.getClicked()) {
+            clicks = 0;
+            nsUI.showUI(false);
+            setUI.showUI(false);
+            if (ssUI.getActive()) {
+                ssUI.showUI(false);
+            } else {
+                ssUI.showUI(true);
+            }
+        }
+
+        if (gBtnSet.getClicked()) {
+            clicks = 0;
+            nsUI.showUI(false);
+            ssUI.showUI(false);
+            if (setUI.getActive()) {
+                setUI.showUI(false);
+            } else {
+                setUI.showUI(true);
+            }
+        }
+
+        nsUI.update();
+
+        if (nsClose.getClicked()) {
+            clicks = 0;
+            nsUI.showUI(false);
+        }
+
+        ssUI.update();
+
+        if (ssClose.getClicked()) {
+            clicks = 0;
+            ssUI.showUI(false);
+        }
+
+        setUI.update();
+
+        if (setClose.getClicked()) {
+            clicks = 0;
+            setUI.showUI(false);
+        }
+
     }
 
 }
