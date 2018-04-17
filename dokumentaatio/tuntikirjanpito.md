@@ -4,4 +4,5 @@
 | 3.4.18  | 2    | Tutustumista JavaFX hiiren toimintoihin ja alkukantainen rakenne pelille pää kohteena creature luokka |
 | 4.4.18  | 1½   | Hiomista creature luokkaan ja creature luoken testejä |
 | 9.4.18  | 3½   | UI ja Damage Over Time, lisää testejä |
-| Summa   | 8    |
+| 17.4.18 | ½    | Luokkakaavio ja dokumentaatio päivitys |
+| Summa   | 8½   |
