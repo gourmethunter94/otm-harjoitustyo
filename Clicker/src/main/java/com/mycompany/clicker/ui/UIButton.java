@@ -99,6 +99,7 @@ public class UIButton extends UIElement {
             
             if(mouseX > super.getX() && mouseX < (super.getX() + width)){
                 if(mouseY > super.getY() && mouseY < (super.getY() + height)){
+                    handler.setMouseClicks(0);
                     this.clicked = true;
                 }
             }

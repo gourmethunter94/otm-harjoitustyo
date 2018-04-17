@@ -16,34 +16,62 @@ import java.sql.SQLException;
  * @author Olli K. Kärki
  */
 public class SettingsDAO {
-    private String path;
+    
+    private Database database;
     
     /**
      *
-     * @param path
-     * @throws ClassNotFoundException
+     * @param database - Database
      */
-    public SettingsDAO(String path) throws ClassNotFoundException {
-        this.path = path;
+    public SettingsDAO(Database database) {
+        this.database = database;
     }
     
     /**
-     *
-     * @return
+     *Returns boolean value; false = not fullscreen, true = fullscreen.
+     * @return boolean
      * @throws SQLException
      */
     public boolean getFullscreen() throws SQLException{
-        Connection con = DriverManager.getConnection(path);
-        PreparedStatement st = con.prepareStatement("SELECT DISTINCT fullscreen FROM SETTINGS;");
-        ResultSet rs = st.executeQuery();
         
-        boolean r = rs.getBoolean("fullscreen");
+        boolean r = false;
         
-        rs.close();
-        st.close();
-        con.close();
+        try (Connection conn = database.getConnection()) { 
+            
+            PreparedStatement stm = conn.prepareStatement("SELECT DISTINCT fullscreen FROM SETTINGS");
+            ResultSet rs = stm.executeQuery();
+            
+            r = rs.getBoolean("fullscreen");
+            
+            rs.close();
+            stm.close();
+            
+        }
         
         return r;
+    }
+    
+    /**
+     * Writes fullscreen value on the database.
+     * @param value
+     * @throws SQLException 
+     */
+    public void setFullscreen(boolean value) throws SQLException{
+        
+        try (Connection conn = database.getConnection()) {
+            
+            int val = 0;
+            
+            if(value == true){
+                val = 1;
+            }
+            
+            PreparedStatement stm = conn.prepareStatement("UPDATE Settings SET fullscreen = " + val);
+            stm.execute();
+            stm.close();
+            
+        }
+        
     }
     
 }

@@ -5,7 +5,10 @@
  */
 package com.mycompany.clicker.utility;
 
+import com.mycompany.clicker.dao.Database;
 import com.mycompany.clicker.dao.SettingsDAO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.sql.SQLException;
 
@@ -14,21 +17,74 @@ import java.sql.SQLException;
  * @author Olli K. Kärki
  */
 public class Settings {
-    
+
     /**
-     *Initialize Settings before using
-     * Boolean value for if the game should be in fullscreen
+     * Initialize Settings before using Boolean value for if the game should be
+     * in fullscreen
      */
     public static boolean fullscreen;
-    
+
     /**
-     *Initializes the Settings class.
-     * @throws SQLException
+     * Initialize Settings before using Double value based on Current Resolution
+     * Width) / 1280
+     */
+    public static double xScale;
+
+    /**
+     * Initialize Settings before using Double value based on (Current
+     * Resolution Height) / 720
+     */
+    public static double yScale;
+
+    /**
+     * Initialize Settings before using Double value based on monitor pixel
+     * width
+     */
+    public static double screenWidth;
+
+    /**
+     * Initialize Settings before using Double value based on monitor pixel
+     * height
+     */
+    public static double screenHeight;
+
+    /**
+     * Initializes the Settings class.
+     * Initialize Commons before calling.
+     * @throws SQLException 
      */
     public static void initialize() throws SQLException {
-        String path = new File("files/database.db").getAbsolutePath();
-        //SettingsDAO sd = new SettingsDAO(path);
-        //fullscreen = sd.getFullscreen();
+        fullscreen = Commons.settingsDao.getFullscreen();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        screenWidth = Commons.baseWidth;
+        screenHeight = Commons.baseHeight;
+
+        if (fullscreen) {
+            screenWidth = screenSize.getWidth();
+            screenHeight = screenSize.getHeight();
+        }
+        
+        xScale = screenWidth / Commons.baseWidth;
+        yScale = screenHeight / Commons.baseHeight;
+        
     }
     
+    /**
+     * Writes fullscreen value on the database.
+     * Initialzie commons before calling.
+     * Returns true if state was changed, otherwise, returns false
+     * @param value - boolean
+     * @return boolean
+     * @throws SQLException 
+     */
+    public static boolean changeScreenState(boolean value) throws SQLException{
+        if(fullscreen != value){
+            fullscreen = value;
+            Commons.settingsDao.setFullscreen(fullscreen);
+            return true;
+        }
+        return false;
+    }
+
 }

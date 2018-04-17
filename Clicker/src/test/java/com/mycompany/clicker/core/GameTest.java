@@ -31,7 +31,7 @@ public class GameTest {
     }
 
     @Test
-    public void updateClickDamage() {
+    public void updateClickDamage() throws ClassNotFoundException, Exception {
         Game g = new Game(d);
         Handler handler = new Handler(g);
         Creature c = new Creature(handler, "Test", 100, 100, Color.RED, new BigInteger("100"), new BigInteger("100"));
@@ -50,7 +50,7 @@ public class GameTest {
     }
 
     @Test
-    public void updateDPS() {
+    public void updateDPS() throws ClassNotFoundException, Exception {
         Game g = new Game(d);
         Handler handler = new Handler(g);
         Creature c = new Creature(handler, "Test", 100, 100, Color.RED, new BigInteger("100"), new BigInteger("100"));

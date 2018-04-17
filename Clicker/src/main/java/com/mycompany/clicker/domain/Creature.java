@@ -24,7 +24,6 @@ public class Creature {
     private int x, y;
     private Handler handler;
     private UIPanel view;
-    private Color color;
     private BigInteger hitPoints;
     private BigInteger maxHP;
     private double hpBarSize;
@@ -49,8 +48,6 @@ public class Creature {
             Color color, BigInteger hitPoints, BigInteger bounty) {
         
         this.name = name;
-
-        this.color = color;
 
         this.x = handler.getDisplayWidth() / 2 - width / 2;
         this.y = handler.getDisplayHeight() / 2 - height / 2;

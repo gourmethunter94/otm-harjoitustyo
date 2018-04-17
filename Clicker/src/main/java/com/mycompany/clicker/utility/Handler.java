@@ -81,4 +81,13 @@ public class Handler {
         this.game.removeNode(node);
     }
     
+    
+    /**
+     *Set amount of mouse clicks active on the game.
+     * @param value - int
+     */
+    public void setMouseClicks(int value){
+        this.game.setClicks(value);
+    }
+    
 }

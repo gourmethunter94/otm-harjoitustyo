@@ -5,6 +5,10 @@
  */
 package com.mycompany.clicker.utility;
 
+import com.mycompany.clicker.dao.Database;
+import com.mycompany.clicker.dao.SaveDAO;
+import com.mycompany.clicker.dao.SettingsDAO;
+import java.io.File;
 import java.math.BigInteger;
 
 /**
@@ -12,6 +16,18 @@ import java.math.BigInteger;
  * @author Olli K. Kärki
  */
 public class Commons {
+    
+    /**
+     *Initialize Commons before using.
+     * 1280, basic content window width
+     */
+    public static double baseWidth;
+    
+    /**
+     *Initialize Commons before using.
+     * 720, basic content window height
+     */
+    public static double baseHeight;
     
     /**
      *Initialize Commons before using.
@@ -32,12 +48,37 @@ public class Commons {
     public static double baseHPBar;
     
     /**
-     *Initializes values in the Commons class.
+     *Database used in the DAOs
      */
-    public static void initialize(){
+    private static Database database;
+    
+    /**
+     * Settings Data Access Object; Used when loading and saving changed settings for the game.
+     * Things such as fullscreen mode, sounds on / off. Ect.
+     */
+    public static SettingsDAO settingsDao;
+    
+    /**
+     * Data access object for game save.
+     * Money, sMoney, active stage, damage, ect.
+     */
+    public static SaveDAO saveDao;
+    
+    /**
+     *Initializes values in the Commons class, including Database and Data-access objects.
+     */
+    public static void initialize() throws ClassNotFoundException{
         divider = new BigInteger("100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         secondInNano = 1000000000;
         baseHPBar = 150.0;
+        
+        String path = new File("src/main/resources/database.db").getAbsolutePath();
+        database = new Database(path);
+        settingsDao = new SettingsDAO(database);
+        saveDao = new SaveDAO(database);
+        
+        baseWidth = 1280.0;
+        baseHeight = 720.0;
     }
     
     /**
