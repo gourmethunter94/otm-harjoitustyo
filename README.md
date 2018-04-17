@@ -11,3 +11,5 @@ Tietokonepeli, jonka ideana on käytännössä vain tuhlata käyttäjän aikaa. 
 [Vaatimusmäärittely](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/Vaatimusmaarittely.md)
 
 [Työaikakirjanpito](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+
+[Arkkitehtuurikuvaus](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
