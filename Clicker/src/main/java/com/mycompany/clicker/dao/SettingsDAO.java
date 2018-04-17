@@ -6,7 +6,6 @@
 package com.mycompany.clicker.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,9 +15,9 @@ import java.sql.SQLException;
  * @author Olli K. Kärki
  */
 public class SettingsDAO {
-    
+
     private Database database;
-    
+
     /**
      *
      * @param database - Database
@@ -26,52 +25,54 @@ public class SettingsDAO {
     public SettingsDAO(Database database) {
         this.database = database;
     }
-    
+
     /**
-     *Returns boolean value; false = not fullscreen, true = fullscreen.
+     * Returns boolean value; false = not fullscreen, true = fullscreen.
+     *
      * @return boolean
      * @throws SQLException
      */
-    public boolean getFullscreen() throws SQLException{
-        
+    public boolean getFullscreen() throws SQLException {
+
         boolean r = false;
-        
-        try (Connection conn = database.getConnection()) { 
-            
+
+        try (Connection conn = database.getConnection()) {
+
             PreparedStatement stm = conn.prepareStatement("SELECT DISTINCT fullscreen FROM SETTINGS");
             ResultSet rs = stm.executeQuery();
-            
+
             r = rs.getBoolean("fullscreen");
-            
+
             rs.close();
             stm.close();
-            
+
         }
-        
+
         return r;
     }
-    
+
     /**
      * Writes fullscreen value on the database.
+     *
      * @param value
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public void setFullscreen(boolean value) throws SQLException{
-        
+    public void setFullscreen(boolean value) throws SQLException {
+
         try (Connection conn = database.getConnection()) {
-            
+
             int val = 0;
-            
-            if(value == true){
+
+            if (value == true) {
                 val = 1;
             }
-            
+
             PreparedStatement stm = conn.prepareStatement("UPDATE Settings SET fullscreen = " + val);
             stm.execute();
             stm.close();
-            
+
         }
-        
+
     }
-    
+
 }

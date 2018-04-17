@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -90,7 +89,6 @@ public class Display extends Application {
         });
 
         // ---------------------------------------------------------------------
-        
     }
 
     @Override
@@ -116,30 +114,30 @@ public class Display extends Application {
         }
 
         this.createContent();
-        
+
         Scene scene = new Scene(root);
-        
+
         Scale scale = new Scale(Settings.xScale, Settings.yScale);
         scale.setPivotX(0);
         scale.setPivotY(0);
         scene.getRoot().getTransforms().setAll(scale);
-        
+
         stage.setScene(scene);
 
         stage.setTitle("Clicker");
-        
+
         stage.show();
 
         this.game = new Game(this);
-        
+
         boolean saveExists = Commons.saveDao.saveExists();
-        
-        if(!saveExists){
+
+        if (!saveExists) {
             Commons.saveDao.initializeSave();
         }
-        
+
         Save save = Commons.saveDao.loadGame();
-        
+
         game.initialize(save);
 
         running = true;

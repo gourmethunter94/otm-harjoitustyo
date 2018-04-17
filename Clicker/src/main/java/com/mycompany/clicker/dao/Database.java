@@ -9,7 +9,6 @@ package com.mycompany.clicker.dao;
  *
  * @author Olli K. Kärki
  */
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -26,4 +25,3 @@ public class Database {
         return DriverManager.getConnection("jdbc:sqlite:" + databaseAddress);
     }
 }
-

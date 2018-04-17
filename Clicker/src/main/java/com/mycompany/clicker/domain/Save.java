@@ -12,9 +12,8 @@ import java.math.BigInteger;
  * @author Olli K. Kärki
  */
 public class Save {
-    
+
     // Variables ---------------------------------------------------------------
-    
     private BigInteger money;
     private BigInteger sMoney;
     private BigInteger clickDamage;
@@ -22,10 +21,9 @@ public class Save {
     private long lastPlayTime;
     private int stage;
     private int activeMonster;
-    
+
     //Constructor --------------------------------------------------------------
-    
-    public Save(String money, String sMoney, String clickDamage, String damagePerSecond, String lastPlayTime, int stage, int activeMonster){
+    public Save(String money, String sMoney, String clickDamage, String damagePerSecond, String lastPlayTime, int stage, int activeMonster) {
         this.money = new BigInteger(money);
         this.sMoney = new BigInteger(sMoney);
         this.clickDamage = new BigInteger(clickDamage);
@@ -34,9 +32,8 @@ public class Save {
         this.stage = stage;
         this.activeMonster = activeMonster;
     }
-    
-    // Getters -----------------------------------------------------------------
 
+    // Getters -----------------------------------------------------------------
     public BigInteger getMoney() {
         return money;
     }
@@ -64,5 +61,5 @@ public class Save {
     public int getActiveMonster() {
         return activeMonster;
     }
-    
+
 }

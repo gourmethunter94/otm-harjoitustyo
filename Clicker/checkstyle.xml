@@ -5,7 +5,7 @@
     <!-- asetetaan kieliasetukset englanniksi. -->
     <property name="localeCountry" value="EN"/>
     <property name="localeLanguage" value="en"/>
-
+	
     <module name='TreeWalker'>
 
         <property name='tabWidth' value='4' />
@@ -84,10 +84,9 @@
     <module name='FileLength'>
         <property name='max' value='500' />
     </module>
+	
+	<module name="SuppressionFilter">
+		<property name="file" value="skipped_files.xml" />
+	</module>
 
-
-<<<<<<< HEAD
 </module>
-=======
-</module>
->>>>>>> 403ab3b609e1d7c0e285eaecb652def2943e437f

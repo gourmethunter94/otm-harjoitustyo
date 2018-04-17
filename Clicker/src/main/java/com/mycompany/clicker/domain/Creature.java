@@ -9,7 +9,6 @@ import com.mycompany.clicker.ui.UIPanel;
 import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Handler;
 import java.math.BigInteger;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -20,9 +19,7 @@ import javafx.scene.shape.Rectangle;
 public class Creature {
 
     // Variables ---------------------------------------------------------------
-    
     private int x, y;
-    private Handler handler;
     private UIPanel view;
     private BigInteger hitPoints;
     private BigInteger maxHP;
@@ -32,7 +29,6 @@ public class Creature {
     private boolean dead;
 
     // Constructor -------------------------------------------------------------
-
     /**
      *
      * @param handler
@@ -43,10 +39,9 @@ public class Creature {
      * @param hitPoints
      * @param bounty
      */
-    
     public Creature(Handler handler, String name, int width, int height,
             Color color, BigInteger hitPoints, BigInteger bounty) {
-        
+
         this.name = name;
 
         this.x = handler.getDisplayWidth() / 2 - width / 2;
@@ -65,20 +60,20 @@ public class Creature {
     }
 
     // public methods ----------------------------------------------------------
-
     /**
-     *Decreases value of current hitPoints, and sets creatures status to dead if necessary.
+     * Decreases value of current hitPoints, and sets creatures status to dead
+     * if necessary.
+     *
      * @param value BigInteger; how much damage
      */
-    
     public void damage(BigInteger value) {
         this.hitPoints = this.hitPoints.subtract(value);
         this.setDeath();
     }
-    
+
     /**
-     *Calculates percentual size for the healthbar of the creature
-     *Use getHpBar to get the actual value.
+     * Calculates percentual size for the healthbar of the creature Use getHpBar
+     * to get the actual value.
      */
     public void setBarSize() {
         double max = this.maxHP.doubleValue();
@@ -101,18 +96,18 @@ public class Creature {
     }
 
     // Getters and setters -----------------------------------------------------
-
     /**
-     *Returns UIPanel used as graphic of the monster.
+     * Returns UIPanel used as graphic of the monster.
+     *
      * @return UIPanel
      */
-    
     public UIPanel getView() {
         return view;
     }
 
     /**
-     *Returns current hit points of the monster.
+     * Returns current hit points of the monster.
+     *
      * @return BigInteger
      */
     public BigInteger getHitPoints() {
@@ -120,7 +115,8 @@ public class Creature {
     }
 
     /**
-     *Returns maximum hit points of the monster.
+     * Returns maximum hit points of the monster.
+     *
      * @return BigInteger
      */
     public BigInteger getMaxHitPoints() {
@@ -128,7 +124,8 @@ public class Creature {
     }
 
     /**
-     *Returns percentual size suitable for the mosnters hit points.
+     * Returns percentual size suitable for the mosnters hit points.
+     *
      * @return double
      */
     public double getHpBar() {
@@ -136,7 +133,7 @@ public class Creature {
     }
 
     /**
-     *Sets this monster as dead.
+     * Sets this monster as dead.
      */
     public void setDeath() {
         if (hitPoints.compareTo(BigInteger.ZERO) < 1) {
@@ -145,7 +142,8 @@ public class Creature {
     }
 
     /**
-     *Returns bounty value of this monster.
+     * Returns bounty value of this monster.
+     *
      * @return BigInteger
      */
     public BigInteger getBounty() {
@@ -153,7 +151,8 @@ public class Creature {
     }
 
     /**
-     *Return tells if this mosnter is dead.
+     * Return tells if this mosnter is dead.
+     *
      * @return boolean
      */
     public boolean getDead() {

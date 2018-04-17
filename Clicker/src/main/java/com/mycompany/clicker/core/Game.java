@@ -5,7 +5,6 @@
  */
 package com.mycompany.clicker.core;
 
-import com.mycompany.clicker.dao.SettingsDAO;
 import com.mycompany.clicker.domain.Creature;
 import com.mycompany.clicker.display.Display;
 import com.mycompany.clicker.domain.Save;
