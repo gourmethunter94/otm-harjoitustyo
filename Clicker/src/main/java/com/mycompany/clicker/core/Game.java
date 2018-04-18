@@ -17,11 +17,9 @@ import com.mycompany.clicker.utility.Settings;
 
 import java.math.BigInteger;
 import java.sql.SQLException;
-import java.util.Random;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 /**
  *
@@ -106,7 +104,7 @@ public class Game {
         this.newMonster();
 
     }
-    
+
     private void initializeGameUI() {
         this.gUI = new UI(this.handler);
         this.gBtnPanel = new UIPanel(handler, new Rectangle(158, 78, Color.GRAY), 0, 0);
@@ -265,7 +263,9 @@ public class Game {
         gUI.addElement(currentCreature.getView());
         if (gUI.getActive()) { // This here enables testing.
             currentCreature.getView().setActive(true);
-            saveGame();
+            if (Settings.displayStartedProperly) {
+                saveGame();
+            }
         }
         this.setHpBar();
     }
