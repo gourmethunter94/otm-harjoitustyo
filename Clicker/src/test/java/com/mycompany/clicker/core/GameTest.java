@@ -7,9 +7,11 @@ package com.mycompany.clicker.core;
 
 import com.mycompany.clicker.display.Display;
 import com.mycompany.clicker.domain.Creature;
+import com.mycompany.clicker.domain.Save;
 import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Handler;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import javafx.scene.paint.Color;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -76,5 +78,71 @@ public class GameTest {
         g.increaseDPS(new BigInteger("23"));
         assertTrue("Damage was " + g.getClickDamage() + ", should have beeen 24", g.getDPS().equals(new BigInteger("24")));
     }
-
+    
+    @Test
+    public void initialization() throws SQLException{
+        Display d = new Display();
+        d.createContent();
+        Game g = new Game(d);
+        
+        g.initialize(new Save("1", "1", "1", "1", "1", 1, 1));
+    }
+    
+    @Test
+    public void gameUI() throws SQLException, Exception{
+        
+        Display d = new Display();
+        d.createContent();
+        Game g = new Game(d);
+        
+        g.initialize(new Save("1", "1", "1", "1", "1", 1, 1));
+        g.update(false);
+        
+        d.setMouseX(3);
+        d.setMouseY(26);
+        g.setClicks(1);
+        g.update(false);
+        g.setClicks(1);
+        g.update(false);
+        g.setClicks(1);
+        g.update(false);
+        g.setClicks(1);
+        d.setMouseX(425);
+        d.setMouseY(84);
+        g.update(false);
+        
+        d.setMouseX(55);
+        d.setMouseY(26);
+        g.setClicks(1);
+        g.update(false);
+        g.setClicks(1);
+        g.update(false);
+        g.setClicks(1);
+        g.update(false);
+        g.setClicks(1);
+        d.setMouseX(425);
+        d.setMouseY(84);
+        g.update(false);
+        
+        d.setMouseX(107);
+        d.setMouseY(26);
+        g.setClicks(1);
+        g.update(false);
+        g.setClicks(1);
+        g.update(false);
+        g.setClicks(1);
+        g.update(false);
+        g.setClicks(1);
+        d.setMouseX(425);
+        d.setMouseY(84);
+        g.update(false);
+        
+        Handler handler = new Handler(g);
+        Creature c = new Creature(handler, "Test", 1, 1, Color.RED, new BigInteger("1"), new BigInteger("1"));
+        g.setMonster(c);
+        
+        g.update(true);
+        
+    }
+    
 }

@@ -9,7 +9,10 @@ import com.mycompany.clicker.dao.Database;
 import com.mycompany.clicker.dao.SaveDAO;
 import com.mycompany.clicker.dao.SettingsDAO;
 import java.io.File;
+import static java.lang.Math.random;
 import java.math.BigInteger;
+import java.util.Random;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -64,6 +67,8 @@ public class Commons {
      */
     public static SaveDAO saveDao;
     
+    private static Random random;
+    
     /**
      *Initializes values in the Commons class, including Database and Data-access objects.
      */
@@ -79,6 +84,8 @@ public class Commons {
         
         baseWidth = 1280.0;
         baseHeight = 720.0;
+        
+        random = new Random(System.nanoTime());
     }
     
     /**
@@ -94,9 +101,17 @@ public class Commons {
         if(length < 7){
             return value;
         } else {
-            return value.substring(0, 4) + "e" + (length - 3);
+            return value.substring(0, 4) + "e" + (length - 4);
         }
         
+    }
+
+    /**
+     * Returns random color with color values between 0.3 - 0.9 in each of RGB.
+     * @return Color
+     */
+    public static Color randomColor() {
+        return Color.color((30.0 + random.nextInt(60)) / 100, (30.0 + random.nextInt(60)) / 100, (30.0 + random.nextInt(60)) / 100);
     }
     
 }

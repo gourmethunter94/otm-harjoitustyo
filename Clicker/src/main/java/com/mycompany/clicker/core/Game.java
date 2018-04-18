@@ -33,7 +33,6 @@ public class Game {
     private Display display;
     private Handler handler;
     private Creature currentCreature;
-    private Random random;
 
     private BigInteger clickDamage;
     private BigInteger damagePerSecond;
@@ -84,7 +83,6 @@ public class Game {
     public Game(Display display) {
         this.display = display;
         this.handler = new Handler(this);
-        this.random = new Random(System.nanoTime());
     }
 
     //initialization -----------------------------------------------------------
@@ -108,14 +106,14 @@ public class Game {
         this.newMonster();
 
     }
-
+    
     private void initializeGameUI() {
         this.gUI = new UI(this.handler);
         this.gBtnPanel = new UIPanel(handler, new Rectangle(158, 78, Color.GRAY), 0, 0);
-        this.gMnPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), new Text("Money: " + Commons.getGameValue(money.toString())), 2, 2);
-        this.gBtnNShop = new UIButton(handler, new Rectangle(50, 50, Color.AZURE), new Text("Shop"), 2, 25, 50, 50);
-        this.gBtnSShop = new UIButton(handler, new Rectangle(50, 50, Color.PINK), new Text("Soul"), 54, 25, 50, 50);
-        this.gBtnSet = new UIButton(handler, new Rectangle(50, 50, Color.BISQUE), new Text("Settings"), 106, 25, 50, 50);
+        this.gMnPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), "Money: " + Commons.getGameValue(money.toString()), 2, 2);
+        this.gBtnNShop = new UIButton(handler, new Rectangle(50, 50, Color.AZURE), "Shop", 2, 25, 50, 50);
+        this.gBtnSShop = new UIButton(handler, new Rectangle(50, 50, Color.PINK), "Soul", 54, 25, 50, 50);
+        this.gBtnSet = new UIButton(handler, new Rectangle(50, 50, Color.BISQUE), "Settings", 106, 25, 50, 50);
         this.gHPBack = new UIPanel(handler, new Rectangle(154, 37, Color.GRAY), display.getWidth() / 2 - 77, display.getHeight() / 2 - 125);
         this.gHPFront = new UIPanel(handler, new Rectangle(150, 33, Color.RED), display.getWidth() / 2 - 75, display.getHeight() / 2 - 123);
         gUI.addElement(gBtnPanel);
@@ -130,27 +128,27 @@ public class Game {
 
     private void nShopInitialize() {
         this.nsUI = new UI(this.handler);
-        this.nsPanel = new UIPanel(handler, new Rectangle(440, 648, Color.GRAY), new Text("Shop"), 0, 80);
-        this.nsClose = new UIButton(handler, new Rectangle(14, 14, Color.RED), new Text("X"), 424, 82, 14, 14);
+        this.nsPanel = new UIPanel(handler, new Rectangle(440, 648, Color.GRAY), "Shop", 0, 80);
+        this.nsClose = new UIButton(handler, new Rectangle(14, 14, Color.RED), "X", 424, 82, 14, 14);
         nsUI.addElement(nsPanel);
         nsUI.addElement(nsClose);
     }
 
     private void sShopInitialize() {
         this.ssUI = new UI(this.handler);
-        this.ssPanel = new UIPanel(handler, new Rectangle(440, 648, Color.CORNFLOWERBLUE), new Text("Soul Shop"), 0, 80);
-        this.ssClose = new UIButton(handler, new Rectangle(14, 14, Color.MAROON), new Text("X"), 424, 82, 14, 14);
+        this.ssPanel = new UIPanel(handler, new Rectangle(440, 648, Color.CORNFLOWERBLUE), "Soul Shop", 0, 80);
+        this.ssClose = new UIButton(handler, new Rectangle(14, 14, Color.MAROON), "X", 424, 82, 14, 14);
         ssUI.addElement(ssPanel);
         ssUI.addElement(ssClose);
     }
 
     private void setInitialize() {
         this.setUI = new UI(this.handler);
-        this.setPanel = new UIPanel(handler, new Rectangle(440, 648, Color.DARKGRAY), new Text("Settings"), 0, 80);
-        this.setClose = new UIButton(handler, new Rectangle(14, 14, Color.LIGHTCORAL), new Text("X"), 424, 82, 14, 14);
-        this.setFullscreenPanel = new UIPanel(handler, new Rectangle(436, 18, Color.LIGHTGRAY), new Text("Fullscreen"), 2, 100);
-        this.setFullscreenON = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), new Text("ON"), 68, 102, 28, 14);
-        this.setFullscreenOFF = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), new Text("OFF"), 104, 102, 28, 14);
+        this.setPanel = new UIPanel(handler, new Rectangle(440, 648, Color.DARKGRAY), "Settings", 0, 80);
+        this.setClose = new UIButton(handler, new Rectangle(14, 14, Color.LIGHTCORAL), "X", 424, 82, 14, 14);
+        this.setFullscreenPanel = new UIPanel(handler, new Rectangle(436, 18, Color.LIGHTGRAY), "Fullscreen", 2, 100);
+        this.setFullscreenON = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), "ON", 68, 102, 28, 14);
+        this.setFullscreenOFF = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), "OFF", 104, 102, 28, 14);
         setUI.addElement(setPanel);
         setUI.addElement(setClose);
         setUI.addElement(setFullscreenPanel);
@@ -263,7 +261,7 @@ public class Game {
         if (currentCreature != null) {
             gUI.removeElement(currentCreature.getView());
         }
-        currentCreature = new Creature(handler, "Place Holder", 125, 125, this.randomColor(), new BigInteger("20"), new BigInteger("1"));
+        currentCreature = new Creature(handler, "Place Holder", 125, 125, Commons.randomColor(), new BigInteger("20"), new BigInteger("1"));
         gUI.addElement(currentCreature.getView());
         if (gUI.getActive()) { // This here enables testing.
             currentCreature.getView().setActive(true);
@@ -343,10 +341,6 @@ public class Game {
     private void setHpBar() {
         double size = Commons.baseHPBar * currentCreature.getHpBar();
         ((Rectangle) this.gHPFront.getView()).setWidth(size);
-    }
-
-    private Color randomColor() {
-        return Color.color((30.0 + random.nextInt(60)) / 100, (30.0 + random.nextInt(60)) / 100, (30.0 + random.nextInt(60)) / 100);
     }
 
     private void updateMoney() {

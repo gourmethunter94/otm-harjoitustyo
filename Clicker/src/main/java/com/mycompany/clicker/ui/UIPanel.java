@@ -6,6 +6,7 @@
 package com.mycompany.clicker.ui;
 
 import com.mycompany.clicker.utility.Handler;
+import com.mycompany.clicker.utility.Settings;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
@@ -30,14 +31,17 @@ public class UIPanel extends UIElement {
      * @param x
      * @param y
      */
-    public UIPanel(Handler handler, Node view, Text text, int x, int y) {
+    public UIPanel(Handler handler, Node view, String text, int x, int y) {
         super(view, x, y);
-        this.text = text;
+        if(!Settings.displayStartedProperly){
+            text = null;
+        }
+        this.text = new Text(text);
         this.handler = handler;
         //Text position
-        text.setLayoutX(x + 2);
-        text.setLayoutY(y + 12);
-        text.setVisible(false);
+        this.text.setLayoutX(x + 2);
+        this.text.setLayoutY(y + 12);
+        this.text.setVisible(false);
     }
 
     /**
@@ -69,7 +73,10 @@ public class UIPanel extends UIElement {
      * @param text String
      */
     public void setText(String text) {
-        if (text != null) {
+        if(!Settings.displayStartedProperly){
+            text = null;
+        }
+        if (this.text != null) {
             this.text.setText(text);
         }
     }

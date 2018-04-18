@@ -47,7 +47,7 @@
                 <version>0.8.0</version>
                 <configuration>
                     <excludes>
-                        <exclude>clicker/display/*</exclude>
+                        <exclude>com/mycompany/clicker/display/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

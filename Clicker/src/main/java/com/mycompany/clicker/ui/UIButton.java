@@ -6,6 +6,7 @@
 package com.mycompany.clicker.ui;
 
 import com.mycompany.clicker.utility.Handler;
+import com.mycompany.clicker.utility.Settings;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
@@ -34,17 +35,20 @@ public class UIButton extends UIElement {
      * @param width
      * @param height
      */
-    public UIButton(Handler handler, Node view, Text text, int x, int y, int width, int height) {
+    public UIButton(Handler handler, Node view, String text, int x, int y, int width, int height) {
         super(view, x, y);
-        this.text = text;
+        if(!Settings.displayStartedProperly){
+            text = null;
+        }
+        this.text = new Text(text);
         this.width = width;
         this.height = height;
         this.clicked = false;
         this.handler = handler;
         //Text position
-        text.setLayoutX(x + 3);
-        text.setLayoutY(y + 12);
-        text.setVisible(false);
+        this.text.setLayoutX(x + 3);
+        this.text.setLayoutY(y + 12);
+        this.text.setVisible(false);
     }
 
     // getters and setters -----------------------------------------------------

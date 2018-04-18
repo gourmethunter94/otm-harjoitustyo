@@ -53,7 +53,7 @@ public class Display extends Application {
     private long time;
 
     // build the display -------------------------------------------------------
-    private void createContent() {
+    public void createContent() {
         root = new Pane();
 
         root.setPrefSize(width, height);
@@ -88,7 +88,6 @@ public class Display extends Application {
             mouseClicks++;
         });
 
-        // ---------------------------------------------------------------------
     }
 
     @Override
@@ -138,10 +137,12 @@ public class Display extends Application {
 
         Save save = Commons.saveDao.loadGame();
 
+        Settings.displayStartedProperly = true;
         game.initialize(save);
 
         running = true;
         time = System.nanoTime();
+
     }
 
     // entery to the main game loop --------------------------------------------
@@ -242,6 +243,22 @@ public class Display extends Application {
      */
     public double getMouseY() {
         return this.mouseY;
+    }
+
+    /**
+     * Sets x value of mouse, mostly used for testing.
+     * @param mouseX double
+     */
+    public void setMouseX(double mouseX) {
+        this.mouseX = mouseX;
+    }
+
+    /**
+     * Sets y value of mouse, mostly used for testing.
+     * @param mouseY double
+     */
+    public void setMouseY(double mouseY) {
+        this.mouseY = mouseY;
     }
 
     /**
