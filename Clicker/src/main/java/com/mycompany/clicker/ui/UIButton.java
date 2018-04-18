@@ -37,7 +37,7 @@ public class UIButton extends UIElement {
      */
     public UIButton(Handler handler, Node view, String text, int x, int y, int width, int height) {
         super(view, x, y);
-        if(!Settings.displayStartedProperly){
+        if (!Settings.displayStartedProperly) {
             text = null;
         }
         this.text = new Text(text);

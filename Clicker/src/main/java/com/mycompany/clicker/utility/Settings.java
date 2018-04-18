@@ -47,21 +47,22 @@ public class Settings {
      * height
      */
     public static double screenHeight;
-    
+
     /**
-     * An static boolean used for tests. There shouldn't ever be need for calling this outside of UI element constructors.
+     * An static boolean used for tests. There shouldn't ever be need for
+     * calling this outside of UI element constructors.
      */
     public static boolean displayStartedProperly = false;
-    
+
     /**
-     * Initializes the Settings class.
-     * Initialize Commons before calling.
-     * @throws SQLException 
+     * Initializes the Settings class. Initialize Commons before calling.
+     *
+     * @throws SQLException
      */
     public static void initialize() throws SQLException {
         fullscreen = Commons.settingsDao.getFullscreen();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        
+
         screenWidth = Commons.baseWidth;
         screenHeight = Commons.baseHeight;
 
@@ -69,22 +70,22 @@ public class Settings {
             screenWidth = screenSize.getWidth();
             screenHeight = screenSize.getHeight();
         }
-        
+
         xScale = screenWidth / Commons.baseWidth;
         yScale = screenHeight / Commons.baseHeight;
-        
+
     }
-    
+
     /**
-     * Writes fullscreen value on the database.
-     * Initialzie commons before calling.
-     * Returns true if state was changed, otherwise, returns false
+     * Writes fullscreen value on the database. Initialzie commons before
+     * calling. Returns true if state was changed, otherwise, returns false
+     *
      * @param value - boolean
      * @return boolean
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public static boolean changeScreenState(boolean value) throws SQLException{
-        if(fullscreen != value){
+    public static boolean changeScreenState(boolean value) throws SQLException {
+        if (fullscreen != value) {
             fullscreen = value;
             Commons.settingsDao.setFullscreen(fullscreen);
             return true;

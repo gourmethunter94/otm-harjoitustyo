@@ -14,80 +14,89 @@ import javafx.scene.Node;
  * @author Olli K. Kärki
  */
 public class Handler {
-    
+
     private Game game;
-    
+
     /**
      *
      * @param game
      */
-    public Handler(Game game){
+    public Handler(Game game) {
         this.game = game;
     }
-    
+
     /**
-     *Returns base width of the root of the Display, as opposed to the true width.
+     * Returns base width of the root of the Display, as opposed to the true
+     * width.
+     *
      * @return int
      */
-    public int getDisplayWidth(){
+    public int getDisplayWidth() {
         return game.getWidth();
     }
-    
+
     /**
-     *Returns base height of the root of the Display, as opposed to the true height.
+     * Returns base height of the root of the Display, as opposed to the true
+     * height.
+     *
      * @return int
      */
-    public int getDisplayHeight(){
+    public int getDisplayHeight() {
         return game.getHeight();
     }
-    
+
     /**
-     *Returns amount of clicks active in the current update of the game.
+     * Returns amount of clicks active in the current update of the game.
+     *
      * @return int
      */
-    public int getClicks(){
+    public int getClicks() {
         return game.getClicks();
     }
-    
+
     /**
-     *Returns position of mouse in X axis.
+     * Returns position of mouse in X axis.
+     *
      * @return double
      */
-    public double getMouseX(){
+    public double getMouseX() {
         return game.getMouseX();
     }
-    
+
     /**
-     *Returns position of mouse in Y axis.
+     * Returns position of mouse in Y axis.
+     *
      * @return double
      */
-    public double getMouseY(){
+    public double getMouseY() {
         return game.getMouseY();
     }
-    
+
     /**
-     *Adds a node in to the root of the Display.
+     * Adds a node in to the root of the Display.
+     *
      * @param node Node
      */
-    public void displayAddNode(Node node){
+    public void displayAddNode(Node node) {
         this.game.addNode(node);
     }
-    
+
     /**
-     *Removes a node from the root of the Display.
+     * Removes a node from the root of the Display.
+     *
      * @param node Node
      */
-    public void displayRemoveNode(Node node){
+    public void displayRemoveNode(Node node) {
         this.game.removeNode(node);
     }
-    
-    
+
     /**
-     *Set amount of mouse clicks active on the game.
+     * Set amount of mouse clicks active on the game.
+     *
      * @param value - int
      */
-    public void setMouseClicks(int value){
+    public void setMouseClicks(int value) {
         this.game.setClicks(value);
     }
-    
+
 }

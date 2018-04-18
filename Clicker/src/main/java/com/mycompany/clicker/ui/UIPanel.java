@@ -33,7 +33,7 @@ public class UIPanel extends UIElement {
      */
     public UIPanel(Handler handler, Node view, String text, int x, int y) {
         super(view, x, y);
-        if(!Settings.displayStartedProperly){
+        if (!Settings.displayStartedProperly) {
             text = null;
         }
         this.text = new Text(text);
@@ -73,7 +73,7 @@ public class UIPanel extends UIElement {
      * @param text String
      */
     public void setText(String text) {
-        if(!Settings.displayStartedProperly){
+        if (!Settings.displayStartedProperly) {
             text = null;
         }
         if (this.text != null) {
