@@ -5,4 +5,6 @@
 | 4.4.18  | 1½   | Hiomista creature luokkaan ja creature luoken testejä |
 | 9.4.18  | 3½   | UI ja Damage Over Time, lisää testejä |
 | 17.4.18 | ½    | Luokkakaavio ja dokumentaatio päivitys |
-| Summa   | 8½   |
+| 17.4.18 | 2    | Testien kirjoittamista ja koodien testeille sopivaksi temekistä, checkstylen käyttöönottoa. |
+| 18.4.18 | 3    | Testien kirjoittamista ja koodien testeille sopivaksi temekistä, checkstylen käyttöönottoa. |
+| Summa   | 13½  |
