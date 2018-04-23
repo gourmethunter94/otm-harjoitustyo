@@ -80,7 +80,7 @@ public class Commons {
         String path = "";
         if ((new File("src/main/resources/database.db")).exists()) {
             path = new File("src/main/resources/database.db").getAbsolutePath();
-        } else if ((new File("classes/database.db").exists())){
+        } else if ((new File("classes/database.db").exists())) {
             path = new File("classes/database.db").getAbsolutePath();
         } else {
             System.out.println("Error database not found!");
