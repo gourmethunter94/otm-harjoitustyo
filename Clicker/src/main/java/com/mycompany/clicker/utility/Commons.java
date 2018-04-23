@@ -77,7 +77,15 @@ public class Commons {
         secondInNano = 1000000000;
         baseHPBar = 150.0;
 
-        String path = new File("src/main/resources/database.db").getAbsolutePath();
+        String path = "";
+        if ((new File("src/main/resources/database.db")).exists()) {
+            path = new File("src/main/resources/database.db").getAbsolutePath();
+        } else if ((new File("classes/database.db").exists())){
+            path = new File("classes/database.db").getAbsolutePath();
+        } else {
+            System.out.println("Error database not found!");
+            System.exit(0);
+        }
         database = new Database(path);
         settingsDao = new SettingsDAO(database);
         saveDao = new SaveDAO(database);
