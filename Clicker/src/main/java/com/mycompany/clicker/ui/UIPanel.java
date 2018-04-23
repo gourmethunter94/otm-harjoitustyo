@@ -10,6 +10,7 @@ import com.mycompany.clicker.utility.Settings;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -37,6 +38,9 @@ public class UIPanel extends UIElement {
             text = null;
         }
         this.text = new Text(text);
+        if (Settings.displayStartedProperly) {
+            this.text.setFont(new Font(10));
+        }
         this.handler = handler;
         //Text position
         this.text.setLayoutX(x + 2);

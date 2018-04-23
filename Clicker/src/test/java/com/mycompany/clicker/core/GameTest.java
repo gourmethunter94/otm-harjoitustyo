@@ -63,9 +63,9 @@ public class GameTest {
         g.update(true);
         assertTrue("HP was: " + c.getHitPoints().toString() + " should have been 90", c.getHitPoints().equals(new BigInteger("90")));
     }
-    
+
     @Test
-    public void damageIncreaseWorks(){
+    public void damageIncreaseWorks() {
         Game g = new Game(d);
         Handler handler = new Handler(g);
         g.setCD(BigInteger.ONE);
@@ -78,26 +78,26 @@ public class GameTest {
         g.increaseDPS(new BigInteger("23"));
         assertTrue("Damage was " + g.getClickDamage() + ", should have beeen 24", g.getDPS().equals(new BigInteger("24")));
     }
-    
+
     @Test
-    public void initialization() throws SQLException{
+    public void initialization() throws SQLException, Exception {
         Display d = new Display();
         d.createContent();
         Game g = new Game(d);
-        
-        g.initialize(new Save("1", "1", "1", "1", "1", 1, 1));
-    }
-    
-    @Test
-    public void gameUI() throws SQLException, Exception{
-        
-        Display d = new Display();
-        d.createContent();
-        Game g = new Game(d);
-        
-        g.initialize(new Save("1", "1", "1", "1", "1", 1, 1));
+        g.initialize(new Save("1", "2", "0", "0", "0", 1, 1));
         g.update(false);
-        
+    }
+
+    @Test
+    public void gameUI() throws SQLException, Exception {
+
+        Display d = new Display();
+        d.createContent();
+        Game g = new Game(d);
+
+        g.initialize(new Save("60", "60", "60", "60", "60", 1, 1));
+        g.update(false);
+
         d.setMouseX(3);
         d.setMouseY(26);
         g.setClicks(1);
@@ -110,7 +110,7 @@ public class GameTest {
         d.setMouseX(425);
         d.setMouseY(84);
         g.update(false);
-        
+
         d.setMouseX(55);
         d.setMouseY(26);
         g.setClicks(1);
@@ -123,7 +123,7 @@ public class GameTest {
         d.setMouseX(425);
         d.setMouseY(84);
         g.update(false);
-        
+
         d.setMouseX(107);
         d.setMouseY(26);
         g.setClicks(1);
@@ -136,13 +136,17 @@ public class GameTest {
         d.setMouseX(425);
         d.setMouseY(84);
         g.update(false);
-        
+
         Handler handler = new Handler(g);
         Creature c = new Creature(handler, "Test", 1, 1, Color.RED, new BigInteger("1"), new BigInteger("1"));
         g.setMonster(c);
-        
+
+        d.setMouseX(0);
+        d.setMouseY(0);
+        g.setClicks(1);
+
         g.update(true);
-        
+
     }
-    
+
 }

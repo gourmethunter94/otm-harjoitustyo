@@ -7,4 +7,6 @@
 | 17.4.18 | ½    | Luokkakaavio ja dokumentaatio päivitys |
 | 17.4.18 | 2    | Testien kirjoittamista ja koodien testeille sopivaksi temekistä, checkstylen käyttöönottoa. |
 | 18.4.18 | 3    | Testien kirjoittamista ja koodien testeille sopivaksi temekistä, checkstylen käyttöönottoa. |
-| Summa   | 13½  |
+| 18.4.18 | 4    | Testejä, DAO, fullscreen, pelin tallentaminen. |
+| 23.4.18 | 1    | Tarkistettu, että toimii myös linuxilla. |
+| Summa   | 18½  |

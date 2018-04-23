@@ -14,6 +14,7 @@ import com.mycompany.clicker.ui.UIPanel;
 import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Handler;
 import com.mycompany.clicker.utility.Settings;
+import java.lang.reflect.Method;
 
 import java.math.BigInteger;
 import java.sql.SQLException;
