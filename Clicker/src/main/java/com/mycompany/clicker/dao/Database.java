@@ -17,8 +17,8 @@ public class Database {
 
     private String databaseAddress;
 
-    public Database(String databaseAddress) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        Class.forName("org.sqlite.JDBC").newInstance();
+    public Database(String databaseAddress) throws ClassNotFoundException {
+        Class.forName("org.sqlite.JDBC");
         this.databaseAddress = databaseAddress;
     }
 
