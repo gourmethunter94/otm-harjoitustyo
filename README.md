@@ -20,4 +20,4 @@ Jos Netbeans ei pysty suorittamaan suoraa vihreää 'play' nappia painamalla, ko
 
 ### Copyright
 
-[sqlite-jdbc](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/sqlite-jdbc-copyright.md)
+[sqlite-jdbc](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/sqlite-jdbc-copyright.md) Copyright (c) 2006, David Crawshaw. All rights reserved.
