@@ -17,3 +17,7 @@ Jos Netbeans ei pysty suorittamaan suoraa vihreää 'play' nappia painamalla, ko
 [Työaikakirjanpito](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 [Arkkitehtuurikuvaus](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+
+### Copyright
+
+[sqlite-jdbc](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/sqlite-jdbc-copyright.md)
