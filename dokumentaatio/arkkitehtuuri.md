@@ -23,3 +23,9 @@ Sovelluksella on latausnäkymä, päänäkymä ja käyttäjä voi avata yksi ker
 <img src="https://raw.githubusercontent.com/GourmetHunter/otm-harjoitustyo/master/dokumentaatio/kuvat/kaavio.png">
 
 Kaavioon ei ole merkitty staattista luokkaa Commons, jonka Display initialisatioi. Se sisältää geneerisiä muuttujia, joiden kutsulle voi olla hyötyö eri puolilla sovellusta.
+
+## Pelin päivitys, repeat cycle / tick / update
+
+<img src="https://raw.githubusercontent.com/GourmetHunter/otm-harjoitustyo/master/dokumentaatio/kuvat/gametickupdate.png">
+
+Pelin päivittyminen tällä hetkellä.
