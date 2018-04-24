@@ -10,4 +10,5 @@
 | 18.4.18 | 4    | Testejä, DAO, fullscreen, pelin tallentaminen. |
 | 23.4.18 | 3    | Tarkistettu, että toimii myös linuxilla. Yritetty saada database driver toimimaan jar compile vaiheessa |
 | 24.4.18 | 2    | Pyöritelty mavan dependencyjä siten, että ne voidaan lisätä jar compile vaiheessa |
-| Summa   | 22½  |
+| 25.4.18 | 1    | Releasen teko, sekvenssi kaavio |
+| Summa   | 23½  |
