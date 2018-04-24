@@ -60,9 +60,6 @@ public class UIPanel extends UIElement {
         super(view, x, y);
         this.handler = handler;
         this.text = null;
-        if (Settings.displayStartedProperly) {
-            this.text.setFont(Commons.font);
-        }
     }
 
     // getters and setters -----------------------------------------------------
