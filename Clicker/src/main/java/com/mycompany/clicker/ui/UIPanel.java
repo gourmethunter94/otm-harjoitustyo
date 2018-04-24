@@ -5,6 +5,7 @@
  */
 package com.mycompany.clicker.ui;
 
+import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Handler;
 import com.mycompany.clicker.utility.Settings;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class UIPanel extends UIElement {
         }
         this.text = new Text(text);
         if (Settings.displayStartedProperly) {
-            this.text.setFont(new Font(10));
+            this.text.setFont(Commons.font);
         }
         this.handler = handler;
         //Text position

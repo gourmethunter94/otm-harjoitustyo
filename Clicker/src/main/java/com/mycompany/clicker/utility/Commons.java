@@ -13,6 +13,7 @@ import static java.lang.Math.random;
 import java.math.BigInteger;
 import java.util.Random;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -68,6 +69,11 @@ public class Commons {
 
     private static Random random;
 
+    /*
+    * Font used by the game.
+    */
+    public static Font font;
+    
     /**
      * Initializes values in the Commons class, including Database and
      * Data-access objects.
@@ -76,7 +82,18 @@ public class Commons {
         divider = new BigInteger("100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         secondInNano = 1000000000;
         baseHPBar = 150.0;
+        
+        font = new Font(10);
+        
+        initializeDatabase();
+        
+        baseWidth = 1280.0;
+        baseHeight = 720.0;
 
+        random = new Random(System.nanoTime());
+    }
+
+    private static void initializeDatabase() throws ClassNotFoundException {
         String path = "";
         if ((new File("src/main/resources/database.db")).exists()) {
             path = new File("src/main/resources/database.db").getAbsolutePath();
@@ -89,11 +106,6 @@ public class Commons {
         database = new Database(path);
         settingsDao = new SettingsDAO(database);
         saveDao = new SaveDAO(database);
-
-        baseWidth = 1280.0;
-        baseHeight = 720.0;
-
-        random = new Random(System.nanoTime());
     }
 
     /**
