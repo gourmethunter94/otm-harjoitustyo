@@ -13,4 +13,5 @@
 | 25.4.18 | 1    | Releasen teko, sekvenssi kaavio. |
 | 27.4.18 | 9    | Kauppaan tavarat, hinnat, UpgradeDAO, loader class / thread. |
 | 28.4.18 | 3½   | Pelin simulointi offline ajalta ohjelman käynnistyessä. |
+| 29.4.18 | 1    | Parempi initalization upgradeille kauppaan, testejä vuosien pituisissa simulaatioissa. |
 | Summa   | 36   |

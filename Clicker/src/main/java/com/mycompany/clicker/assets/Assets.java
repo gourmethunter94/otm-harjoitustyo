@@ -80,19 +80,13 @@ public class Assets {
     }
 
     private static void setProperClickDamage() {
-        int levels = upgrades.get(0).getLevel().intValue();
-        upgrades.get(0).setLevel(BigInteger.ZERO);
-        for (int i = 0; i < levels; i++) {
-            levelUpUpgrade(0, null, false);
-        }
+        upgrades.get(0).setLevel(upgrades.get(0).getLevel().subtract(BigInteger.ONE));
+        levelUpUpgrade(0, null, false);
     }
 
     private static void setProperDamagePerSecond() {
-        int levels = upgrades.get(1).getLevel().intValue();
-        upgrades.get(1).setLevel(BigInteger.ZERO);
-        for (int i = 0; i < levels; i++) {
-            levelUpUpgrade(1, null, false);
-        }
+        upgrades.get(1).setLevel(upgrades.get(1).getLevel().subtract(BigInteger.ONE));
+        levelUpUpgrade(1, null, false);
     }
 
 }
