@@ -7,6 +7,7 @@ package com.mycompany.clicker.utility;
 
 import com.mycompany.clicker.core.Game;
 import com.mycompany.clicker.display.Display;
+import java.math.BigInteger;
 import javafx.scene.Node;
 
 /**
@@ -97,6 +98,24 @@ public class Handler {
      */
     public void setMouseClicks(int value) {
         this.game.setClicks(value);
+    }
+
+    /**
+     * Set value for damage caused by clicking.
+     *
+     * @param value - BigInteger
+     */
+    public void setClickDamage(BigInteger value) {
+        this.game.setCD(value);
+    }
+
+    /**
+     * Set value for damage per second
+     *
+     * @param value - BigInteger
+     */
+    public void setDamagePerSecond(BigInteger value) {
+        this.game.setDPS(value);
     }
 
 }

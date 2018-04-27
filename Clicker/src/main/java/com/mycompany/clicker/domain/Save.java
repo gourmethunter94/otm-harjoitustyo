@@ -62,4 +62,32 @@ public class Save {
         return activeMonster;
     }
 
+    public void setMoney(BigInteger money) {
+        this.money = money;
+    }
+
+    public void setsMoney(BigInteger sMoney) {
+        this.sMoney = sMoney;
+    }
+
+    public void setClickDamage(BigInteger clickDamage) {
+        this.clickDamage = clickDamage;
+    }
+
+    public void setDamagePerSecond(BigInteger damagePerSecond) {
+        this.damagePerSecond = damagePerSecond;
+    }
+
+    public void setLastPlayTime(long lastPlayTime) {
+        this.lastPlayTime = lastPlayTime;
+    }
+
+    public void setStage(int stage) {
+        this.stage = stage;
+    }
+
+    public void setActiveMonster(int activeMonster) {
+        this.activeMonster = activeMonster;
+    }
+
 }

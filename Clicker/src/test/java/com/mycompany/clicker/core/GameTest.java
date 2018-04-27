@@ -5,22 +5,28 @@
  */
 package com.mycompany.clicker.core;
 
+import com.mycompany.clicker.assets.Assets;
 import com.mycompany.clicker.display.Display;
 import com.mycompany.clicker.domain.Creature;
 import com.mycompany.clicker.domain.Save;
 import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Handler;
+import com.mycompany.clicker.utility.Settings;
+import de.saxsys.javafx.test.JfxRunner;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import javafx.scene.paint.Color;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  *
  * @author Olli K. Kärki
  */
+
+@RunWith(JfxRunner.class)
 public class GameTest {
 
     Display d;
@@ -85,6 +91,17 @@ public class GameTest {
         d.createContent();
         Game g = new Game(d);
         g.initialize(new Save("1", "2", "0", "0", "0", 1, 1));
+        
+        Thread.sleep(500); // Give UI time to load in thread.
+        
+        if(g.loading) { // If more time is needed.
+            Thread.sleep(1000);
+        }
+        
+        if(g.loading) {
+            assertTrue("Loading UI took insanely long time", false == true);
+        }
+        
         g.update(false);
     }
 
@@ -93,9 +110,25 @@ public class GameTest {
 
         Display d = new Display();
         d.createContent();
+        
+        Commons.initialize();
+        Settings.initialize();
+        Assets.initialize();
+        
         Game g = new Game(d);
 
         g.initialize(new Save("60", "60", "60", "60", "60", 1, 1));
+        
+        Thread.sleep(500); // Give UI time to load in thread.
+        
+        if(g.loading) { // If more time is needed.
+            Thread.sleep(1000);
+        }
+        
+        if(g.loading) {
+            assertTrue("Loading UI took insanely long time", false == true);
+        }
+        
         g.update(false);
 
         d.setMouseX(3);

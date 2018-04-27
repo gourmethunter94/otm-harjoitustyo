@@ -86,6 +86,18 @@ public class UIPanel extends UIElement {
         }
     }
 
+    /**
+     * If the UIElement was initiated with a Text element, changes the font of
+     * the text.
+     *
+     * @param font - Font
+     */
+    public void setFont(Font font) {
+        if (this.text != null) {
+            this.text.setFont(font);
+        }
+    }
+
     // overridden methods ------------------------------------------------------
     /**
      * Sets active status of Nodes attached to the UIElement.

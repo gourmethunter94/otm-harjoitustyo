@@ -8,7 +8,9 @@
 | 17.4.18 | 2    | Testien kirjoittamista ja koodien testeille sopivaksi temekistä, checkstylen käyttöönottoa. |
 | 18.4.18 | 3    | Testien kirjoittamista ja koodien testeille sopivaksi temekistä, checkstylen käyttöönottoa. |
 | 18.4.18 | 4    | Testejä, DAO, fullscreen, pelin tallentaminen. |
-| 23.4.18 | 3    | Tarkistettu, että toimii myös linuxilla. Yritetty saada database driver toimimaan jar compile vaiheessa |
-| 24.4.18 | 2    | Pyöritelty mavan dependencyjä siten, että ne voidaan lisätä jar compile vaiheessa |
-| 25.4.18 | 1    | Releasen teko, sekvenssi kaavio |
-| Summa   | 23½  |
+| 23.4.18 | 3    | Tarkistettu, että toimii myös linuxilla. Yritetty saada database driver toimimaan jar compile vaiheessa. |
+| 24.4.18 | 2    | Pyöritelty mavan dependencyjä siten, että ne voidaan lisätä jar compile vaiheessa. |
+| 25.4.18 | 1    | Releasen teko, sekvenssi kaavio. |
+| 27.4.18 | 9    | Kauppaan tavarat, hinnat, UpgradeDAO, loader class / thread. |
+| 28.4.18 | 3½   | Pelin simulointi offline ajalta ohjelman käynnistyessä. |
+| Summa   | 36   |

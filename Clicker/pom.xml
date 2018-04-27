@@ -24,6 +24,11 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.8.10.1</version>
         </dependency>
+        <dependency>
+            <groupId>de.saxsys</groupId>
+            <artifactId>jfx-testrunner</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
     
     <build>

@@ -5,6 +5,7 @@
  */
 package com.mycompany.clicker.display;
 
+import com.mycompany.clicker.assets.Assets;
 import com.mycompany.clicker.core.Game;
 import com.mycompany.clicker.domain.Save;
 import com.mycompany.clicker.utility.Commons;
@@ -129,11 +130,15 @@ public class Display extends Application {
 
         this.game = new Game(this);
 
-        boolean saveExists = Commons.saveDao.saveExists();
-
-        if (!saveExists) {
+        if (!Commons.saveDao.saveExists()) {
             Commons.saveDao.initializeSave();
         }
+
+        if (!Commons.upgradeDao.upgradesExist()) {
+            Commons.upgradeDao.initializeUpgrades();
+        }
+
+        Assets.initialize();
 
         Save save = Commons.saveDao.loadGame();
 
@@ -247,6 +252,7 @@ public class Display extends Application {
 
     /**
      * Sets x value of mouse, mostly used for testing.
+     *
      * @param mouseX double
      */
     public void setMouseX(double mouseX) {
@@ -255,6 +261,7 @@ public class Display extends Application {
 
     /**
      * Sets y value of mouse, mostly used for testing.
+     *
      * @param mouseY double
      */
     public void setMouseY(double mouseY) {

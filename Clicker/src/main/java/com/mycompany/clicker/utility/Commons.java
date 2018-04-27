@@ -8,6 +8,7 @@ package com.mycompany.clicker.utility;
 import com.mycompany.clicker.dao.Database;
 import com.mycompany.clicker.dao.SaveDAO;
 import com.mycompany.clicker.dao.SettingsDAO;
+import com.mycompany.clicker.dao.UpgradeDAO;
 import java.io.File;
 import static java.lang.Math.random;
 import java.math.BigInteger;
@@ -62,6 +63,12 @@ public class Commons {
     public static SettingsDAO settingsDao;
 
     /**
+     * Upgrades Data Access Object; Used when loadiang and saving data
+     * concerning upgrades from normal shop.
+     */
+    public static UpgradeDAO upgradeDao;
+
+    /**
      * Data access object for game save. Money, sMoney, active stage, damage,
      * ect.
      */
@@ -71,9 +78,14 @@ public class Commons {
 
     /*
     * Font used by the game.
-    */
+     */
     public static Font font;
-    
+
+    /*
+    * Font used by some parts of the game.
+     */
+    public static Font bigFont;
+
     /**
      * Initializes values in the Commons class, including Database and
      * Data-access objects.
@@ -82,11 +94,12 @@ public class Commons {
         divider = new BigInteger("100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         secondInNano = 1000000000;
         baseHPBar = 150.0;
-        
+
         font = new Font(10);
-        
+        bigFont = new Font(20);
+
         initializeDatabase();
-        
+
         baseWidth = 1280.0;
         baseHeight = 720.0;
 
@@ -106,6 +119,7 @@ public class Commons {
         database = new Database(path);
         settingsDao = new SettingsDAO(database);
         saveDao = new SaveDAO(database);
+        upgradeDao = new UpgradeDAO(database);
     }
 
     /**
