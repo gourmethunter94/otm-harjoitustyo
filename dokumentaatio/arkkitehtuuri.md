@@ -48,6 +48,6 @@ Kaavioon ei ole merkitty staattista luokkaa Commons, jonka Display initialisatio
 
 ## Pelin päivitys, repeat cycle / tick / update
 
-<img src="https://raw.githubusercontent.com/GourmetHunter/otm-harjoitustyo/master/dokumentaatio/kuvat/gametickupdate.png">
+<img src="https://raw.githubusercontent.com/GourmetHunter/otm-harjoitustyo/master/dokumentaatio/kuvat/gametickupdatev2.png">
 
 Pelin päivittyminen tällä hetkellä.
