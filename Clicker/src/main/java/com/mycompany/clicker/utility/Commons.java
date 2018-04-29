@@ -89,6 +89,8 @@ public class Commons {
     /**
      * Initializes values in the Commons class, including Database and
      * Data-access objects.
+     *
+     * @throws java.lang.ClassNotFoundException Database driver not found
      */
     public static void initialize() throws ClassNotFoundException {
         divider = new BigInteger("100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
