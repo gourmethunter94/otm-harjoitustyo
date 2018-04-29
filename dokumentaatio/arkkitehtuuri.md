@@ -42,7 +42,7 @@ Vaikkakin pelissä on vain yksi tallennus, on valittu tallennus tavaksi database
 
 ## Luokkakaavio
 
-<img src="https://raw.githubusercontent.com/GourmetHunter/otm-harjoitustyo/master/dokumentaatio/kuvat/kaavio.png">
+<img src="https://raw.githubusercontent.com/GourmetHunter/otm-harjoitustyo/master/dokumentaatio/kuvat/luokkakaavio.png">
 
 Kaavioon ei ole merkitty staattista luokkaa Commons, jonka Display initialisatioi. Se sisältää geneerisiä muuttujia, joiden kutsulle voi olla hyötyö eri puolilla sovellusta.
 
