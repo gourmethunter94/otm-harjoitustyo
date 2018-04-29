@@ -81,12 +81,12 @@ public class SaveDAO {
     /**
      * Saves the game.
      *
-     * @param money
-     * @param sMoney
-     * @param clickDamage
-     * @param damagePerSecond
-     * @param stage
-     * @param activeMonster
+     * @param money BigInteger
+     * @param sMoney BigInteger
+     * @param clickDamage BigInteger
+     * @param damagePerSecond BigInteger
+     * @param stage int
+     * @param activeMonster int
      * @throws SQLException
      */
     public void saveGame(BigInteger money, BigInteger sMoney, BigInteger clickDamage, BigInteger damagePerSecond, int stage, int activeMonster) throws SQLException {
