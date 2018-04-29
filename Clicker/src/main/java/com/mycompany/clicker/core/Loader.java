@@ -136,7 +136,7 @@ public class Loader {
         int currentMonster = activeMonster;
 
         while (time >= kTime) { // if time remaining is larger than the time it takes to kill one monster
-            
+
             if (level < stageLimit) { // if level being simulated is lower then the level limit
                 long kills = time / kTime; // how many kills the simulation can do in the time
                 time = 0; // set time to 0 to end the simulation

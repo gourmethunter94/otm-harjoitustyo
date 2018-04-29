@@ -67,4 +67,39 @@ public class SaveTest {
         
     }
     
+    @Test
+    public void setMethodsWork() {
+        Save save = new Save("0", "0", "0", "0", "0", 0, 0);
+        save.setMoney(new BigInteger("23"));
+        assertTrue("Save setMoney sets wrong value!", save.getMoney().equals(new BigInteger("23")));
+        save.setMoney(new BigInteger("53"));
+        assertTrue("Save setMoney sets wrong value!", save.getMoney().equals(new BigInteger("53")));
+        save.setMoney(new BigInteger("125"));
+        assertTrue("Save setMoney sets wrong value!", save.getMoney().equals(new BigInteger("125")));
+        save.setDamagePerSecond(new BigInteger("55"));
+        assertTrue("Save setDamagePerSecond sets wrong value!", save.getDamagePerSecond().equals(new BigInteger("55")));
+        save.setDamagePerSecond(new BigInteger("525"));
+        assertTrue("Save setDamagePerSecond sets wrong value!", save.getDamagePerSecond().equals(new BigInteger("525")));
+        save.setDamagePerSecond(new BigInteger("557"));
+        assertTrue("Save setDamagePerSecond sets wrong value!", save.getDamagePerSecond().equals(new BigInteger("557")));
+        save.setClickDamage(new BigInteger("15"));
+        assertTrue("Save setClickDamage sets wrong value!", save.getClickDamage().equals(new BigInteger("15")));
+        save.setClickDamage(new BigInteger("45"));
+        assertTrue("Save setClickDamage sets wrong value!", save.getClickDamage().equals(new BigInteger("45")));
+        save.setClickDamage(new BigInteger("16"));
+        assertTrue("Save setClickDamage sets wrong value!", save.getClickDamage().equals(new BigInteger("16")));
+        save.setLastPlayTime(1l);
+        assertTrue("Save setLastPlayTime sets wrong value!", save.getLastPlayTime() == 1l);
+        save.setLastPlayTime(1252251l);
+        assertTrue("Save setLastPlayTime sets wrong value!", save.getLastPlayTime() == 1252251l);
+        save.setLastPlayTime(4574574574574l);
+        assertTrue("Save setLastPlayTime sets wrong value!", save.getLastPlayTime() == 4574574574574l);
+        save.setsMoney(new BigInteger("233"));
+        assertTrue("Save setsMoney sets wrong value!", save.getsMoney().equals(new BigInteger("233")));
+        save.setsMoney(new BigInteger("7533"));
+        assertTrue("Save setsMoney sets wrong value!", save.getsMoney().equals(new BigInteger("7533")));
+        save.setsMoney(new BigInteger("51253"));
+        assertTrue("Save setsMoney sets wrong value!", save.getsMoney().equals(new BigInteger("51253")));
+    }
+    
 }

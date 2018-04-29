@@ -49,10 +49,9 @@ public class Settings {
     public static double screenHeight;
 
     /**
-     * An static boolean used for tests. There shouldn't ever be need for
-     * calling this outside of UI element constructors.
+     * An static boolean used for tests.
      */
-    public static boolean displayStartedProperly = false;
+    public static boolean notTesting = false;
 
     /**
      * Initializes the Settings class. Initialize Commons before calling.

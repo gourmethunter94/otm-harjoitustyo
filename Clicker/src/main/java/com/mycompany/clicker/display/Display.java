@@ -142,7 +142,7 @@ public class Display extends Application {
 
         Save save = Commons.saveDao.loadGame();
 
-        Settings.displayStartedProperly = true;
+        Settings.notTesting = true;
         game.initialize(save);
 
         running = true;

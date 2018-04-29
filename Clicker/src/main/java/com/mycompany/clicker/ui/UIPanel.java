@@ -35,11 +35,11 @@ public class UIPanel extends UIElement {
      */
     public UIPanel(Handler handler, Node view, String text, int x, int y) {
         super(view, x, y);
-        if (!Settings.displayStartedProperly) {
+        if (!Settings.notTesting) {
             text = null;
         }
         this.text = new Text(text);
-        if (Settings.displayStartedProperly) {
+        if (Settings.notTesting) {
             this.text.setFont(Commons.font);
         }
         this.handler = handler;
@@ -78,7 +78,7 @@ public class UIPanel extends UIElement {
      * @param text String
      */
     public void setText(String text) {
-        if (!Settings.displayStartedProperly) {
+        if (!Settings.notTesting) {
             text = null;
         }
         if (this.text != null) {

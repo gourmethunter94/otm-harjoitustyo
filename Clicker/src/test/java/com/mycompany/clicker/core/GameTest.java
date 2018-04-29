@@ -86,7 +86,7 @@ public class GameTest {
     }
 
     @Test
-    public void initialization() throws SQLException, Exception {
+    public void initializationAndNewMonster() throws SQLException, Exception {
         Display d = new Display();
         d.createContent();
         Game g = new Game(d);
@@ -103,6 +103,14 @@ public class GameTest {
         }
         
         g.update(false);
+        
+        Creature c = g.getCurrentCreature();
+        assertTrue("Game should already have an creature!", c != null);
+        
+        assertTrue(g.loading == false);
+        assertTrue(g.simulating == false);
+        g.newMonster(); // Kaataa testin jos initialization ei ole toiminut
+        assertTrue("New creature didn't create new creature!", !c.equals(g.getCurrentCreature()));
     }
 
     @Test
@@ -117,7 +125,7 @@ public class GameTest {
         
         Game g = new Game(d);
 
-        g.initialize(new Save("60", "60", "60", "60", "60", 1, 1));
+        g.initialize(new Save("1", "1", "1", "1", "1", 1, 1));
         
         Thread.sleep(500); // Give UI time to load in thread.
         
@@ -135,50 +143,77 @@ public class GameTest {
         d.setMouseY(26);
         g.setClicks(1);
         g.update(false);
+        assertTrue("Normal shop should be active!", g.getUiManager().nsUI.getActive() == true);
         g.setClicks(1);
         g.update(false);
+        assertTrue("Normal shop shouldn't be active!", g.getUiManager().nsUI.getActive() == false);
         g.setClicks(1);
         g.update(false);
+        assertTrue("Normal shop should be active!", g.getUiManager().nsUI.getActive() == true);
         g.setClicks(1);
         d.setMouseX(425);
         d.setMouseY(84);
         g.update(false);
+        assertTrue("Normal shop shouldn't be active!", g.getUiManager().nsUI.getActive() == false);
+        d.setMouseX(3);
+        d.setMouseY(26);
+        g.setClicks(1);
+        g.update(false);
+        assertTrue("Normal shop should be active!", g.getUiManager().nsUI.getActive() == true);
 
         d.setMouseX(55);
         d.setMouseY(26);
         g.setClicks(1);
         g.update(false);
+        assertTrue("Normal shop shouldn't be active!", g.getUiManager().nsUI.getActive() == false);
+        assertTrue("Soul shop should be active!", g.getUiManager().ssUI.getActive() == true);
         g.setClicks(1);
         g.update(false);
+        assertTrue("Soul shop shouldn't be active!", g.getUiManager().ssUI.getActive() == false);
         g.setClicks(1);
         g.update(false);
+        assertTrue("Soul shop should be active!", g.getUiManager().ssUI.getActive() == true);
         g.setClicks(1);
         d.setMouseX(425);
         d.setMouseY(84);
         g.update(false);
+        assertTrue("Soul shop shouldn't be active!", g.getUiManager().ssUI.getActive() == false);
+        d.setMouseX(55);
+        d.setMouseY(26);
+        g.setClicks(1);
+        g.update(false);
+        assertTrue("Soul shop should be active!", g.getUiManager().ssUI.getActive() == true);
 
         d.setMouseX(107);
         d.setMouseY(26);
         g.setClicks(1);
         g.update(false);
+        assertTrue("Settings UI should be active!", g.getUiManager().setUI.getActive() == true);
+        assertTrue("Soul shop shouldn't be active!", g.getUiManager().ssUI.getActive() == false);
         g.setClicks(1);
         g.update(false);
+        assertTrue("Settings UI shouldn't be active!", g.getUiManager().setUI.getActive() == false);
         g.setClicks(1);
         g.update(false);
+        assertTrue("Settings UI should be active!", g.getUiManager().setUI.getActive() == true);
         g.setClicks(1);
         d.setMouseX(425);
         d.setMouseY(84);
         g.update(false);
+        assertTrue("Settings UI shouldn't be active!", g.getUiManager().setUI.getActive() == false);
 
         Handler handler = new Handler(g);
-        Creature c = new Creature(handler, "Test", 1, 1, Color.RED, new BigInteger("1"), new BigInteger("1"));
+        Creature c = new Creature(handler, "Test", 3, 3, Color.RED, new BigInteger("3"), new BigInteger("3"));
         g.setMonster(c);
 
+        assertTrue("Set creature works wrong!", g.getCurrentCreature().getHitPoints().equals(new BigInteger("3")));
+        
         d.setMouseX(0);
         d.setMouseY(0);
         g.setClicks(1);
-
         g.update(true);
+        
+        assertTrue("Monster shoudl've taken 2 damage!", g.getCurrentCreature().getHitPoints().equals(new BigInteger("1")));
 
     }
 

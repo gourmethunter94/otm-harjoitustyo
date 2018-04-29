@@ -39,8 +39,8 @@ public class Commons {
     public static BigInteger divider;
 
     /**
-     * Initialize Commons before using. The length of second in nanoseconds, 1
-     * 000 000 000 nanoseconds.
+     * Initialize Commons before using. The length of second in nanoseconds,
+     * 1000000000 nanoseconds.
      */
     public static long secondInNano;
 

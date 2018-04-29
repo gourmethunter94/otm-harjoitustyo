@@ -6,8 +6,6 @@
 package com.mycompany.clicker.dao;
 
 import com.mycompany.clicker.assets.Assets;
-import com.mycompany.clicker.domain.Save;
-import com.mycompany.clicker.domain.Upgrade;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -107,7 +105,7 @@ public class UpgradeDAO {
     }
 
     // Private methods ---------------------------------------------------------
-    private void executeStatement(Connection conn, String statement) throws SQLException {
+    public void executeStatement(Connection conn, String statement) throws SQLException {
         PreparedStatement stm = conn.prepareStatement(statement);
         stm.execute();
         stm.close();

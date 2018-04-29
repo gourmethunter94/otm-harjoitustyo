@@ -5,22 +5,16 @@
  */
 package com.mycompany.clicker.core;
 
-import com.mycompany.clicker.assets.Assets;
 import com.mycompany.clicker.domain.Creature;
 import com.mycompany.clicker.display.Display;
 import com.mycompany.clicker.domain.Save;
-import com.mycompany.clicker.ui.UI;
-import com.mycompany.clicker.ui.UIButton;
-import com.mycompany.clicker.ui.UIPanel;
 import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Handler;
 import com.mycompany.clicker.utility.Settings;
 
 import java.math.BigInteger;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -30,8 +24,8 @@ import javafx.scene.shape.Rectangle;
 public class Game {
 
     // variables ---------------------------------------------------------------
-    private Display display;
-    private Handler handler;
+    private final Display display;
+    private final Handler handler;
     private Creature currentCreature;
 
     private BigInteger clickDamage;
@@ -40,6 +34,7 @@ public class Game {
     private BigInteger souls;
 
     private int stage;
+    private int activeStage;
     private int activeMonster;
     private int monsterLimit;
 
@@ -50,43 +45,7 @@ public class Game {
     public boolean simulating;
     private boolean simulationFinished;
 
-    // Game UI Variables -------------------------------------------------------
-    private UI gUI;
-    private UIPanel gBtnPanel;
-    private UIPanel gMnPanel;
-    private UIPanel gSlPanel;
-    private UIButton gBtnNShop;
-    private UIButton gBtnSet;
-    private UIButton gBtnSShop;
-    private UIPanel gHPBack;
-    private UIPanel gHPFront;
-    private UIPanel gStagePanel;
-    private UIPanel gMonsterPanel;
-    private UIPanel gCDPanel;
-    private UIPanel gDPSPanel;
-    // -------------------------------------------------------------------------
-
-    // Normal Shop UI ----------------------------------------------------------
-    private UI nsUI;
-    private UIPanel nsPanel;
-    private UIButton nsClose;
-    private UIPanel[] nsUpgradePanels;
-    private UIButton[] nsUpgradeButtons;
-    // -------------------------------------------------------------------------
-
-    // Special Shop UI ---------------------------------------------------------
-    private UI ssUI;
-    private UIPanel ssPanel;
-    private UIButton ssClose;
-    // -------------------------------------------------------------------------
-
-    // Settings UI -------------------------------------------------------------
-    private UI setUI;
-    private UIPanel setPanel;
-    private UIButton setClose;
-    private UIPanel setFullscreenPanel;
-    private UIButton setFullscreenON;
-    private UIButton setFullscreenOFF;
+    private UIManager uiManager;
 
     // -------------------------------------------------------------------------
     // constructor -------------------------------------------------------------
@@ -105,99 +64,32 @@ public class Game {
     //initialization -----------------------------------------------------------
     /**
      * Call to initialize the Game, should only be called from Display.
+     *
+     * @param save
+     * @throws java.sql.SQLException
      */
     public void initialize(Save save) throws SQLException {
-
         clickDamage = save.getClickDamage();
         damagePerSecond = save.getDamagePerSecond();
         money = save.getMoney();
         souls = save.getsMoney();
-
         monsterLimit = 10;
-
         stage = save.getStage();
+        activeStage = stage;
         activeMonster = save.getActiveMonster();
-
         loader = new Loader(this, save);
         loader.load();
-        loader.simulate();
-
-    }
-
-    public void initializeAllUI() {
-        this.initializeGameUI();
-        this.nShopInitialize();
-        this.sShopInitialize();
-        this.setInitialize();
-    }
-
-    private void initializeGameUI() {
-        this.gUI = new UI(this.handler);
-        this.gBtnPanel = new UIPanel(handler, new Rectangle(314, 78, Color.GRAY), 0, 0);
-        this.gMnPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), "Money: " + Commons.getGameValue(money.toString()), 2, 2);
-        this.gSlPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), "Souls: " + Commons.getGameValue(souls.toString()), 158, 2);
-        this.gCDPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), "Click Damage: " + Commons.getGameValue(clickDamage.toString()), 158, 25);
-        this.gDPSPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), "Damage per Second: " + Commons.getGameValue(damagePerSecond.toString()), 158, 48);
-        this.gStagePanel = new UIPanel(handler, new Rectangle(154, 16, Color.GRAY), "Stage: " + stage, (int) (Commons.baseWidth / 2 - 77), (int) (Commons.baseHeight / 2 - 157));
-        this.gMonsterPanel = new UIPanel(handler, new Rectangle(154, 16, Color.GRAY), "Monster: " + activeMonster + " / 10", (int) (Commons.baseWidth / 2 - 77), (int) (Commons.baseHeight / 2 - 141));
-        this.gBtnNShop = new UIButton(handler, new Rectangle(50, 50, Color.AZURE), "Shop", 2, 25, 50, 50);
-        this.gBtnSShop = new UIButton(handler, new Rectangle(50, 50, Color.PINK), "Soul", 54, 25, 50, 50);
-        this.gBtnSet = new UIButton(handler, new Rectangle(50, 50, Color.BISQUE), "Settings", 106, 25, 50, 50);
-        this.gHPBack = new UIPanel(handler, new Rectangle(154, 37, Color.GRAY), display.getWidth() / 2 - 77, display.getHeight() / 2 - 125);
-        this.gHPFront = new UIPanel(handler, new Rectangle(150, 33, Color.RED), monsterHP(stage) + "", display.getWidth() / 2 - 75, display.getHeight() / 2 - 123);
-        gUI.addElement(gBtnPanel);
-        gUI.addElement(gMnPanel);
-        gUI.addElement(gSlPanel);
-        gUI.addElement(gCDPanel);
-        gUI.addElement(gDPSPanel);
-        gUI.addElement(gStagePanel);
-        gUI.addElement(gMonsterPanel);
-        gUI.addElement(gBtnNShop);
-        gUI.addElement(gBtnSShop);
-        gUI.addElement(gBtnSet);
-        gUI.addElement(gHPBack);
-        gUI.addElement(gHPFront);
-        gUI.showUI(true);
-    }
-
-    private void nShopInitialize() {
-        this.nsUI = new UI(this.handler);
-        this.nsPanel = new UIPanel(handler, new Rectangle(440, 648, Color.GRAY), "Shop", 0, 80);
-        this.nsClose = new UIButton(handler, new Rectangle(14, 14, Color.RED), "X", 424, 82, 14, 14);
-        nsUI.addElement(nsPanel);
-        nsUI.addElement(nsClose);
-        this.nsUpgradePanels = new UIPanel[Assets.upgradesCount];
-        this.nsUpgradeButtons = new UIButton[Assets.upgradesCount];
-        for (int i = 0; i < Assets.upgradesCount; i++) {
-            String upgradeValue = Assets.upgrades.get(i).toString();
-            this.nsUpgradePanels[i] = new UIPanel(handler, new Rectangle(436, 18, Color.LIGHTGRAY), Assets.upgrades.get(i).getName() + ": " + upgradeValue, 2, 100 + i * 20);
-            this.nsUpgradeButtons[i] = new UIButton(handler, new Rectangle(108, 14, Color.DARKGRAY),
-                    "Buy: " + Commons.getGameValue(Assets.upgrades.get(i).getNextLevelPrice().toString()), 328, 102 + i * 20, 108, 14);
-            nsUI.addElement(nsUpgradePanels[i]);
-            nsUI.addElement(nsUpgradeButtons[i]);
+        if (Settings.notTesting) {
+            loader.simulate();
         }
     }
 
-    private void sShopInitialize() {
-        this.ssUI = new UI(this.handler);
-        this.ssPanel = new UIPanel(handler, new Rectangle(440, 648, Color.CORNFLOWERBLUE), "Soul Shop", 0, 80);
-        this.ssClose = new UIButton(handler, new Rectangle(14, 14, Color.MAROON), "X", 424, 82, 14, 14);
-        ssUI.addElement(ssPanel);
-        ssUI.addElement(ssClose);
-    }
-
-    private void setInitialize() {
-        this.setUI = new UI(this.handler);
-        this.setPanel = new UIPanel(handler, new Rectangle(440, 648, Color.DARKGRAY), "Settings", 0, 80);
-        this.setClose = new UIButton(handler, new Rectangle(14, 14, Color.LIGHTCORAL), "X", 424, 82, 14, 14);
-        this.setFullscreenPanel = new UIPanel(handler, new Rectangle(436, 18, Color.LIGHTGRAY), "Fullscreen", 2, 100);
-        this.setFullscreenON = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), "ON", 68, 102, 28, 14);
-        this.setFullscreenOFF = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), "OFF", 104, 102, 28, 14);
-        setUI.addElement(setPanel);
-        setUI.addElement(setClose);
-        setUI.addElement(setFullscreenPanel);
-        setUI.addElement(setFullscreenON);
-        setUI.addElement(setFullscreenOFF);
+    /**
+     * Initializes all parts of games main views UI.
+     */
+    public void initializeAllUI() {
+        this.uiManager = new UIManager(this, this.handler, this.display);
+        this.uiManager.initialize();
     }
 
     // primary update ----------------------------------------------------------
@@ -206,53 +98,52 @@ public class Game {
      * determines if monster should take periodical damage.
      *
      * @param applyDPS boolean
+     * @throws java.sql.SQLException
      */
     public void update(boolean applyDPS) throws SQLException, Exception {
-
         if (!loading && !simulating) {
-
-            if (!this.simulationFinished && Settings.displayStartedProperly) {
+            if (!this.simulationFinished && Settings.notTesting) {
                 this.simulationFinished = true;
                 this.updateMoney(BigInteger.ZERO);
                 this.updateCDandDPSPanel();
-                this.updateStageAndMonsterPanel(stage);
+                this.updateStageAndMonsterPanel(activeStage);
             }
-
             if (currentCreature == null) {
                 this.newMonster();
             }
-
             clicks = clicks + display.getMouseClicks();
-
             // Updating UI ---------------------------------------------------------
-            if (gUI != null) {
-                this.updateUI();
-                this.setHpBar();
+            if (uiManager != null) {
+                uiManager.updateUI();
             }
-
             // Updating the game proper --------------------------------------------
-            BigInteger damage = new BigInteger("" + clicks).multiply(clickDamage);
-            if (applyDPS) {
-                damage = damage.add(damagePerSecond);
-            }
-
-            if (damage.compareTo(BigInteger.ZERO) > 0) {
-                currentCreature.damage(damage);
-                currentCreature.setBarSize();
-            }
-            if (currentCreature.getDead()) {
-                this.updateMoney(currentCreature.getBounty());
-                activeMonster += 1;
-                if (activeMonster > monsterLimit) {
-                    activeMonster = 1;
-                    stage++;
-                }
-                this.newMonster();
-            }
-
-            clicks = 0;
-
+            this.updateGameProper(applyDPS);
         }
+    }
+
+    private void updateGameProper(boolean applyDPS) throws SQLException {
+        BigInteger damage = new BigInteger("" + clicks).multiply(clickDamage);
+        if (applyDPS) {
+            damage = damage.add(damagePerSecond);
+        }
+        if (damage.compareTo(BigInteger.ZERO) > 0) {
+            currentCreature.damage(damage);
+            currentCreature.setBarSize();
+            this.setHpBar();
+        }
+        if (currentCreature.getDead()) {
+            this.updateMoney(currentCreature.getBounty());
+            if (activeStage == stage) {
+                activeMonster += 1;
+            }
+            if (activeMonster > monsterLimit) {
+                activeMonster = 1;
+                stage++;
+                activeStage++;
+            }
+            this.newMonster();
+        }
+        clicks = 0;
 
     }
 
@@ -263,14 +154,14 @@ public class Game {
      * @param creature Creature
      */
     public void setMonster(Creature creature) {
-        if (gUI != null) {
+        if (uiManager != null) {
             if (currentCreature != null) {
-                gUI.removeElement(currentCreature.getView());
+                uiManager.gUI.removeElement(currentCreature.getView());
             }
         }
         currentCreature = creature;
-        if (gUI != null) {
-            if (gUI.getActive()) {
+        if (uiManager != null) {
+            if (uiManager.gUI.getActive()) {
                 currentCreature.getView().setActive(true);
             }
             this.setHpBar();
@@ -298,17 +189,19 @@ public class Game {
     /**
      * Sets new monster of currently active level as new monster. Takes care of
      * updating of HP bar automatically.
+     *
+     * @throws java.sql.SQLException
      */
     public void newMonster() throws SQLException {
         if (currentCreature != null) {
-            gUI.removeElement(currentCreature.getView());
-            updateStageAndMonsterPanel(stage);
+            uiManager.gUI.removeElement(currentCreature.getView());
+            updateStageAndMonsterPanel(activeStage);
         }
-        currentCreature = new Creature(handler, "Place Holder", 125, 125, Commons.randomColor(), this.monsterHP(stage), this.monsterMoney(stage));
-        gUI.addElement(currentCreature.getView());
-        if (gUI.getActive()) { // This here enables testing.
+        currentCreature = new Creature(handler, "Place Holder", 125, 125, Commons.randomColor(), this.monsterHP(activeStage), this.monsterMoney(activeStage));
+        uiManager.gUI.addElement(currentCreature.getView());
+        if (uiManager.gUI.getActive()) { // This here enables testing.
             currentCreature.getView().setActive(true);
-            if (Settings.displayStartedProperly) {
+            if (Settings.notTesting) {
                 saveGame();
             }
         }
@@ -325,22 +218,32 @@ public class Game {
     }
 
     public void saveGame() throws SQLException {
-        if (Settings.displayStartedProperly) { // Tests can't save the game.
+        if (Settings.notTesting) { // Tests can't save the game.
             Commons.saveDao.saveGame(money, souls, clickDamage, damagePerSecond, stage, activeMonster);
         }
     }
 
     public void saveGame(Save save) throws SQLException {
-        if (Settings.displayStartedProperly) { // Tests can't save the game.
+        if (Settings.notTesting) { // Tests can't save the game.
             this.money = save.getMoney();
             this.souls = save.getsMoney();
             this.stage = save.getStage();
+            this.activeStage = stage;
             this.clickDamage = save.getClickDamage();
             this.damagePerSecond = save.getDamagePerSecond();
             this.activeMonster = save.getActiveMonster();
-            this.stage = save.getStage();
             Commons.saveDao.saveGame(save.getMoney(), save.getsMoney(), save.getClickDamage(), save.getDamagePerSecond(), save.getStage(), save.getActiveMonster());
         }
+    }
+
+    public void updateMoney(BigInteger value) {
+        this.money = money.add(value);
+        this.uiManager.gMnPanel.setText("Money: " + Commons.getGameValue(money.toString()));
+    }
+
+    public void updateCDandDPSPanel() {
+        this.uiManager.gCDPanel.getText().setText("Click Damage: " + Commons.getGameValue(clickDamage.toString()));
+        this.uiManager.gDPSPanel.getText().setText("Damage per Second: " + Commons.getGameValue(damagePerSecond.toString()));
     }
 
     // Display methods ---------------------------------------------------------
@@ -458,24 +361,113 @@ public class Game {
         return this.damagePerSecond;
     }
 
+    /**
+     * Returns current creature of the game as Creature object.
+     *
+     * @return Creature
+     */
+    public Creature getCurrentCreature() {
+        return currentCreature;
+    }
+
+    /**
+     * Amount of money the current save has.
+     *
+     * @return BigInteger
+     */
+    public BigInteger getMoney() {
+        return money;
+    }
+
+    /**
+     * Amount of souls that the current save has.
+     *
+     * @return BigInteger
+     */
+    public BigInteger getSouls() {
+        return souls;
+    }
+
+    /**
+     * Stage limit of the game.
+     *
+     * @return int
+     */
+    public int getStage() {
+        return stage;
+    }
+
+    /**
+     * Current stage of game.
+     *
+     * @return int
+     */
+    public int getActiveStage() {
+        return activeStage;
+    }
+
+    /**
+     * which monster of the stage is currently being fought.
+     *
+     * @return int
+     */
+    public int getActiveMonster() {
+        return activeMonster;
+    }
+
+    /**
+     * Should always be 10.
+     *
+     * @return int
+     */
+    public int getMonsterLimit() {
+        return monsterLimit;
+    }
+
+    /**
+     * gives uiManager that stores user intreface of the game.
+     *
+     * @return UIManager
+     */
+    public UIManager getUiManager() {
+        return uiManager;
+    }
+
+    /**
+     * Set active stage of the game.
+     *
+     * @param activeStage
+     */
+    public void setActiveStage(int activeStage) {
+        this.activeStage = activeStage;
+    }
+
+    /**
+     * Set value for money.
+     *
+     * @param money
+     */
+    public void setMoney(BigInteger money) {
+        this.money = money;
+    }
+
     // private methods ---------------------------------------------------------
     private void setHpBar() {
         double size = Commons.baseHPBar * currentCreature.getHpBar();
-        if (Settings.displayStartedProperly) {
-            this.gHPFront.getText().setText(Commons.getGameValue(this.currentCreature.getHitPoints().toString()) + " / " + Commons.getGameValue(this.currentCreature.getMaxHitPoints().toString()));
+        if (Settings.notTesting) {
+            this.uiManager.gHPFront.getText().setText(Commons.getGameValue(this.currentCreature.getHitPoints().toString()) + " / " + Commons.getGameValue(this.currentCreature.getMaxHitPoints().toString()));
+            ((Rectangle) this.uiManager.gHPFront.getView()).setWidth(size);
         }
-        ((Rectangle) this.gHPFront.getView()).setWidth(size);
-    }
-
-    private void updateMoney(BigInteger value) {
-        this.money = money.add(value);
-        this.gMnPanel.setText("Money: " + Commons.getGameValue(money.toString()));
     }
 
     private void updateStageAndMonsterPanel(int s) {
-        if (Settings.displayStartedProperly) {
-            this.gStagePanel.getText().setText("Stage: " + s);
-            this.gMonsterPanel.getText().setText("Monster: " + activeMonster + " / " + monsterLimit);
+        if (Settings.notTesting) {
+            this.uiManager.gStagePanel.getText().setText("Stage: " + s);
+            if (activeStage == stage) {
+                this.uiManager.gMonsterPanel.getText().setText("Monster: " + activeMonster + " / " + monsterLimit);
+            } else {
+                this.uiManager.gMonsterPanel.getText().setText("This stage is already cleared!");
+            }
         }
     }
 
@@ -491,92 +483,6 @@ public class Game {
         int stageBaseBase = (int) Math.pow(s / 10, 1.2);
         BigInteger stageBase = new BigInteger(stageBaseBase + "").add(new BigInteger((s - 1) + ""));
         return base.add(stageBase);
-    }
-
-    private void updateCDandDPSPanel() {
-        this.gCDPanel.getText().setText("Click Damage: " + Commons.getGameValue(clickDamage.toString()));
-        this.gDPSPanel.getText().setText("Damage per Second: " + Commons.getGameValue(damagePerSecond.toString()));
-    }
-
-    private void updateUI() throws SQLException, Exception {
-
-        gUI.update(); // Game ui -----------------------------------------------
-
-        if (gBtnNShop.getClicked()) {
-            ssUI.showUI(false);
-            setUI.showUI(false);
-            if (nsUI.getActive()) {
-                nsUI.showUI(false);
-            } else {
-                nsUI.showUI(true);
-            }
-        }
-
-        if (gBtnSShop.getClicked()) {
-            nsUI.showUI(false);
-            setUI.showUI(false);
-            if (ssUI.getActive()) {
-                ssUI.showUI(false);
-            } else {
-                ssUI.showUI(true);
-            }
-        }
-
-        if (gBtnSet.getClicked()) {
-            nsUI.showUI(false);
-            ssUI.showUI(false);
-            if (setUI.getActive()) {
-                setUI.showUI(false);
-            } else {
-                setUI.showUI(true);
-            }
-        }
-
-        nsUI.update(); // normal shop ui ---------------------------------------
-
-        if (nsClose.getClicked()) {
-            nsUI.showUI(false);
-        }
-
-        for (int i = 0; i < Assets.upgradesCount; i++) { // Shop buttons 
-            if (nsUpgradeButtons[i].getClicked()) { // if button was clicked
-                if (this.money.compareTo(Assets.upgrades.get(i).getNextLevelPrice()) >= 0) { // if there was enough money
-                    this.money = this.money.subtract(Assets.upgrades.get(i).getNextLevelPrice()); // reduce money from total
-                    Assets.levelUpUpgrade(i, handler, true); // increase level of the upgrade
-                    nsUpgradePanels[i].getText().setText(Assets.upgrades.get(i).getName() + ": " + Assets.upgrades.get(i).toString()); // change text in panel and button
-                    nsUpgradeButtons[i].getText().setText("Buy: " + Commons.getGameValue(Assets.upgrades.get(i).getNextLevelPrice().toString()));
-                    this.updateMoney(BigInteger.ZERO); // change money text
-                    Commons.upgradeDao.updateUpgrade(i, Assets.upgrades.get(i).getLevel().intValue()); // update upgrade database
-                    this.saveGame(); // update save in database
-                    this.updateCDandDPSPanel();
-                }
-            }
-        }
-
-        ssUI.update(); // special shop ui --------------------------------------
-
-        if (ssClose.getClicked()) {
-            ssUI.showUI(false);
-        }
-
-        setUI.update(); // settings ui -----------------------------------------
-
-        if (setClose.getClicked()) {
-            setUI.showUI(false);
-        }
-
-        if (setFullscreenON.getClicked()) {
-            if (Settings.changeScreenState(true)) {
-                this.restart();
-            }
-        }
-
-        if (setFullscreenOFF.getClicked()) {
-            if (Settings.changeScreenState(false)) {
-                this.restart();
-            }
-        }
-
     }
 
 }

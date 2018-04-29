@@ -39,11 +39,11 @@ public class UIButton extends UIElement {
      */
     public UIButton(Handler handler, Node view, String text, int x, int y, int width, int height) {
         super(view, x, y);
-        if (!Settings.displayStartedProperly) {
+        if (!Settings.notTesting) {
             text = null;
         }
         this.text = new Text(text);
-        if (Settings.displayStartedProperly) {
+        if (Settings.notTesting) {
             this.text.setFont(Commons.font);
         }
         this.width = width;
