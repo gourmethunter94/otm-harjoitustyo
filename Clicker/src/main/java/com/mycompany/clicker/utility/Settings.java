@@ -81,7 +81,7 @@ public class Settings {
      *
      * @param value boolean
      * @return boolean
-     * @throws SQLException
+     * @throws SQLException initialize commons properly
      */
     public static boolean changeScreenState(boolean value) throws SQLException {
         if (fullscreen != value) {
