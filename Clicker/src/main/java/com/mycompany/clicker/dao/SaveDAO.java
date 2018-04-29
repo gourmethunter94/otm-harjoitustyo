@@ -31,7 +31,7 @@ public class SaveDAO {
     /**
      * Checks if a save for the game exists.
      *
-     * @return
+     * @return Boolean
      * @throws SQLException
      */
     public boolean saveExists() throws SQLException {
@@ -81,6 +81,12 @@ public class SaveDAO {
     /**
      * Saves the game.
      *
+     * @param money
+     * @param sMoney
+     * @param clickDamage
+     * @param damagePerSecond
+     * @param stage
+     * @param activeMonster
      * @throws SQLException
      */
     public void saveGame(BigInteger money, BigInteger sMoney, BigInteger clickDamage, BigInteger damagePerSecond, int stage, int activeMonster) throws SQLException {
@@ -113,6 +119,7 @@ public class SaveDAO {
      * Loads the game from database.
      *
      * @return Save
+     * @throws java.sql.SQLException
      */
     public Save loadGame() throws SQLException {
 
