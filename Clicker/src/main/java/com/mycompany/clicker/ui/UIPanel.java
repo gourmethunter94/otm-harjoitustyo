@@ -26,12 +26,13 @@ public class UIPanel extends UIElement {
 
     // Constructor -------------------------------------------------------------
     /**
-     *
-     * @param handler
-     * @param view
-     * @param text
-     * @param x
-     * @param y
+     * Constructor with text
+     * 
+     * @param handler Handler
+     * @param view Node
+     * @param text String
+     * @param x int
+     * @param y int
      */
     public UIPanel(Handler handler, Node view, String text, int x, int y) {
         super(view, x, y);
@@ -50,11 +51,12 @@ public class UIPanel extends UIElement {
     }
 
     /**
-     *
-     * @param handler
-     * @param view
-     * @param x
-     * @param y
+     * Constructor without a text.
+     * 
+     * @param handler Handler
+     * @param view Node
+     * @param x int
+     * @param y int
      */
     public UIPanel(Handler handler, Node view, int x, int y) {
         super(view, x, y);
@@ -90,7 +92,7 @@ public class UIPanel extends UIElement {
      * If the UIElement was initiated with a Text element, changes the font of
      * the text.
      *
-     * @param font - Font
+     * @param font Font
      */
     public void setFont(Font font) {
         if (this.text != null) {
@@ -124,7 +126,7 @@ public class UIPanel extends UIElement {
     /**
      * Returns list of Nodes attached to the UIPanel.
      *
-     * @return List<Node>
+     * @return List of Nodes
      */
     @Override
     public List<Node> getNodes() {

@@ -32,7 +32,7 @@ public class Display extends Application {
     // main --------------------------------------------------------------------
     /**
      *
-     * @param args
+     * @param args String[]
      */
     public static void main(String[] args) {
         launch(args);
@@ -187,7 +187,7 @@ public class Display extends Application {
     /**
      * Reconstruct the game, used mainly for chaning to fullscreen.
      *
-     * @throws Exception
+     * @throws Exception call from only same thread.
      */
     public void buildNewStage() throws Exception {
         this.stage.close();

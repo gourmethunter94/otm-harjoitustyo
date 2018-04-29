@@ -24,7 +24,7 @@ public class UI {
     // constructor -------------------------------------------------------------
     /**
      *
-     * @param handler
+     * @param handler Handler
      */
     public UI(Handler handler) {
         this.handler = handler;

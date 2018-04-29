@@ -29,13 +29,13 @@ public class UIButton extends UIElement {
     // Constructor -------------------------------------------------------------
     /**
      *
-     * @param handler
-     * @param view
-     * @param text
-     * @param x
-     * @param y
-     * @param width
-     * @param height
+     * @param handler Handler
+     * @param view Node
+     * @param text String
+     * @param x int
+     * @param y int
+     * @param width int
+     * @param height int
      */
     public UIButton(Handler handler, Node view, String text, int x, int y, int width, int height) {
         super(view, x, y);
@@ -81,7 +81,7 @@ public class UIButton extends UIElement {
      * If the UIElement was initiated with a Text element, changes the font of
      * the text.
      *
-     * @param font - Font
+     * @param font Font
      */
     public void setFont(Font font) {
         if (this.text != null) {
@@ -128,7 +128,7 @@ public class UIButton extends UIElement {
     /**
      * Returns list of all Nodes attached to this UIElement
      *
-     * @return List<Node>
+     * @return List of Nodes
      */
     public List<Node> getNodes() {
         List<Node> r = new ArrayList<>();

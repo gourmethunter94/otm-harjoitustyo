@@ -20,7 +20,7 @@ public class SettingsDAO {
 
     /**
      *
-     * @param database - Database
+     * @param database Database
      */
     public SettingsDAO(Database database) {
         this.database = database;
@@ -30,7 +30,7 @@ public class SettingsDAO {
      * Returns boolean value; false = not fullscreen, true = fullscreen.
      *
      * @return boolean
-     * @throws SQLException
+     * @throws SQLException correcly initialize database in commons.
      */
     public boolean getFullscreen() throws SQLException {
 
@@ -54,8 +54,8 @@ public class SettingsDAO {
     /**
      * Writes fullscreen value on the database.
      *
-     * @param value
-     * @throws SQLException
+     * @param value boolean
+     * @throws SQLException correcly initialize database in commons.
      */
     public void setFullscreen(boolean value) throws SQLException {
 

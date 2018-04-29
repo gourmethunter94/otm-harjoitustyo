@@ -144,7 +144,7 @@ public class Commons {
     /**
      * Returns random color with color values between 0.3 - 0.9 in each of RGB.
      *
-     * @return Color
+     * @return Color (JavaFX)
      */
     public static Color randomColor() {
         return Color.color((30.0 + random.nextInt(60)) / 100, (30.0 + random.nextInt(60)) / 100, (30.0 + random.nextInt(60)) / 100);

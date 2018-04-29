@@ -22,9 +22,9 @@ public abstract class UIElement {
     // Constructor -------------------------------------------------------------
     /**
      *
-     * @param view
-     * @param x
-     * @param y
+     * @param view Node
+     * @param x int
+     * @param y int
      */
     public UIElement(Node view, int x, int y) {
         this.active = false;
@@ -99,7 +99,7 @@ public abstract class UIElement {
     /**
      * Returns list of Nodes attached to the UIElement
      *
-     * @return List<Node>
+     * @return List of Nodes
      */
     public abstract List<Node> getNodes();
 

@@ -31,13 +31,13 @@ public class Creature {
     // Constructor -------------------------------------------------------------
     /**
      *
-     * @param handler
-     * @param name
-     * @param width
-     * @param height
-     * @param color
-     * @param hitPoints
-     * @param bounty
+     * @param handler Handler
+     * @param name String
+     * @param width int
+     * @param height int 
+     * @param color Color (JavaFX)
+     * @param hitPoints BigInteger
+     * @param bounty BigInteger
      */
     public Creature(Handler handler, String name, int width, int height,
             Color color, BigInteger hitPoints, BigInteger bounty) {

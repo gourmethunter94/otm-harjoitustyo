@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.clicker.core;
 
 import com.mycompany.clicker.domain.Creature;
@@ -27,31 +22,25 @@ public class Game {
     private final Display display;
     private final Handler handler;
     private Creature currentCreature;
-
     private BigInteger clickDamage;
     private BigInteger damagePerSecond;
     private BigInteger money;
     private BigInteger souls;
-
     private int stage;
     private int activeStage;
     private int activeMonster;
     private int monsterLimit;
-
     private int clicks;
-
     private Loader loader;
     public boolean loading;
     public boolean simulating;
     private boolean simulationFinished;
-
     private UIManager uiManager;
 
-    // -------------------------------------------------------------------------
     // constructor -------------------------------------------------------------
     /**
      *
-     * @param display
+     * @param display Display
      */
     public Game(Display display) {
         this.display = display;
@@ -65,8 +54,8 @@ public class Game {
     /**
      * Call to initialize the Game, should only be called from Display.
      *
-     * @param save
-     * @throws java.sql.SQLException
+     * @param save Save
+     * @throws java.sql.SQLException correcly initialize database in commons.
      */
     public void initialize(Save save) throws SQLException {
         clickDamage = save.getClickDamage();
@@ -98,7 +87,7 @@ public class Game {
      * determines if monster should take periodical damage.
      *
      * @param applyDPS boolean
-     * @throws java.sql.SQLException
+     * @throws java.sql.SQLException correcly initialize database in commons.
      */
     public void update(boolean applyDPS) throws SQLException, Exception {
         if (!loading && !simulating) {
@@ -190,7 +179,7 @@ public class Game {
      * Sets new monster of currently active level as new monster. Takes care of
      * updating of HP bar automatically.
      *
-     * @throws java.sql.SQLException
+     * @throws java.sql.SQLException correcly initialize database in commons.
      */
     public void newMonster() throws SQLException {
         if (currentCreature != null) {
@@ -211,18 +200,29 @@ public class Game {
     /**
      * Restarts the application.
      *
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception correcly initialize database in commons.
      */
     public void restart() throws Exception {
         this.display.buildNewStage();
     }
 
+    /**
+     * Saves the game.
+     *
+     * @throws SQLException correcly initialize database in commons.
+     */
     public void saveGame() throws SQLException {
         if (Settings.notTesting) { // Tests can't save the game.
             Commons.saveDao.saveGame(money, souls, clickDamage, damagePerSecond, stage, activeMonster);
         }
     }
 
+    /**
+     * Saves the game.
+     *
+     * @param save Save
+     * @throws SQLException correcly initialize database in commons.
+     */
     public void saveGame(Save save) throws SQLException {
         if (Settings.notTesting) { // Tests can't save the game.
             this.money = save.getMoney();
@@ -236,14 +236,49 @@ public class Game {
         }
     }
 
+    /**
+     * Increases the money by given value, also updates part of the ui
+     * displaying money.
+     *
+     * @param value BigInteger
+     */
     public void updateMoney(BigInteger value) {
         this.money = money.add(value);
         this.uiManager.gMnPanel.setText("Money: " + Commons.getGameValue(money.toString()));
     }
 
+    /**
+     * Updates click damage and dps panels of the ui.
+     */
     public void updateCDandDPSPanel() {
         this.uiManager.gCDPanel.getText().setText("Click Damage: " + Commons.getGameValue(clickDamage.toString()));
         this.uiManager.gDPSPanel.getText().setText("Damage per Second: " + Commons.getGameValue(damagePerSecond.toString()));
+    }
+
+    /**
+     * Give stage as parameter, get monster hp for the stage.
+     *
+     * @param s int
+     * @return BigInteger
+     */
+    public BigInteger monsterHP(int s) { // calculates bounty based on current stage.
+        BigInteger base = new BigInteger("3");
+        int stageBaseBase = (int) Math.pow(s / 4, 2.6);
+        BigInteger stageBase = new BigInteger("2").multiply(new BigInteger(stageBaseBase + "")).add(new BigInteger(s + "").multiply(new BigInteger("7")));
+        return base.add(stageBase);
+    }
+
+    /**
+     * Give stage as parameter, get monster money for the stage.
+     *
+     * @param s int
+     * @return BigInteger
+     */
+    public BigInteger monsterMoney(int s) { // calculates bounty based on current stage.
+        BigInteger base = BigInteger.ONE;
+        int stageBaseBase = (int) Math.pow(s / 10, 1.2);
+        BigInteger stageBase = new BigInteger(stageBaseBase + "").add(new BigInteger((s - 1) + ""));
+        return base.add(stageBase);
     }
 
     // Display methods ---------------------------------------------------------
@@ -433,20 +468,10 @@ public class Game {
         return uiManager;
     }
 
-    /**
-     * Set active stage of the game.
-     *
-     * @param activeStage
-     */
     public void setActiveStage(int activeStage) {
         this.activeStage = activeStage;
     }
 
-    /**
-     * Set value for money.
-     *
-     * @param money
-     */
     public void setMoney(BigInteger money) {
         this.money = money;
     }
@@ -470,19 +495,4 @@ public class Game {
             }
         }
     }
-
-    public BigInteger monsterHP(int s) { // calculates bounty based on current stage.
-        BigInteger base = new BigInteger("3");
-        int stageBaseBase = (int) Math.pow(s / 4, 2.6);
-        BigInteger stageBase = new BigInteger("2").multiply(new BigInteger(stageBaseBase + "")).add(new BigInteger(s + "").multiply(new BigInteger("7")));
-        return base.add(stageBase);
-    }
-
-    public BigInteger monsterMoney(int s) { // calculates bounty based on current stage.
-        BigInteger base = BigInteger.ONE;
-        int stageBaseBase = (int) Math.pow(s / 10, 1.2);
-        BigInteger stageBase = new BigInteger(stageBaseBase + "").add(new BigInteger((s - 1) + ""));
-        return base.add(stageBase);
-    }
-
 }

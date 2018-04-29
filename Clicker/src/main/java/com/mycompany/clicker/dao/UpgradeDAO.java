@@ -22,7 +22,7 @@ public class UpgradeDAO {
 
     /**
      *
-     * @param database - Database
+     * @param database Database
      */
     public UpgradeDAO(Database database) {
         this.database = database;
@@ -32,7 +32,7 @@ public class UpgradeDAO {
      * Checks if date for upgrades exist in database.
      *
      * @return boolean
-     * @throws SQLException
+     * @throws SQLException correcly initialize database in commons.
      */
     public boolean upgradesExist() throws SQLException {
 
@@ -62,7 +62,7 @@ public class UpgradeDAO {
      * Initializes upgrades table in the database. Shoul be called only if
      * saveExists returns false.
      *
-     * @throws SQLException
+     * @throws SQLException correcly initialize database in commons.
      */
     public void initializeUpgrades() throws SQLException {
         try (Connection conn = database.getConnection()) {
@@ -75,7 +75,7 @@ public class UpgradeDAO {
      * Loads levels for upgrades of the normal shop. Should be called after
      * initialization of Assets class.
      *
-     * @throws SQLException
+     * @throws SQLException correcly initialize database in commons.
      */
     public void loadUpgrades() throws SQLException {
         try (Connection conn = database.getConnection()) {
@@ -94,9 +94,9 @@ public class UpgradeDAO {
     /**
      * Updates level of specified upgrade from the shop.
      *
-     * @param key - int
-     * @param level - int
-     * @throws SQLException
+     * @param key int
+     * @param level int
+     * @throws SQLException correcly initialize database in commons.
      */
     public void updateUpgrade(int key, int level) throws SQLException {
         try (Connection conn = database.getConnection()) {

@@ -56,7 +56,7 @@ public class Settings {
     /**
      * Initializes the Settings class. Initialize Commons before calling.
      *
-     * @throws SQLException
+     * @throws SQLException correcly initialize database in commons.
      */
     public static void initialize() throws SQLException {
         fullscreen = Commons.settingsDao.getFullscreen();
@@ -79,7 +79,7 @@ public class Settings {
      * Writes fullscreen value on the database. Initialzie commons before
      * calling. Returns true if state was changed, otherwise, returns false
      *
-     * @param value - boolean
+     * @param value boolean
      * @return boolean
      * @throws SQLException
      */

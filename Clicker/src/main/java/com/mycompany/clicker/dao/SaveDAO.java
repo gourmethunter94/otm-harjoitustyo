@@ -32,7 +32,7 @@ public class SaveDAO {
      * Checks if a save for the game exists.
      *
      * @return Boolean
-     * @throws SQLException
+     * @throws SQLException correcly initialize database in commons.
      */
     public boolean saveExists() throws SQLException {
 
@@ -62,7 +62,7 @@ public class SaveDAO {
      * Initializes the save of the game, should only be called if saveExists()
      * returns false.
      *
-     * @throws SQLException
+     * @throws SQLException correcly initialize database in commons.
      */
     public void initializeSave() throws SQLException {
 
@@ -87,7 +87,7 @@ public class SaveDAO {
      * @param damagePerSecond BigInteger
      * @param stage int
      * @param activeMonster int
-     * @throws SQLException
+     * @throws SQLException correcly initialize database in commons.
      */
     public void saveGame(BigInteger money, BigInteger sMoney, BigInteger clickDamage, BigInteger damagePerSecond, int stage, int activeMonster) throws SQLException {
 
@@ -119,7 +119,7 @@ public class SaveDAO {
      * Loads the game from database.
      *
      * @return Save
-     * @throws java.sql.SQLException
+     * @throws java.sql.SQLException correcly initialize database in commons.
      */
     public Save loadGame() throws SQLException {
 

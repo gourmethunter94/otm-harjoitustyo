@@ -20,7 +20,7 @@ public class Handler {
 
     /**
      *
-     * @param game
+     * @param game Game
      */
     public Handler(Game game) {
         this.game = game;
