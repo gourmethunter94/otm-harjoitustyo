@@ -22,6 +22,4 @@ Jos Netbeans ei pysty suorittamaan suoraa vihreää 'play' nappia painamalla, ko
 
 [Arkkitehtuurikuvaus](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
-### Copyright
-
-Database Connection: [sqlite-jdbc](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/sqlite-jdbc-copyright.md) Copyright (c) 2006, David Crawshaw. All rights reserved.
+[Käyttöohje](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)

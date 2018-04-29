@@ -18,6 +18,28 @@ Sovelluksella on latausnäkymä, päänäkymä ja käyttäjä voi avata yksi ker
   - Erikois Kauppa
   - Asetukset
 
+## Sovelluslogiikka
+
+Sovelluksen looginen mallin muodostuu luokan [Game](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/Clicker/src/main/java/com/mycompany/clicker/core/Game.java) ympärille.
+
+Game hallinnoi kaikkia tapahtumia, ja erinäiset luokat sisältävät niiden toteutuksia.
+
+ - [Loader](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/Clicker/src/main/java/com/mycompany/clicker/core/Loader.java) hallinnoi osaa initialisaatiosta ja pelin offline ajan simuloinnista.
+ - [UIManager](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/Clicker/src/main/java/com/mycompany/clicker/core/UIManager.java) hallinnoi pelin graaffista käyttöliittymää ja sen interaktiivisa toimintoja.
+ - [Creature](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/Clicker/src/main/java/com/mycompany/clicker/domain/Creature.java) hallinnoi osaa pelin etenemisestä.
+
+Game luokan tarkempia tehtäviä ovat esimerkiksi seurata onko peli valmis siirtymään seuraavalle tasolle, ja tasojen navigointia.
+
+## Tietojen tallennus
+
+Pakkauksesta clicker.dao löytyy luokka [Database](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/Clicker/src/main/java/com/mycompany/clicker/dao/Database.java), ja sen avulla toimivat luokat [SaveDAO](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/Clicker/src/main/java/com/mycompany/clicker/dao/SaveDAO.java), [SettingsDAO](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/Clicker/src/main/java/com/mycompany/clicker/dao/SettingsDAO.java) ja [UpgradeDAO](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/Clicker/src/main/java/com/mycompany/clicker/dao/UpgradeDAO.java), jotka vastaavaat tiedon tallettamisesta.
+
+Databaseen ja DAO:hin pääsee käsiksi staattisen Commons luokan avulla. DAO luokkien toteutus on erillään muusta sovelluksesta ja kunhan metodien nimet pysyvät ennallaan, on niiden toteutusta helppo muunnella.
+
+Database on connection luodaan SQLite connectorion avulla.
+
+Vaikkakin pelissä on vain yksi tallennus, on valittu tallennus tavaksi database, sillä haluttaessa laajennus monille tallennuksille näin erittäin helppoa.
+
 ## Luokkakaavio
 
 <img src="https://raw.githubusercontent.com/GourmetHunter/otm-harjoitustyo/master/dokumentaatio/kuvat/kaavio.png">
