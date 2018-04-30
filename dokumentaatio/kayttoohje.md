@@ -1,6 +1,6 @@
 ﻿# Käyttöohje
 
-Lataa ohjelma [täältä](https://github.com/GourmetHunter/otm-harjoitustyo/releases/tag/viikko5).
+Lataa ohjelma [täältä](https://github.com/GourmetHunter/otm-harjoitustyo/releases/tag/viikko6).
 
 ## Asennus
 
