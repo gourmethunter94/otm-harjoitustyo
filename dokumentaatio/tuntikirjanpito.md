@@ -15,4 +15,5 @@
 | 28.4.18 | 3½   | Pelin simulointi offline ajalta ohjelman käynnistyessä. |
 | 29.4.18 | 1    | Parempi initalization upgradeille kauppaan, testejä vuosien (miljardien millisekunttien) pituisissa simulaatioissa. |
 | 30.4.18 | 6    | Dokumentaation päivitystä, javadoc, Game:n jakaminen osittain UIManageriin, Stagen vaihtaminen peliin. |
-| Summa   | 42   |
+| 31.4.18 | 3    | Koodin päivitystä siten että se noudattaa checkstyleä, javadocin luontia. |
+| Summa   | 45   |
