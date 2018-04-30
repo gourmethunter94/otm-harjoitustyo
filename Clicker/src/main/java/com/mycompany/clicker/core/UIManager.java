@@ -77,17 +77,59 @@ public class UIManager {
     }
 
     // Public methods ----------------------------------------------------------
+    /**
+     * Initializes the UIManager class, should only be called once.
+     */
     public void initialize() {
+        this.gUI = new UI(this.handler);
+        this.nsUI = new UI(this.handler);
+        this.ssUI = new UI(this.handler);
+        this.setUI = new UI(this.handler);
         this.initializeGameUI();
         this.nShopInitialize();
         this.sShopInitialize();
         this.setInitialize();
     }
 
+    //Methods for updating all the UIs -----------------------------------------
+    /**
+     * Updates UI elements, and handles their interactive parts.
+     *
+     * @throws SQLException initialize commons before calling.
+     * @throws Exception call only from main thread.
+     */
     public void updateUI() throws SQLException, Exception {
-
         gUI.update(); // Game ui -----------------------------------------------
+        this.updateGameUI();
+        nsUI.update(); // normal shop ui ---------------------------------------
+        this.updateNSUI();
+        ssUI.update(); // special shop ui --------------------------------------
+        this.updateSSUI();
+        setUI.update(); // settings ui -----------------------------------------
+        this.updateSETUI();
 
+    }
+
+    // Private methods ---------------------------------------------------------
+    private void updateGameUI() throws SQLException {
+        this.updateNSButton();
+        this.updateSSButton();
+        this.updateSETButton();
+        if (gCSNext.getClicked()) {
+            if (game.getActiveStage() + 1 <= game.getStage()) {
+                game.setActiveStage(game.getActiveStage() + 1);
+                game.newMonster();
+            }
+        }
+        if (gCSPrev.getClicked()) {
+            if (game.getActiveStage() - 1 > 0) {
+                game.setActiveStage(game.getActiveStage() - 1);
+                game.newMonster();
+            }
+        }
+    }
+
+    private void updateNSButton() {
         if (gBtnNShop.getClicked()) {
             ssUI.showUI(false);
             setUI.showUI(false);
@@ -97,7 +139,9 @@ public class UIManager {
                 nsUI.showUI(true);
             }
         }
+    }
 
+    private void updateSSButton() {
         if (gBtnSShop.getClicked()) {
             nsUI.showUI(false);
             setUI.showUI(false);
@@ -107,7 +151,9 @@ public class UIManager {
                 ssUI.showUI(true);
             }
         }
+    }
 
+    private void updateSETButton() {
         if (gBtnSet.getClicked()) {
             nsUI.showUI(false);
             ssUI.showUI(false);
@@ -117,27 +163,12 @@ public class UIManager {
                 setUI.showUI(true);
             }
         }
+    }
 
-        if (gCSNext.getClicked()) {
-            if (game.getActiveStage() + 1 <= game.getStage()) {
-                game.setActiveStage(game.getActiveStage() + 1);
-                game.newMonster();
-            }
-        }
-
-        if (gCSPrev.getClicked()) {
-            if (game.getActiveStage() - 1 > 0) {
-                game.setActiveStage(game.getActiveStage() - 1);
-                game.newMonster();
-            }
-        }
-
-        nsUI.update(); // normal shop ui ---------------------------------------
-
+    private void updateNSUI() throws SQLException {
         if (nsClose.getClicked()) {
             nsUI.showUI(false);
         }
-
         for (int i = 0; i < Assets.upgradesCount; i++) { // Shop buttons 
             if (nsUpgradeButtons[i].getClicked()) { // if button was clicked
                 if (game.getMoney().compareTo(Assets.upgrades.get(i).getNextLevelPrice()) >= 0) { // if there was enough money
@@ -152,34 +183,30 @@ public class UIManager {
                 }
             }
         }
+    }
 
-        ssUI.update(); // special shop ui --------------------------------------
-
+    private void updateSSUI() {
         if (ssClose.getClicked()) {
             ssUI.showUI(false);
         }
+    }
 
-        setUI.update(); // settings ui -----------------------------------------
-
+    private void updateSETUI() throws SQLException, Exception {
         if (setClose.getClicked()) {
             setUI.showUI(false);
         }
-
         if (setFullscreenON.getClicked()) {
             if (Settings.changeScreenState(true)) {
                 game.restart();
             }
         }
-
         if (setFullscreenOFF.getClicked()) {
             if (Settings.changeScreenState(false)) {
                 game.restart();
             }
         }
-
     }
 
-    // Private methods ---------------------------------------------------------
     private void initializeGameUI() {
         this.initializeGameUICreateObjects();
         this.initializeGameUIAddObjects();
@@ -187,7 +214,6 @@ public class UIManager {
     }
 
     private void initializeGameUICreateObjects() {
-        this.gUI = new UI(this.handler);
         this.gBtnPanel = new UIPanel(handler, new Rectangle(314, 78, Color.GRAY), 0, 0);
         this.gMnPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), "Money: " + Commons.getGameValue(game.getMoney().toString()), 2, 2);
         this.gSlPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), "Souls: " + Commons.getGameValue(game.getSouls().toString()), 158, 2);
@@ -200,9 +226,17 @@ public class UIManager {
         this.gBtnSet = new UIButton(handler, new Rectangle(50, 50, Color.BISQUE), "Settings", 106, 25, 50, 50);
         this.gHPBack = new UIPanel(handler, new Rectangle(154, 37, Color.GRAY), display.getWidth() / 2 - 77, display.getHeight() / 2 - 125);
         this.gHPFront = new UIPanel(handler, new Rectangle(150, 33, Color.RED), game.monsterHP(game.getStage()) + "", display.getWidth() / 2 - 75, display.getHeight() / 2 - 123);
+        this.buildNext();
+        this.buildPrev();
+    }
+
+    private void buildNext() {
         Polygon tempLeft = new Polygon(new double[]{0.0, 0.0, 50.0, 34.5, 0.0, 69.0});
         tempLeft.setFill(Color.GRAY);
         this.gCSNext = new UIButton(handler, tempLeft, "", (int) (Commons.baseWidth / 2 + 80), (int) (Commons.baseHeight / 2 - 157), 50, 69);
+    }
+
+    private void buildPrev() {
         Polygon tempRight = new Polygon(new double[]{0.0, 34.5, 50, 0.0, 50.0, 69.0});
         tempRight.setFill(Color.GRAY);
         this.gCSPrev = new UIButton(handler, tempRight, "", (int) (Commons.baseWidth / 2 - 130), (int) (Commons.baseHeight / 2 - 157), 50, 69);
@@ -226,7 +260,6 @@ public class UIManager {
     }
 
     private void nShopInitialize() {
-        this.nsUI = new UI(this.handler);
         this.nsPanel = new UIPanel(handler, new Rectangle(440, 648, Color.GRAY), "Shop", 0, 80);
         this.nsClose = new UIButton(handler, new Rectangle(14, 14, Color.RED), "X", 424, 82, 14, 14);
         nsUI.addElement(nsPanel);
@@ -244,7 +277,6 @@ public class UIManager {
     }
 
     private void sShopInitialize() {
-        this.ssUI = new UI(this.handler);
         this.ssPanel = new UIPanel(handler, new Rectangle(440, 648, Color.CORNFLOWERBLUE), "Soul Shop", 0, 80);
         this.ssClose = new UIButton(handler, new Rectangle(14, 14, Color.MAROON), "X", 424, 82, 14, 14);
         ssUI.addElement(ssPanel);
@@ -252,7 +284,6 @@ public class UIManager {
     }
 
     private void setInitialize() {
-        this.setUI = new UI(this.handler);
         this.setPanel = new UIPanel(handler, new Rectangle(440, 648, Color.DARKGRAY), "Settings", 0, 80);
         this.setClose = new UIButton(handler, new Rectangle(14, 14, Color.LIGHTCORAL), "X", 424, 82, 14, 14);
         this.setFullscreenPanel = new UIPanel(handler, new Rectangle(436, 18, Color.LIGHTGRAY), "Fullscreen", 2, 100);

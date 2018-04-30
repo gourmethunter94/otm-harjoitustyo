@@ -120,6 +120,11 @@ public class Game {
             currentCreature.setBarSize();
             this.setHpBar();
         }
+        this.updateCreatureDeath();
+        clicks = 0;
+    }
+
+    private void updateCreatureDeath() throws SQLException {
         if (currentCreature.getDead()) {
             this.updateMoney(currentCreature.getBounty());
             if (activeStage == stage) {
@@ -132,8 +137,6 @@ public class Game {
             }
             this.newMonster();
         }
-        clicks = 0;
-
     }
 
     // public methods ----------------------------------------------------------
@@ -302,168 +305,74 @@ public class Game {
     }
 
     // Getters and Setters -----------------------------------------------------
-    /**
-     * Returns (base) width of the root of the display. As opposed to true
-     * width.
-     *
-     * @return int
-     */
     public int getWidth() {
         return display.getWidth();
     }
 
-    /**
-     * Returns (base) height of the root of the display. As opposed to true
-     * height.
-     *
-     * @return int
-     */
     public int getHeight() {
         return display.getHeight();
     }
 
-    /**
-     * Sets current value to damage per second, should be used with care.
-     *
-     * @param value BigInteger
-     */
     public void setDPS(BigInteger value) {
         this.damagePerSecond = value;
     }
 
-    /**
-     * Sets current value to click damage, should be used with care.
-     *
-     * @param value BigInteger
-     */
     public void setCD(BigInteger value) {
         this.clickDamage = value;
     }
 
-    /**
-     * Returns the amount of clicks active on the next update. Method should be
-     * called from UI.
-     *
-     * @return int
-     */
     public int getClicks() {
         return clicks;
     }
 
-    /**
-     * Sets amount of clicks active on the next update.
-     *
-     * @param value int
-     */
     public void setClicks(int value) {
         this.clicks = value;
     }
 
-    /**
-     * Returns mouses position on X axis.
-     *
-     * @return double
-     */
     public double getMouseX() {
         return this.display.getMouseX();
     }
 
-    /**
-     * Returns mouses position on Y axis.
-     *
-     * @return double
-     */
     public double getMouseY() {
         return this.display.getMouseY();
     }
 
-    /**
-     * Returns current clicking damage.
-     *
-     * @return BigInteger
-     */
     public BigInteger getClickDamage() {
         return this.clickDamage;
     }
 
-    /**
-     * Returns current damage per second (from upgrades, as opposed to a
-     * statistic)
-     *
-     * @return BigInteger
-     */
     public BigInteger getDPS() {
         return this.damagePerSecond;
     }
 
-    /**
-     * Returns current creature of the game as Creature object.
-     *
-     * @return Creature
-     */
     public Creature getCurrentCreature() {
         return currentCreature;
     }
 
-    /**
-     * Amount of money the current save has.
-     *
-     * @return BigInteger
-     */
     public BigInteger getMoney() {
         return money;
     }
 
-    /**
-     * Amount of souls that the current save has.
-     *
-     * @return BigInteger
-     */
     public BigInteger getSouls() {
         return souls;
     }
 
-    /**
-     * Stage limit of the game.
-     *
-     * @return int
-     */
     public int getStage() {
         return stage;
     }
 
-    /**
-     * Current stage of game.
-     *
-     * @return int
-     */
     public int getActiveStage() {
         return activeStage;
     }
 
-    /**
-     * which monster of the stage is currently being fought.
-     *
-     * @return int
-     */
     public int getActiveMonster() {
         return activeMonster;
     }
 
-    /**
-     * Should always be 10.
-     *
-     * @return int
-     */
     public int getMonsterLimit() {
         return monsterLimit;
     }
 
-    /**
-     * gives uiManager that stores user intreface of the game.
-     *
-     * @return UIManager
-     */
     public UIManager getUiManager() {
         return uiManager;
     }

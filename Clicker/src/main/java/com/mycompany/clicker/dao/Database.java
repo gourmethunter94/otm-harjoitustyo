@@ -22,6 +22,13 @@ public class Database {
         this.databaseAddress = databaseAddress;
     }
 
+    /**
+     * Call to get connection for database.
+     *
+     * @return Connection
+     * @throws SQLException if Database doesn't exist or Driver is
+     * non-functional.
+     */
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:sqlite:" + databaseAddress);
     }

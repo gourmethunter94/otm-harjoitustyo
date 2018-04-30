@@ -6,6 +6,7 @@
 package com.mycompany.clicker.core;
 
 import com.mycompany.clicker.domain.Save;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.concurrent.CountDownLatch;
@@ -33,84 +34,111 @@ public class Loader {
         this.simulated = false;
     }
 
+    /**
+     * Initializes all UI elements that belong to the Game class.
+     */
     public void load() {
         if (!loaded) {
             loaded = true;
             game.loading = true;
-
-            Service<Void> service = new Service<Void>() {
-                @Override
-                protected Task<Void> createTask() {
-                    return new Task<Void>() {
-                        @Override
-                        protected Void call() throws Exception {
-                            //Background work                       
-                            final CountDownLatch latch = new CountDownLatch(1);
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        game.initializeAllUI();
-                                        game.loading = false;
-                                    } finally {
-                                        latch.countDown();
-                                    }
-                                }
-                            });
-                            latch.await();
-                            //Keep with the background work
-                            return null;
-                        }
-                    };
-                }
-            };
-
+            Service service = getLoadService();
             service.start();
-
         }
     }
 
-    public void simulate() {
+    private Service getLoadService() {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return getLoadTask();
+            }
+        };
+        return service;
+    }
 
+    private Task<Void> getLoadTask() {
+        return new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                //Background work                       
+                final CountDownLatch latch = new CountDownLatch(1);
+                Platform.runLater(getLoadRunnable(latch));
+                latch.await();
+                //Keep with the background work
+                return null;
+            }
+        };
+    }
+
+    private Runnable getLoadRunnable(CountDownLatch latch) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    game.initializeAllUI();
+                    game.loading = false;
+                } finally {
+                    latch.countDown();
+                }
+            }
+        };
+    }
+
+    /**
+     * Simulates offline time of the game. Should only be called when the
+     * program is started.
+     */
+    public void simulate() {
         long currentTime = System.currentTimeMillis();
         long simulationTime = currentTime - save.getLastPlayTime();
-
         if (simulationTime > 1000 && !simulated && save.getDamagePerSecond().compareTo(BigInteger.ZERO) > 0) {
             simulated = true;
             game.simulating = true;
-            Service<Void> service = new Service<Void>() {
-                @Override
-                protected Task<Void> createTask() {
-                    return new Task<Void>() {
-                        @Override
-                        protected Void call() throws Exception {
-                            //Background work                       
-                            final CountDownLatch latch = new CountDownLatch(1);
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        simulation(simulationTime);
-                                        game.simulating = false;
-                                    } catch (SQLException ex) {
-                                        Logger.getLogger(Loader.class.getName()).log(Level.SEVERE, null, ex);
-                                    } finally {
-                                        latch.countDown();
-                                    }
-                                }
-                            });
-                            latch.await();
-                            //Keep with the background work
-                            return null;
-                        }
-                    };
-                }
-            };
-
+            Service service = getSimulateService(simulationTime);
             service.start();
 
         }
 
+    }
+
+    private Service getSimulateService(long simulationTime) {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return getSimulateTask(simulationTime);
+            }
+        };
+        return service;
+    }
+
+    private Task<Void> getSimulateTask(long simulationTime) {
+        return new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                //Background work                       
+                final CountDownLatch latch = new CountDownLatch(1);
+                Platform.runLater(getSimulationRunnable(simulationTime, latch));
+                latch.await();
+                //Keep with the background work
+                return null;
+            }
+        };
+    }
+
+    private Runnable getSimulationRunnable(long simulationTime, CountDownLatch latch) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    simulation(simulationTime);
+                    game.simulating = false;
+                } catch (SQLException ex) {
+                    Logger.getLogger(Loader.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    latch.countDown();
+                }
+            }
+        };
     }
 
     private void simulation(long time) throws SQLException {
@@ -167,7 +195,6 @@ public class Loader {
         }
 
         int newLevel = Math.max(level, stageLimit);
-
         save.setStage(newLevel);
         save.setActiveMonster(currentMonster);
         save.setMoney(save.getMoney().add(bounty));
