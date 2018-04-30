@@ -4,7 +4,7 @@ Lataa ohjelma [täältä](https://github.com/GourmetHunter/otm-harjoitustyo/rele
 
 ## Asennus
 
-Ohjelma olettaa että sen käynnistys hakemistossa on latauslinkin sisältämä hakemisto _lib_, jonka sisällä on tiedosto _sqlite-jdbc-3.8.10.1.jar_, ja hakemisto _classes_, jonka sisällä on tiedosto _database.db_.
+Ohjelma olettaa että sen käynnistys hakemistossa on latauslinkin sisältämä hakemisto *lib*, jonka sisällä on tiedosto _sqlite-jdbc-3.8.10.1.jar_, ja hakemisto *classes*, jonka sisällä on tiedosto _database.db_.
 
 ## Ohjelman käynnistäminen
 
