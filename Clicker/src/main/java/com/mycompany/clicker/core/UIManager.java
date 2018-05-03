@@ -29,6 +29,10 @@ public class UIManager {
     private Handler handler;
     private Display display;
 
+    // Loading UI Variables ----------------------------------------------------
+    public UI lUI;
+    public UIPanel lText;
+
     // Game UI Variables -------------------------------------------------------
     public UI gUI;
     public UIPanel gBtnPanel;
@@ -100,6 +104,22 @@ public class UIManager {
         this.setInitialize();
     }
 
+    /**
+     * Initializes loading screen
+     */
+    public void initializeLoadingScreen() {
+        this.lUI = new UI(this.handler);
+        this.lText = new UIPanel(handler, new Rectangle(154, 37, Color.DARKGRAY), "The game is loading, please wait.", display.getWidth() / 2 - 77, display.getHeight() / 2 - 125);
+        lUI.addElement(lText);
+        lUI.showUI(true);
+    }
+
+    /**
+     * Changes the value displayed in the Soul Shops amount of souls when the
+     * game is reset.
+     *
+     * @param value BigInteger
+     */
     public void updateNewSouls(BigInteger value) {
         if (Settings.notTesting) {
             this.ssThisRunSouls.setText("Soul from this run: " + Commons.getGameValue(value.toString()));
@@ -254,10 +274,10 @@ public class UIManager {
     }
 
     private void updateSETSounds() throws SQLException {
-        if(setSoundsON.getClicked()) {
+        if (setSoundsON.getClicked()) {
             Settings.changeSoundsState(true);
         }
-        if(setSoundsOFF.getClicked()) {
+        if (setSoundsOFF.getClicked()) {
             Settings.changeSoundsState(false);
         }
     }

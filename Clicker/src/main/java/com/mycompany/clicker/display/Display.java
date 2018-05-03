@@ -148,6 +148,7 @@ public class Display extends Application {
         Save save = Commons.saveDao.loadGame();
 
         Settings.notTesting = true;
+        game.getUiManager().initializeLoadingScreen();
         game.initialize(save);
 
         running = true;

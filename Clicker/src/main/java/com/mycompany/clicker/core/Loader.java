@@ -27,12 +27,14 @@ public class Loader {
     private Save save;
     private boolean loaded;
     private boolean simulated;
+    private long outTime;
 
     public Loader(Game game, Save save) {
         this.game = game;
         this.save = save;
         this.loaded = false;
         this.simulated = false;
+        this.outTime = 0;
     }
 
     /**
@@ -143,7 +145,7 @@ public class Loader {
     }
 
     private void simulation(long time) throws SQLException {
-
+        outTime = time;
         int stageLimit = save.getStage();
 
         BigInteger dpsM = new BigInteger("0");
@@ -178,6 +180,8 @@ public class Loader {
         BigInteger newSouls = save.getNewSouls();
 
         while (time >= kTime) { // if time remaining is larger than the time it takes to kill one monster
+
+            outTime = time;
 
             if (level < stageLimit) { // if level being simulated is lower then the level limit
                 long kills = time / kTime; // how many kills the simulation can do in the time
@@ -220,6 +224,8 @@ public class Loader {
         save.setMoney(save.getMoney().add(bounty));
         save.setNewSouls(newSouls);
         game.saveGame(save);
+
+        game.getUiManager().lUI.showUI(false);
 
     }
 

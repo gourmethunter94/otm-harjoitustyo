@@ -17,4 +17,5 @@
 | 30.4.18 | 6    | Dokumentaation päivitystä, javadoc, Game:n jakaminen osittain UIManageriin, Stagen vaihtaminen peliin. |
 | 31.4.18 | 3    | Koodin päivitystä siten että se noudattaa checkstyleä, javadocin luontia. |
 | 3.5.18  | 7    | SoundPlayer, sound setting, reset, soul shop, soulit simulaatioon ja SoulUpgradeDAO. |
-| Summa   | 52   |
+| 3.5.18  | 1    | Loading näkymä. |
+| Summa   | 53   |

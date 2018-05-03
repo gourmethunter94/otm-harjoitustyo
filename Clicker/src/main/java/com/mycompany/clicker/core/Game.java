@@ -47,6 +47,7 @@ public class Game {
         this.loading = false;
         this.simulating = false;
         this.simulationFinished = false;
+        this.uiManager = new UIManager(this, this.handler, this.display);
         cdM = new BigInteger("1");
         dpsM = new BigInteger("1");
     }
@@ -80,7 +81,6 @@ public class Game {
      * Initializes all parts of games main views UI.
      */
     public void initializeAllUI() {
-        this.uiManager = new UIManager(this, this.handler, this.display);
         this.uiManager.initialize();
     }
 
