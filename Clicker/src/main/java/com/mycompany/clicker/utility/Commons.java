@@ -8,6 +8,7 @@ package com.mycompany.clicker.utility;
 import com.mycompany.clicker.dao.Database;
 import com.mycompany.clicker.dao.SaveDAO;
 import com.mycompany.clicker.dao.SettingsDAO;
+import com.mycompany.clicker.dao.SoulUpgradeDAO;
 import com.mycompany.clicker.dao.UpgradeDAO;
 import java.io.File;
 import static java.lang.Math.random;
@@ -63,10 +64,16 @@ public class Commons {
     public static SettingsDAO settingsDao;
 
     /**
-     * Upgrades Data Access Object; Used when loadiang and saving data
-     * concerning upgrades from normal shop.
+     * Upgrades Data Access Object; Used when loading and saving data concerning
+     * upgrades from normal shop.
      */
     public static UpgradeDAO upgradeDao;
+
+    /**
+     * Soul Upgrade Data Access Object; Used when loading and saving data
+     * concerning soul based updates.
+     */
+    public static SoulUpgradeDAO soulUpgradeDao;
 
     /**
      * Data access object for game save. Money, sMoney, active stage, damage,
@@ -122,6 +129,7 @@ public class Commons {
         settingsDao = new SettingsDAO(database);
         saveDao = new SaveDAO(database);
         upgradeDao = new UpgradeDAO(database);
+        soulUpgradeDao = new SoulUpgradeDAO(database);
     }
 
     /**

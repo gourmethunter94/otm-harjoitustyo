@@ -16,7 +16,7 @@ import java.sql.SQLException;
  *
  * @author Olli K. Kärki
  */
-public class UpgradeDAO {
+public class SoulUpgradeDAO {
 
     private Database database;
 
@@ -24,7 +24,7 @@ public class UpgradeDAO {
      *
      * @param database Database
      */
-    public UpgradeDAO(Database database) {
+    public SoulUpgradeDAO(Database database) {
         this.database = database;
     }
 
@@ -34,13 +34,13 @@ public class UpgradeDAO {
      * @return boolean
      * @throws SQLException correcly initialize database in commons.
      */
-    public boolean upgradesExist() throws SQLException {
+    public boolean soulUpgradesExist() throws SQLException {
 
         boolean r = false;
 
         try (Connection conn = database.getConnection()) {
 
-            PreparedStatement stm = conn.prepareStatement("SELECT Count(*) AS count FROM UPGRADE");
+            PreparedStatement stm = conn.prepareStatement("SELECT Count(*) AS count FROM SOULUPGRADE");
             ResultSet rs = stm.executeQuery();
 
             int exists = rs.getInt("count");
@@ -64,9 +64,8 @@ public class UpgradeDAO {
      *
      * @throws SQLException correcly initialize database in commons.
      */
-    public void initializeUpgrades() throws SQLException {
-        database.executeStatement("INSERT INTO upgrade (key, level) VALUES (0, 0)");
-        database.executeStatement("INSERT INTO upgrade (key, level) VALUES (1, 0)");
+    public void initializeSoulUpgrades() throws SQLException {
+        database.executeStatement("INSERT INTO soulupgrade (key, level) VALUES (0, 0)");
     }
 
     /**
@@ -75,33 +74,29 @@ public class UpgradeDAO {
      *
      * @throws SQLException correcly initialize database in commons.
      */
-    public void loadUpgrades() throws SQLException {
+    public void loadSoulUpgrades() throws SQLException {
         try (Connection conn = database.getConnection()) {
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM upgrade");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM soulupgrade");
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 int key = rs.getInt("key");
                 BigInteger level = new BigInteger(rs.getInt("level") + "");
-                Assets.upgrades.get(key).setLevel(level);
+                Assets.soulUpgrades.get(key).setLevel(level);
             }
             rs.close();
             stm.close();
         }
     }
 
-    public void deleteAll() throws SQLException {
-        database.executeStatement("DELETE FROM upgrade");
-    }
-
     /**
-     * Updates level of specified upgrade from the shop.
+     * Updates level of specified soul based upgrade from the shop.
      *
      * @param key int
      * @param level int
      * @throws SQLException correcly initialize database in commons.
      */
-    public void updateUpgrade(int key, int level) throws SQLException {
-        database.executeStatement("UPDATE upgrade set level = " + level + " WHERE key = " + key);
+    public void updateSoulUpgrade(int key, int level) throws SQLException {
+        database.executeStatement("UPDATE soulupgrade set level = " + level + " WHERE key = " + key);
     }
 
 }

@@ -1,13 +1,12 @@
 package com.mycompany.clicker.core;
 
-import com.mycompany.clicker.domain.Creature;
+import com.mycompany.clicker.assets.Assets;
+import com.mycompany.clicker.domain.*;
 import com.mycompany.clicker.display.Display;
-import com.mycompany.clicker.domain.Save;
-import com.mycompany.clicker.utility.Commons;
-import com.mycompany.clicker.utility.Handler;
-import com.mycompany.clicker.utility.Settings;
+import com.mycompany.clicker.utility.*;
 
 import java.math.BigInteger;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
@@ -26,6 +25,7 @@ public class Game {
     private BigInteger damagePerSecond;
     private BigInteger money;
     private BigInteger souls;
+    private BigInteger newSouls;
     private int stage;
     private int activeStage;
     private int activeMonster;
@@ -36,18 +36,19 @@ public class Game {
     public boolean simulating;
     private boolean simulationFinished;
     private UIManager uiManager;
+    private BigInteger cdM;
+    private BigInteger dpsM;
+    private SoundPlayer soundPlayer;
 
     // constructor -------------------------------------------------------------
-    /**
-     *
-     * @param display Display
-     */
     public Game(Display display) {
         this.display = display;
         this.handler = new Handler(this);
         this.loading = false;
         this.simulating = false;
         this.simulationFinished = false;
+        cdM = new BigInteger("1");
+        dpsM = new BigInteger("1");
     }
 
     //initialization -----------------------------------------------------------
@@ -57,12 +58,13 @@ public class Game {
      * @param save Save
      * @throws java.sql.SQLException correcly initialize database in commons.
      */
-    public void initialize(Save save) throws SQLException {
+    public void initialize(Save save) throws SQLException, MalformedURLException {
         clickDamage = save.getClickDamage();
         damagePerSecond = save.getDamagePerSecond();
         money = save.getMoney();
         souls = save.getsMoney();
         monsterLimit = 10;
+        newSouls = save.getNewSouls();
         stage = save.getStage();
         activeStage = stage;
         activeMonster = save.getActiveMonster();
@@ -71,6 +73,7 @@ public class Game {
         if (Settings.notTesting) {
             loader.simulate();
         }
+        soundPlayer = new SoundPlayer();
     }
 
     /**
@@ -92,10 +95,7 @@ public class Game {
     public void update(boolean applyDPS) throws SQLException, Exception {
         if (!loading && !simulating) {
             if (!this.simulationFinished && Settings.notTesting) {
-                this.simulationFinished = true;
-                this.updateMoney(BigInteger.ZERO);
-                this.updateCDandDPSPanel();
-                this.updateStageAndMonsterPanel(activeStage);
+                this.lastInitialization();
             }
             if (currentCreature == null) {
                 this.newMonster();
@@ -110,10 +110,20 @@ public class Game {
         }
     }
 
+    private void lastInitialization() {
+        this.simulationFinished = true;
+        this.updateMoney(BigInteger.ZERO);
+        this.updateCDandDPSPanel();
+        this.updateStageAndMonsterPanel(activeStage);
+        uiManager.updateNewSouls(this.newSouls);
+        this.setCdM();
+        this.setDpsM();
+    }
+
     private void updateGameProper(boolean applyDPS) throws SQLException {
-        BigInteger damage = new BigInteger("" + clicks).multiply(clickDamage);
+        BigInteger damage = new BigInteger("" + clicks).multiply(clickDamage).multiply(cdM);
         if (applyDPS) {
-            damage = damage.add(damagePerSecond);
+            damage = damage.add(damagePerSecond).multiply(dpsM);
         }
         if (damage.compareTo(BigInteger.ZERO) > 0) {
             currentCreature.damage(damage);
@@ -126,6 +136,9 @@ public class Game {
 
     private void updateCreatureDeath() throws SQLException {
         if (currentCreature.getDead()) {
+            if (Settings.sounds) {
+                soundPlayer.playMonsterDeath();
+            }
             this.updateMoney(currentCreature.getBounty());
             if (activeStage == stage) {
                 activeMonster += 1;
@@ -134,8 +147,22 @@ public class Game {
                 activeMonster = 1;
                 stage++;
                 activeStage++;
+                this.addNewSouls();
             }
             this.newMonster();
+        }
+    }
+
+    private void addNewSouls() {
+        if (stage == 100) {
+            this.newSouls = BigInteger.ONE;
+            uiManager.updateNewSouls(newSouls);
+        } else if (stage > 100) {
+            if (stage % 5 == 0) {
+                int multiplier = Math.max(1, stage / 250);
+                this.newSouls = this.newSouls.add(new BigInteger((stage / 50) + "").multiply(new BigInteger(multiplier + "")));
+                uiManager.updateNewSouls(newSouls);
+            }
         }
     }
 
@@ -205,8 +232,8 @@ public class Game {
      *
      * @throws java.lang.Exception correcly initialize database in commons.
      */
-    public void restart() throws Exception {
-        this.display.buildNewStage();
+    public void restart(boolean save) throws Exception {
+        this.display.buildNewStage(save);
     }
 
     /**
@@ -216,7 +243,7 @@ public class Game {
      */
     public void saveGame() throws SQLException {
         if (Settings.notTesting) { // Tests can't save the game.
-            Commons.saveDao.saveGame(money, souls, clickDamage, damagePerSecond, stage, activeMonster);
+            Commons.saveDao.saveGame(money, souls, clickDamage, damagePerSecond, stage, activeMonster, newSouls);
         }
     }
 
@@ -235,7 +262,8 @@ public class Game {
             this.clickDamage = save.getClickDamage();
             this.damagePerSecond = save.getDamagePerSecond();
             this.activeMonster = save.getActiveMonster();
-            Commons.saveDao.saveGame(save.getMoney(), save.getsMoney(), save.getClickDamage(), save.getDamagePerSecond(), save.getStage(), save.getActiveMonster());
+            this.newSouls = save.getNewSouls();
+            Commons.saveDao.saveGame(save.getMoney(), save.getsMoney(), save.getClickDamage(), save.getDamagePerSecond(), save.getStage(), save.getActiveMonster(), save.getNewSouls());
         }
     }
 
@@ -251,11 +279,22 @@ public class Game {
     }
 
     /**
+     * Increases the souls by given value, also updates part of the ui
+     * displaying souls.
+     *
+     * @param value BigInteger
+     */
+    public void updateSouls(BigInteger value) {
+        this.souls = souls.add(value);
+        this.uiManager.gSlPanel.setText("Souls: " + Commons.getGameValue(souls.toString()));
+    }
+
+    /**
      * Updates click damage and dps panels of the ui.
      */
     public void updateCDandDPSPanel() {
-        this.uiManager.gCDPanel.getText().setText("Click Damage: " + Commons.getGameValue(clickDamage.toString()));
-        this.uiManager.gDPSPanel.getText().setText("Damage per Second: " + Commons.getGameValue(damagePerSecond.toString()));
+        this.uiManager.gCDPanel.getText().setText("Click Damage: " + Commons.getGameValue(clickDamage.multiply(cdM).toString()));
+        this.uiManager.gDPSPanel.getText().setText("Damage per Second: " + Commons.getGameValue(damagePerSecond.multiply(dpsM).toString()));
     }
 
     /**
@@ -284,6 +323,36 @@ public class Game {
         return base.add(stageBase);
     }
 
+    /**
+     * Sets correct values to click based damage displays.
+     */
+    public void setCdM() {
+        BigInteger multiplier = new BigInteger("0");
+        for (int i = 0; i < Assets.upgradesCount; i++) {
+            multiplier = multiplier = multiplier.add(Assets.upgrades.get(i).getCdM());
+        }
+        for (int i = 0; i < Assets.soulUpgradesCount; i++) {
+            multiplier = multiplier = multiplier.add(Assets.soulUpgrades.get(i).getCdM());
+        }
+        this.cdM = multiplier;
+        updateCDandDPSPanel();
+    }
+
+    /**
+     * Sets correct values to dps based displays.
+     */
+    public void setDpsM() {
+        BigInteger multiplier = new BigInteger("0");
+        for (int i = 0; i < Assets.upgradesCount; i++) {
+            multiplier = multiplier.add(Assets.upgrades.get(i).getDpsM());
+        }
+        for (int i = 0; i < Assets.soulUpgradesCount; i++) {
+            multiplier = multiplier.add(Assets.soulUpgrades.get(i).getDpsM());
+        }
+        this.dpsM = multiplier;
+        updateCDandDPSPanel();
+    }
+
     // Display methods ---------------------------------------------------------
     /**
      * Adds a Node to the root of Display.
@@ -302,6 +371,10 @@ public class Game {
      */
     public void removeNode(Node node) {
         this.display.removeNode(node);
+    }
+
+    public void addToNewSouls(BigInteger value) {
+        this.newSouls = newSouls.add(value);
     }
 
     // Getters and Setters -----------------------------------------------------
@@ -383,6 +456,18 @@ public class Game {
 
     public void setMoney(BigInteger money) {
         this.money = money;
+    }
+
+    public BigInteger getNewSouls() {
+        return newSouls;
+    }
+
+    public void setNewSouls(BigInteger newSouls) {
+        this.newSouls = newSouls;
+    }
+
+    public void setSouls(BigInteger souls) {
+        this.souls = souls;
     }
 
     // private methods ---------------------------------------------------------

@@ -59,6 +59,12 @@ public class UIManager {
     public UI ssUI;
     public UIPanel ssPanel;
     public UIButton ssClose;
+    public UIPanel ssThisRunSouls;
+    public UIButton ssResetRun;
+    public UIPanel ssSoulsExplainedFst;
+    public UIPanel ssSoulsExplainedSnd;
+    public UIPanel[] ssUpgradePanels;
+    public UIButton[] ssUpgradeButtons;
     // -------------------------------------------------------------------------
 
     // Settings UI -------------------------------------------------------------
@@ -68,6 +74,9 @@ public class UIManager {
     public UIPanel setFullscreenPanel;
     public UIButton setFullscreenON;
     public UIButton setFullscreenOFF;
+    public UIPanel setSoundsPanel;
+    public UIButton setSoundsON;
+    public UIButton setSoundsOFF;
 
     // Constructor -------------------------------------------------------------
     public UIManager(Game game, Handler handler, Display display) {
@@ -89,6 +98,12 @@ public class UIManager {
         this.nShopInitialize();
         this.sShopInitialize();
         this.setInitialize();
+    }
+
+    public void updateNewSouls(BigInteger value) {
+        if (Settings.notTesting) {
+            this.ssThisRunSouls.setText("Soul from this run: " + Commons.getGameValue(value.toString()));
+        }
     }
 
     //Methods for updating all the UIs -----------------------------------------
@@ -185,9 +200,35 @@ public class UIManager {
         }
     }
 
-    private void updateSSUI() {
+    private void updateSSUI() throws SQLException, Exception {
         if (ssClose.getClicked()) {
             ssUI.showUI(false);
+        }
+        if (ssResetRun.getClicked()) {
+            if (!game.getNewSouls().equals(BigInteger.ZERO)) {
+                Commons.upgradeDao.deleteAll();
+                Commons.saveDao.saveGame(BigInteger.ZERO, game.getSouls().add(game.getNewSouls()), BigInteger.ONE, BigInteger.ZERO, 1, 0, BigInteger.ZERO);
+                game.restart(false);
+                return;
+            }
+        }
+        this.updateSSItems();
+    }
+
+    private void updateSSItems() throws SQLException {
+        for (int i = 0; i < Assets.soulUpgradesCount; i++) { // Shop buttons 
+            if (ssUpgradeButtons[i].getClicked()) { // if button was clicked
+                if (game.getSouls().compareTo(Assets.soulUpgrades.get(i).getNextLevelPrice()) >= 0) { // if there was enough money
+                    game.setSouls(game.getSouls().subtract(Assets.soulUpgrades.get(i).getNextLevelPrice())); // reduce money from total
+                    Assets.levelUpSoulUpgrade(i, handler, true); // increase level of the upgrade
+                    ssUpgradePanels[i].getText().setText(Assets.soulUpgrades.get(i).getName() + ": " + Assets.soulUpgrades.get(i).toString()); // change text in panel and button
+                    ssUpgradeButtons[i].getText().setText("Buy: " + Commons.getGameValue(Assets.soulUpgrades.get(i).getNextLevelPrice().toString()));
+                    game.updateSouls(BigInteger.ZERO); // change money text
+                    Commons.soulUpgradeDao.updateSoulUpgrade(i, Assets.soulUpgrades.get(i).getLevel().intValue()); // update upgrade database
+                    game.saveGame(); // update save in database
+                    game.updateCDandDPSPanel();
+                }
+            }
         }
     }
 
@@ -195,15 +236,29 @@ public class UIManager {
         if (setClose.getClicked()) {
             setUI.showUI(false);
         }
+        this.updateSETFullscreen();
+        this.updateSETSounds();
+    }
+
+    private void updateSETFullscreen() throws SQLException, Exception {
         if (setFullscreenON.getClicked()) {
             if (Settings.changeScreenState(true)) {
-                game.restart();
+                game.restart(true);
             }
         }
         if (setFullscreenOFF.getClicked()) {
             if (Settings.changeScreenState(false)) {
-                game.restart();
+                game.restart(true);
             }
+        }
+    }
+
+    private void updateSETSounds() throws SQLException {
+        if(setSoundsON.getClicked()) {
+            Settings.changeSoundsState(true);
+        }
+        if(setSoundsOFF.getClicked()) {
+            Settings.changeSoundsState(false);
         }
     }
 
@@ -264,6 +319,10 @@ public class UIManager {
         this.nsClose = new UIButton(handler, new Rectangle(14, 14, Color.RED), "X", 424, 82, 14, 14);
         nsUI.addElement(nsPanel);
         nsUI.addElement(nsClose);
+        this.nShopInitializeItems();
+    }
+
+    private void nShopInitializeItems() {
         this.nsUpgradePanels = new UIPanel[Assets.upgradesCount];
         this.nsUpgradeButtons = new UIButton[Assets.upgradesCount];
         for (int i = 0; i < Assets.upgradesCount; i++) {
@@ -279,8 +338,30 @@ public class UIManager {
     private void sShopInitialize() {
         this.ssPanel = new UIPanel(handler, new Rectangle(440, 648, Color.CORNFLOWERBLUE), "Soul Shop", 0, 80);
         this.ssClose = new UIButton(handler, new Rectangle(14, 14, Color.MAROON), "X", 424, 82, 14, 14);
+        this.ssThisRunSouls = new UIPanel(handler, new Rectangle(436, 18, Color.ALICEBLUE), "Soul from this run: " + game.getNewSouls(), 2, 100);
+        this.ssResetRun = new UIButton(handler, new Rectangle(34, 14, Color.LIGHTBLUE), "Reset", 402, 102, 34, 14);
+        this.ssSoulsExplainedFst = new UIPanel(handler, new Rectangle(436, 18, Color.CORNFLOWERBLUE), "You gain souls every 5 stages, first time at the 100th stage.", 2, 120);
+        this.ssSoulsExplainedSnd = new UIPanel(handler, new Rectangle(436, 18, Color.CORNFLOWERBLUE), "Reset nulls all progress, except the soul related stuff.", 2, 140);
         ssUI.addElement(ssPanel);
         ssUI.addElement(ssClose);
+        ssUI.addElement(ssThisRunSouls);
+        ssUI.addElement(ssResetRun);
+        ssUI.addElement(ssSoulsExplainedFst);
+        ssUI.addElement(ssSoulsExplainedSnd);
+        this.sShopInitializeItems();
+    }
+
+    private void sShopInitializeItems() {
+        this.ssUpgradePanels = new UIPanel[Assets.soulUpgradesCount];
+        this.ssUpgradeButtons = new UIButton[Assets.soulUpgradesCount];
+        for (int i = 0; i < Assets.soulUpgradesCount; i++) {
+            String upgradeValue = Assets.soulUpgrades.get(i).toString();
+            this.ssUpgradePanels[i] = new UIPanel(handler, new Rectangle(436, 18, Color.ALICEBLUE), Assets.soulUpgrades.get(i).getName() + ": " + upgradeValue, 2, 160 + i * 20);
+            this.ssUpgradeButtons[i] = new UIButton(handler, new Rectangle(108, 14, Color.LIGHTBLUE),
+                    "Buy: " + Commons.getGameValue(Assets.soulUpgrades.get(i).getNextLevelPrice().toString()), 328, 162 + i * 20, 108, 14);
+            ssUI.addElement(ssUpgradePanels[i]);
+            ssUI.addElement(ssUpgradeButtons[i]);
+        }
     }
 
     private void setInitialize() {
@@ -289,11 +370,17 @@ public class UIManager {
         this.setFullscreenPanel = new UIPanel(handler, new Rectangle(436, 18, Color.LIGHTGRAY), "Fullscreen", 2, 100);
         this.setFullscreenON = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), "ON", 68, 102, 28, 14);
         this.setFullscreenOFF = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), "OFF", 104, 102, 28, 14);
+        this.setSoundsPanel = new UIPanel(handler, new Rectangle(436, 18, Color.LIGHTGRAY), "Sounds", 2, 120);
+        this.setSoundsON = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), "ON", 68, 122, 28, 14);
+        this.setSoundsOFF = new UIButton(handler, new Rectangle(28, 14, Color.GRAY), "OFF", 104, 122, 28, 14);
         setUI.addElement(setPanel);
         setUI.addElement(setClose);
         setUI.addElement(setFullscreenPanel);
         setUI.addElement(setFullscreenON);
         setUI.addElement(setFullscreenOFF);
+        setUI.addElement(setSoundsPanel);
+        setUI.addElement(setSoundsON);
+        setUI.addElement(setSoundsOFF);
     }
 
 }

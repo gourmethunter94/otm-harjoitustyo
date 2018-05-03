@@ -11,6 +11,7 @@ package com.mycompany.clicker.dao;
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Database {
@@ -31,5 +32,19 @@ public class Database {
      */
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:sqlite:" + databaseAddress);
+    }
+
+    /**
+     * Excecutes sql statement that is given as the parameter.
+     *
+     * @param statement SQL statement as String
+     * @throws SQLException initialize database from Commons.
+     */
+    public void executeStatement(String statement) throws SQLException {
+        Connection conn = this.getConnection();
+        PreparedStatement stm = conn.prepareStatement(statement);
+        stm.execute();
+        stm.close();
+        conn.close();
     }
 }

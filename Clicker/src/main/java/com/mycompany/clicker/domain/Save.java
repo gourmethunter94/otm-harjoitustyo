@@ -18,12 +18,13 @@ public class Save {
     private BigInteger sMoney;
     private BigInteger clickDamage;
     private BigInteger damagePerSecond;
+    private BigInteger newSouls;
     private long lastPlayTime;
     private int stage;
     private int activeMonster;
 
     //Constructor --------------------------------------------------------------
-    public Save(String money, String sMoney, String clickDamage, String damagePerSecond, String lastPlayTime, int stage, int activeMonster) {
+    public Save(String money, String sMoney, String clickDamage, String damagePerSecond, String lastPlayTime, int stage, int activeMonster, String newSouls) {
         this.money = new BigInteger(money);
         this.sMoney = new BigInteger(sMoney);
         this.clickDamage = new BigInteger(clickDamage);
@@ -31,6 +32,7 @@ public class Save {
         this.lastPlayTime = Long.parseLong(lastPlayTime);
         this.stage = stage;
         this.activeMonster = activeMonster;
+        this.newSouls = new BigInteger(newSouls);
     }
 
     // Getters -----------------------------------------------------------------
@@ -62,6 +64,10 @@ public class Save {
         return activeMonster;
     }
 
+    public BigInteger getNewSouls() {
+        return newSouls;
+    }
+
     public void setMoney(BigInteger money) {
         this.money = money;
     }
@@ -88,6 +94,10 @@ public class Save {
 
     public void setActiveMonster(int activeMonster) {
         this.activeMonster = activeMonster;
+    }
+
+    public void setNewSouls(BigInteger newSouls) {
+        this.newSouls = newSouls;
     }
 
 }

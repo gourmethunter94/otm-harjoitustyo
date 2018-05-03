@@ -31,8 +31,9 @@ public class SaveTest {
         String lastPlayTime = "10";
         int stage = 5;
         int activeMonster = 2;
+        String newSouls = "123";
         
-        Save save = new Save(money, sMoney, clickDamage, damagePerSecond, lastPlayTime, stage, activeMonster);
+        Save save = new Save(money, sMoney, clickDamage, damagePerSecond, lastPlayTime, stage, activeMonster, newSouls);
         
         assertTrue(save.getMoney().equals(new BigInteger(money)));
         assertTrue(save.getsMoney().equals(new BigInteger(sMoney)));
@@ -41,6 +42,7 @@ public class SaveTest {
         assertTrue(save.getStage() == stage);
         assertTrue(save.getActiveMonster() == activeMonster);
         assertTrue(save.getLastPlayTime() == Long.parseLong(lastPlayTime));
+        assertTrue(save.getNewSouls().equals(new BigInteger(newSouls)));
         
     }
     
@@ -54,8 +56,9 @@ public class SaveTest {
         String lastPlayTime = "110";
         int stage = 55;
         int activeMonster = 12;
+        String newSouls = "55555";
         
-        Save save = new Save(money, sMoney, clickDamage, damagePerSecond, lastPlayTime, stage, activeMonster);
+        Save save = new Save(money, sMoney, clickDamage, damagePerSecond, lastPlayTime, stage, activeMonster, newSouls);
         
         assertTrue(save.getMoney().equals(new BigInteger(money)));
         assertTrue(save.getsMoney().equals(new BigInteger(sMoney)));
@@ -64,12 +67,13 @@ public class SaveTest {
         assertTrue(save.getStage() == stage);
         assertTrue(save.getActiveMonster() == activeMonster);
         assertTrue(save.getLastPlayTime() == Long.parseLong(lastPlayTime));
+        assertTrue(save.getNewSouls().equals(new BigInteger(newSouls)));
         
     }
     
     @Test
     public void setMethodsWork() {
-        Save save = new Save("0", "0", "0", "0", "0", 0, 0);
+        Save save = new Save("0", "0", "0", "0", "0", 0, 0, "0");
         save.setMoney(new BigInteger("23"));
         assertTrue("Save setMoney sets wrong value!", save.getMoney().equals(new BigInteger("23")));
         save.setMoney(new BigInteger("53"));
@@ -100,6 +104,12 @@ public class SaveTest {
         assertTrue("Save setsMoney sets wrong value!", save.getsMoney().equals(new BigInteger("7533")));
         save.setsMoney(new BigInteger("51253"));
         assertTrue("Save setsMoney sets wrong value!", save.getsMoney().equals(new BigInteger("51253")));
+        save.setNewSouls(new BigInteger("123"));
+        assertTrue("Save setNewSouls sets wrong value!", save.getNewSouls().equals(new BigInteger("123")));
+        save.setNewSouls(new BigInteger("123321"));
+        assertTrue("Save setNewSouls sets wrong value!", save.getNewSouls().equals(new BigInteger("123321")));
+        save.setNewSouls(new BigInteger("16233261"));
+        assertTrue("Save setNewSouls sets wrong value!", save.getNewSouls().equals(new BigInteger("16233261")));
     }
     
 }

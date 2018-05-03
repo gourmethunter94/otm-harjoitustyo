@@ -90,7 +90,7 @@ public class GameTest {
         Display d = new Display();
         d.createContent();
         Game g = new Game(d);
-        g.initialize(new Save("1", "2", "0", "0", "0", 1, 1));
+        g.initialize(new Save("1", "2", "0", "0", "0", 1, 1, "0"));
         
         Thread.sleep(500); // Give UI time to load in thread.
         
@@ -125,7 +125,7 @@ public class GameTest {
         
         Game g = new Game(d);
 
-        g.initialize(new Save("1", "1", "1", "1", "1", 1, 1));
+        g.initialize(new Save("1", "1", "1", "1", "1", 1, 1, "0"));
         
         Thread.sleep(500); // Give UI time to load in thread.
         

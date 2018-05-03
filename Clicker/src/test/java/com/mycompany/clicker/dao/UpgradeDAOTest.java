@@ -53,44 +53,4 @@ public class UpgradeDAOTest {
             assertTrue("The upgrades exist, but upgradesExists returns False", upgradeDao.upgradesExist() == true);
         }
     }
-    
-    @Test
-    public void executeStatementWorks() throws SQLException {
-        PreparedStatement stm = database.getConnection().prepareStatement("SELECT Count(*) as count FROM upgrade WHERE level = -1");
-        ResultSet rs = stm.executeQuery();
-        
-        int count = rs.getInt("count");
-        
-        rs.close();
-        stm.close();
-        
-        assertTrue("An upgrade that shouldn't exist does exit!", count == 0);
-        
-        upgradeDao.executeStatement(database.getConnection(), "INSERT INTO upgrade (key, level) VALUES (-1, -1)");
-        
-        PreparedStatement stm2 = database.getConnection().prepareStatement("SELECT Count(*) as count FROM upgrade WHERE level = -1");
-        ResultSet rs2 = stm2.executeQuery();
-        
-        int count2 = rs2.getInt("count");
-        
-        rs2.close();
-        stm2.close();
-        
-        assertTrue("The created upgrade doesn't exit!", count2 == 1);
-        
-        upgradeDao.executeStatement(database.getConnection(), "DELETE FROM upgrade WHERE level = -1");
-        
-        PreparedStatement stm3 = database.getConnection().prepareStatement("SELECT Count(*) as count FROM upgrade WHERE level = -1");
-        ResultSet rs3 = stm3.executeQuery();
-        
-        int count3 = rs3.getInt("count");
-        
-        rs3.close();
-        stm3.close();
-        
-        assertTrue("The created upgrade was not deleted!", count3 == 0);
-        
-        
-        
-    }
 }

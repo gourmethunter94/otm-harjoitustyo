@@ -60,7 +60,7 @@ public class SaveDAOTest {
         boolean cleanSave = false;
         if (!saveDao.saveExists()) {
             cleanSave = true;
-            PreparedStatement stm2 = database.getConnection().prepareStatement("INSERT INTO Save (money, sMoney, clickDamage, damagePerSecond, lastPlayTime, stage, activeMonster) VALUES ('22', '33', '44', '55', '-123', 66, 66)");
+            PreparedStatement stm2 = database.getConnection().prepareStatement("INSERT INTO Save (money, sMoney, clickDamage, damagePerSecond, lastPlayTime, stage, activeMonster, newSouls) VALUES ('22', '33', '44', '55', '-123', 66, 66, '6')");
             stm2.execute();
             stm2.close();
         }
@@ -77,6 +77,7 @@ public class SaveDAOTest {
         assertTrue("loadSave gives wrong value", save.getClickDamage().toString().equals(rs.getString("clickDamage")));
         assertTrue("loadSave gives wrong value", save.getMoney().toString().equals(rs.getString("money")));
         assertTrue("loadSave gives wrong value", save.getsMoney().toString().equals(rs.getString("sMoney")));
+        assertTrue("loadSave gives wrong value", save.getNewSouls().toString().equals(rs.getString("newSouls")));
         
         rs.close();
         stm.close();

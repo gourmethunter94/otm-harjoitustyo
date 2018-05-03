@@ -5,6 +5,7 @@
  */
 package com.mycompany.clicker.core;
 
+import com.mycompany.clicker.assets.Assets;
 import com.mycompany.clicker.domain.Save;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
@@ -144,7 +145,18 @@ public class Loader {
     private void simulation(long time) throws SQLException {
 
         int stageLimit = save.getStage();
-        BigInteger damage = save.getDamagePerSecond();
+
+        BigInteger dpsM = new BigInteger("0");
+        for (int i = 0; i < Assets.upgradesCount; i++) {
+            dpsM = dpsM.add(Assets.upgrades.get(i).getDpsM());
+        }
+        for (int i = 0; i < Assets.soulUpgradesCount; i++) {
+            dpsM = dpsM.add(Assets.soulUpgrades.get(i).getDpsM());
+        }
+        if (dpsM.equals(BigInteger.ZERO)) {
+            dpsM = BigInteger.ONE;
+        }
+        BigInteger damage = save.getDamagePerSecond().multiply(dpsM);
         BigInteger limit = new BigInteger("30");
         int level = 1;
 
@@ -163,6 +175,8 @@ public class Loader {
         BigInteger bounty = BigInteger.ZERO;
         int currentMonster = activeMonster;
 
+        BigInteger newSouls = save.getNewSouls();
+
         while (time >= kTime) { // if time remaining is larger than the time it takes to kill one monster
 
             if (level < stageLimit) { // if level being simulated is lower then the level limit
@@ -175,6 +189,12 @@ public class Loader {
                 if (monsters * kTime < time) { // can the simulation clear the stage
                     time -= (monsters * kTime); // remove required amount of time from the simulation
                     bounty = bounty.add(game.monsterMoney(level).multiply(new BigInteger(monsters + ""))); // add to the bounty
+                    if (stageLimit == 100) {
+                        newSouls = BigInteger.ONE;
+                    } else if (stageLimit > 100 && (stageLimit % 5 == 0)) {
+                        int multiplier = Math.max(1, stageLimit / 250);
+                        newSouls = newSouls.add(new BigInteger((stageLimit / 50) + "").multiply(new BigInteger(multiplier + "")));
+                    }
                     stageLimit++; // increase stageLimit
                     level++; // increase level
                     currentMonster = 1;
@@ -198,6 +218,7 @@ public class Loader {
         save.setStage(newLevel);
         save.setActiveMonster(currentMonster);
         save.setMoney(save.getMoney().add(bounty));
+        save.setNewSouls(newSouls);
         game.saveGame(save);
 
     }

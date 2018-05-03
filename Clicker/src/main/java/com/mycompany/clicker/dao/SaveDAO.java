@@ -70,7 +70,7 @@ public class SaveDAO {
 
             String time = System.currentTimeMillis() + "";
 
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Save (money, sMoney, clickDamage, damagePerSecond, lastPlayTime, stage, activeMonster) VALUES ('0', '0', '1', '0', '" + time + "', 1, 1)");
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Save (money, sMoney, clickDamage, damagePerSecond, lastPlayTime, stage, activeMonster, newSouls) VALUES ('0', '0', '1', '0', '" + time + "', 1, 1, '0')");
             stm.execute();
             stm.close();
 
@@ -89,28 +89,22 @@ public class SaveDAO {
      * @param activeMonster int
      * @throws SQLException correcly initialize database in commons.
      */
-    public void saveGame(BigInteger money, BigInteger sMoney, BigInteger clickDamage, BigInteger damagePerSecond, int stage, int activeMonster) throws SQLException {
+    public void saveGame(BigInteger money, BigInteger sMoney, BigInteger clickDamage, BigInteger damagePerSecond, int stage, int activeMonster, BigInteger newSouls) throws SQLException {
 
         try (Connection conn = database.getConnection()) {
-
-            String strMoney = money.toString();
-            String strSMoney = sMoney.toString();
-            String strClickDamage = clickDamage.toString();
-            String strDamagePerSecond = damagePerSecond.toString();
-            String strTime = System.currentTimeMillis() + "";
-
-            PreparedStatement stm = conn.prepareStatement("UPDATE Save SET money = ?, sMoney = ?, clickDamage = ?, damagePerSecond = ?, lastPlayTime = ?, stage = ?, activeMonster = ?");
-            stm.setString(1, strMoney);
-            stm.setString(2, strSMoney);
-            stm.setString(3, strClickDamage);
-            stm.setString(4, strDamagePerSecond);
-            stm.setString(5, strTime);
+            PreparedStatement stm = conn.prepareStatement("UPDATE Save SET money = ?, sMoney = ?, clickDamage = ?, damagePerSecond = ?, lastPlayTime = ?, stage = ?, activeMonster = ?, newSouls = ?");
+            stm.setString(1, money.toString());
+            stm.setString(2, sMoney.toString());
+            stm.setString(3, clickDamage.toString());
+            stm.setString(4, damagePerSecond.toString());
+            stm.setString(5, System.currentTimeMillis() + "");
             stm.setInt(6, stage);
             stm.setInt(7, activeMonster);
+            stm.setString(8, newSouls.toString());
+            
             stm.execute();
-
+            
             stm.close();
-
         }
 
     }
@@ -137,8 +131,9 @@ public class SaveDAO {
             String time = rs.getString("lastPlayTime");
             int stage = rs.getInt("stage");
             int activeMonster = rs.getInt("activeMonster");
+            String newSouls = rs.getString("newSouls");
 
-            save = new Save(money, sMoney, clickDamage, damagePerSecond, time, stage, activeMonster);
+            save = new Save(money, sMoney, clickDamage, damagePerSecond, time, stage, activeMonster, newSouls);
 
             rs.close();
             stm.close();

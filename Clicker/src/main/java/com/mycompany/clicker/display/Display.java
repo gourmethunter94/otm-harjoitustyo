@@ -10,6 +10,7 @@ import com.mycompany.clicker.core.Game;
 import com.mycompany.clicker.domain.Save;
 import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Settings;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,7 +93,7 @@ public class Display extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws SQLException, ClassNotFoundException {
+    public void start(Stage stage) throws SQLException, ClassNotFoundException, MalformedURLException {
 
         running = false;
 
@@ -136,6 +137,10 @@ public class Display extends Application {
 
         if (!Commons.upgradeDao.upgradesExist()) {
             Commons.upgradeDao.initializeUpgrades();
+        }
+
+        if (!Commons.soulUpgradeDao.soulUpgradesExist()) {
+            Commons.soulUpgradeDao.initializeSoulUpgrades();
         }
 
         Assets.initialize();
@@ -189,9 +194,11 @@ public class Display extends Application {
      *
      * @throws Exception call from only same thread.
      */
-    public void buildNewStage() throws Exception {
+    public void buildNewStage(boolean save) throws Exception {
         this.stage.close();
-        this.game.saveGame();
+        if (save) {
+            this.game.saveGame();
+        }
         this.start(new Stage());
     }
 

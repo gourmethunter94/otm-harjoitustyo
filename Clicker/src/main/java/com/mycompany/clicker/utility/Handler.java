@@ -118,4 +118,12 @@ public class Handler {
         this.game.setDPS(value);
     }
 
+    public void setCdM() {
+        this.game.setCdM();
+    }
+
+    public void setDpsM() {
+        this.game.setDpsM();
+    }
+
 }

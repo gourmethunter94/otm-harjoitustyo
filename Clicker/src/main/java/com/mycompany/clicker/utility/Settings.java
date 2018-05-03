@@ -54,6 +54,12 @@ public class Settings {
     public static boolean notTesting = false;
 
     /**
+     * Tells if the game has sounds on or not. Use only after initializing
+     * Settings class.
+     */
+    public static boolean sounds;
+
+    /**
      * Initializes the Settings class. Initialize Commons before calling.
      *
      * @throws SQLException correcly initialize database in commons.
@@ -69,6 +75,8 @@ public class Settings {
             screenWidth = screenSize.getWidth();
             screenHeight = screenSize.getHeight();
         }
+
+        sounds = Commons.settingsDao.getSounds();
 
         xScale = screenWidth / Commons.baseWidth;
         yScale = screenHeight / Commons.baseHeight;
@@ -90,6 +98,13 @@ public class Settings {
             return true;
         }
         return false;
+    }
+    
+    public static void changeSoundsState(boolean value) throws SQLException {
+        if (sounds != value) {
+            sounds = value;
+            Commons.settingsDao.setSounds(sounds);
+        }
     }
 
 }
