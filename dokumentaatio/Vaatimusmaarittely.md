@@ -29,6 +29,7 @@ Pelin ideana on kerätä rahaa, ja edetä tasoissa. Tämä kuitenkin voi alkaa t
 - "Loputon" raha
   - Normaalisti raha rajoittuisi yhteen long tai integer muuttujaan, pelissä kuitenkin on tarkoitus saada sellaisia summia raheeta, että mainitut tietomuodot ovat aivan liian rajallisia, joten toteutetaan erittäinpaljon laajempi tietotyyppi.
   - Copper -> Silver -> Gold -> Platinum -> Diamond -> ... Eli ideana on tehdä olio jossa on taulukko integereitä tai longeja, ja toimivia matemaattisia operaatioita tälle oliolle.
+  - Javan tarjoama BigInteger luokka oli tarpeeksi toimiva, oma teutus todettu turhaksi.
 
 - Näkymät
   - Kauppa 1; Normaali raha
