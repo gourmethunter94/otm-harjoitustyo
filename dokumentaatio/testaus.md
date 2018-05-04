@@ -40,6 +40,13 @@ Ohjelma sisältää osia jotka on testattu automatisoitujen testien sijaan manua
 
 Ohjelma on asennettu [käyttöohjeen](https://github.com/GourmetHunter/otm-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md) mukaisesti Windows, Linux ja OSX käyttöjärjestelmillä.
 
+Ohjelma on suoritettavissa ja logiikka toimii kaikilla kolmella kokeillulla käyttöjärjestelmällä, mutta OSX:llä on kaksi ongelmaa mitä ei ilmene Windows tai Linux järjestelmillä.
+
+ - Fullscreen ei toimi aivan halutulla tavalla, yläreunan dekoraatiota ei poistu kokonaan.
+ - Äänet eivät välttämättä toimi.
+
+Ongelmia ei ole pystytty vielä korjaamaan, sillä koodin toimivuutta olisi hankala seurava, sillä en itse omista konetta jossa oli OSX järjestelmänä.
+
 ## Virhe tilanteiden testaus
 
 Ohjelma pyytä käyttäjältä syötteitä erittäin rajallisesti, vain hiirtä käyttäen, joten käyttäjän on miltein mahdotonta antaa virheellisiä syötteitä.
