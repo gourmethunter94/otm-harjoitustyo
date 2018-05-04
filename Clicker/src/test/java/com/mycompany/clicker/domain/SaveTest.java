@@ -110,6 +110,18 @@ public class SaveTest {
         assertTrue("Save setNewSouls sets wrong value!", save.getNewSouls().equals(new BigInteger("123321")));
         save.setNewSouls(new BigInteger("16233261"));
         assertTrue("Save setNewSouls sets wrong value!", save.getNewSouls().equals(new BigInteger("16233261")));
+        save.setStage(1);
+        assertTrue("Save setStage sets wrong value!", save.getStage() == 1);
+        save.setStage(21);
+        assertTrue("Save setStage sets wrong value!", save.getStage() == 21);
+        save.setStage(3166);
+        assertTrue("Save setStage sets wrong value!", save.getStage() == 3166);
+        save.setActiveMonster(4);
+        assertTrue("Save setStage sets wrong value!", save.getActiveMonster() == 4);
+        save.setActiveMonster(757);
+        assertTrue("Save setStage sets wrong value!", save.getActiveMonster() == 757);
+        save.setActiveMonster(2324);
+        assertTrue("Save setStage sets wrong value!", save.getActiveMonster() == 2324);
     }
     
 }

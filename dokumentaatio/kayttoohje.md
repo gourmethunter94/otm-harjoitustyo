@@ -4,7 +4,7 @@ Lataa ohjelma [täältä](https://github.com/GourmetHunter/otm-harjoitustyo/rele
 
 ## Asennus
 
-Ohjelma olettaa että sen käynnistys hakemistossa on latauslinkin sisältämä hakemisto *lib*, jonka sisällä on tiedosto _sqlite-jdbc-3.8.10.1.jar_, ja hakemisto *classes*, jonka sisällä on tiedosto _database.db_.
+Ohjelma olettaa että sen käynnistys hakemistossa on latauslinkin sisältämä hakemisto *lib*, jonka sisällä on tiedosto _sqlite-jdbc-3.8.10.1.jar_, ja hakemisto *classes*, jonka sisällä on tiedosto _database.db_.
 
 ## Ohjelman käynnistäminen
 
@@ -16,6 +16,8 @@ Ohjelma käynnistetään komennolla
 
 java -jar Clicker-1.0-SNAPSHOT.jar
 ```
+
+Komennon viimeinen osa on tietysti vaihdettava, jos tiedoston nimeä on muutettu.
 
 Jos tämä on ensimmäinen käynnistys kerta, pitäisi pelin avautua hetken kuluttua, jos _asennus_ on tehty ohjeen mukaisesti.
 
@@ -34,5 +36,14 @@ Peli tallentuu itsestään aina kun pelaaja joko ostaa jotain pelin kaupasta tai
 Jos pelaaja on ostanut damage per second (vahinkoa sekunteittain) päivitystä, tulee peli tekemään käynnistyksen yhteydessä offline simulaation.
 
 Simulaation ideana on edetä pelissä aivan kuin se olisi ollut auki koko sen ajan kun se on ollut kiinni. Simulaatio taistelee vastustajia vastaan sellaisella tasolla peliä, jossa vastustajan peittoamiseen kuluu maksimissaan 30 sekunttia.
+
+## Asetukset
+
+Peli sisältää kaksi asetus vaihtoehtoa, ja niitä voi muuttaa pelin sisäisestä asetus valikosta.
+
+- Fullscreen
+- Sounds
+
+Äänen pitäisi soida vain kun vastustaja peitotaan.
 
 

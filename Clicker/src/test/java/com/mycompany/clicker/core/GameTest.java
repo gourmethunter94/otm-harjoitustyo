@@ -14,6 +14,8 @@ import com.mycompany.clicker.utility.Handler;
 import com.mycompany.clicker.utility.Settings;
 import de.saxsys.javafx.test.JfxRunner;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import javafx.scene.paint.Color;
 import static org.junit.Assert.assertTrue;
@@ -215,6 +217,35 @@ public class GameTest {
         
         assertTrue("Monster shoudl've taken 2 damage!", g.getCurrentCreature().getHitPoints().equals(new BigInteger("1")));
 
+    }
+    
+    @Test
+    public void getAndSetTest() {
+        Game g = new Game(d);
+        g.setActiveStage(6);
+        assertTrue("Game setActiveStage works incorrectly!", g.getActiveStage() == 6);
+        g.setActiveStage(6623);
+        assertTrue("Game setActiveStage works incorrectly!", g.getActiveStage() == 6623);
+        g.setActiveStage(78);
+        assertTrue("Game setActiveStage works incorrectly!", g.getActiveStage() == 78);
+        g.setMoney(new BigInteger("56"));
+        assertTrue("Game setMoney works incorrectly!", g.getMoney().equals(new BigInteger("56")));
+        g.setMoney(new BigInteger("698"));
+        assertTrue("Game setMoney works incorrectly!", g.getMoney().equals(new BigInteger("698")));
+        g.setMoney(new BigInteger("46"));
+        assertTrue("Game setMoney works incorrectly!", g.getMoney().equals(new BigInteger("46")));
+        g.setNewSouls(new BigInteger("546"));
+        assertTrue("Game setNewSouls works incorrectly!", g.getNewSouls().equals(new BigInteger("546")));
+        g.setNewSouls(new BigInteger("54698"));
+        assertTrue("Game setNewSouls works incorrectly!", g.getNewSouls().equals(new BigInteger("54698")));
+        g.setNewSouls(new BigInteger("344"));
+        assertTrue("Game setNewSouls works incorrectly!", g.getNewSouls().equals(new BigInteger("344")));
+        g.setSouls(new BigInteger("672"));
+        assertTrue("Game setSouls works incorrectly!", g.getSouls().equals(new BigInteger("672")));
+        g.setSouls(new BigInteger("67212"));
+        assertTrue("Game setSouls works incorrectly!", g.getSouls().equals(new BigInteger("67212")));
+        g.setSouls(new BigInteger("912"));
+        assertTrue("Game setSouls works incorrectly!", g.getSouls().equals(new BigInteger("912")));
     }
 
 }
