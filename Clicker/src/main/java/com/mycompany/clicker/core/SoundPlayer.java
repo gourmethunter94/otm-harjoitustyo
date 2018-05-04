@@ -5,8 +5,10 @@
  */
 package com.mycompany.clicker.core;
 
+import com.mycompany.clicker.utility.SoundLoader;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -21,23 +23,14 @@ public class SoundPlayer {
     private MediaPlayer monsterDeathPlayer;
 
     // Constructor -------------------------------------------------------------
-    public SoundPlayer() throws MalformedURLException {
-        this.initializeMonsterDeath();
+    public SoundPlayer() throws MalformedURLException, URISyntaxException {
+        SoundLoader soundLoader = new SoundLoader();
+        this.initializeMonsterDeath(soundLoader);
     }
 
     // Initialization methods --------------------------------------------------
-    private void initializeMonsterDeath() throws MalformedURLException {
-        String path = "";
-        if ((new File("src/main/resources/death.wav")).exists()) {
-            path = new File("src/main/resources/death.wav").getAbsolutePath();
-        } else if ((new File("classes/death.wav").exists())) {
-            path = new File("classes/death.wav").getAbsolutePath();
-        } else {
-            System.out.println("Error soundfile for monster death (death.wav) not found!");
-            System.exit(0);
-        }
-        String monsterDeathPath = new File(path).toURI().toURL().toString();
-        monsterDeath = new Media(monsterDeathPath);
+    private void initializeMonsterDeath(SoundLoader soundLoader) throws MalformedURLException, URISyntaxException {
+        monsterDeath = soundLoader.loadMedia("/death.wav");
         monsterDeathPlayer = new MediaPlayer(monsterDeath);
     }
 

@@ -7,6 +7,7 @@ import com.mycompany.clicker.utility.*;
 
 import java.math.BigInteger;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
@@ -62,7 +63,7 @@ public class Game {
      * @throws java.sql.SQLException correcly initialize database in commons.
      * @throws java.net.MalformedURLException
      */
-    public void initialize(Save save) throws SQLException, MalformedURLException {
+    public void initialize(Save save) throws SQLException, MalformedURLException, URISyntaxException {
         clickDamage = save.getClickDamage();
         damagePerSecond = save.getDamagePerSecond();
         money = save.getMoney();

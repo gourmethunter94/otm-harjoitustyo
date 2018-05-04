@@ -94,7 +94,7 @@ public class Display extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws SQLException, ClassNotFoundException, MalformedURLException {
+    public void start(Stage stage) throws SQLException, ClassNotFoundException, MalformedURLException, URISyntaxException {
 
         running = false;
 

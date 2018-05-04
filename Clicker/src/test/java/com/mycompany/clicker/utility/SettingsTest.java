@@ -7,6 +7,7 @@ package com.mycompany.clicker.utility;
 
 import com.mycompany.clicker.domain.*;
 import java.math.BigInteger;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import javafx.scene.paint.Color;
 import static org.junit.Assert.assertTrue;
@@ -19,7 +20,7 @@ import org.junit.Test;
 public class SettingsTest {
 
     @Test
-    public void SettingsInitializes() throws ClassNotFoundException, SQLException {
+    public void SettingsInitializes() throws ClassNotFoundException, SQLException, URISyntaxException {
 
         Commons.initialize();
         Settings.initialize();

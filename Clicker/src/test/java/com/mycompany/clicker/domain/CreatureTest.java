@@ -10,6 +10,7 @@ import com.mycompany.clicker.display.Display;
 import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Handler;
 import java.math.BigInteger;
+import java.net.URISyntaxException;
 import javafx.scene.paint.Color;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;

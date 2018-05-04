@@ -5,6 +5,7 @@
  */
 package com.mycompany.clicker.utility;
 
+import java.net.URISyntaxException;
 import javafx.scene.paint.Color;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
