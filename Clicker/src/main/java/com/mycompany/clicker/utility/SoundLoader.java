@@ -15,7 +15,6 @@ import javafx.scene.media.Media;
 public class SoundLoader {
 
     public Media loadMedia(String path) throws URISyntaxException {
-        Media media = new Media(getClass().getResource(path).toURI().toString());
-        return media;
+        return new Media(getClass().getResource(path).toURI().toString());
     }
 }
