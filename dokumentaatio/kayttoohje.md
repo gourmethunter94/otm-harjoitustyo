@@ -1,6 +1,6 @@
 ﻿# Käyttöohje
 
-Lataa ohjelma [täältä](https://github.com/GourmetHunter/otm-harjoitustyo/releases/tag/viikko6).
+Lataa ohjelma [täältä](https://github.com/GourmetHunter/otm-harjoitustyo/releases/tag/v1.0).
 
 ## Asennus
 
@@ -26,6 +26,8 @@ Peli simuloi offline ajan, joten käynnistys saattaa kestää muutamia sekunttej
 ## Ohjelman käyttäminen
 
 Pelin alussa ainut tapa edetä on klikkaamalla toistuvasti ruutua, jolloin tehdään vastustajaan vahinkoa. Kun tarpeeksi vastustajia on peitottu saa käyttäjä rahaa, jolla hän voi ostaa pelin kaupasta päivityksiä.
+
+Pelissä voi vaihdella tasoja ensimmäisen tason ja suurimman saavutetun tason välillä, tämä tapahtuu nappuloilla jotka ovat ruudun keskellä olevan informaatio ruudun vieressä.
 
 Yksi näistä päivityksistä tekee vahinkoa automaattisesti vastustajaa, joka tarkoittaa, että halutessaan pelaajan ei tarvitse tehdä klikkaamalla enää yhtää vahinkoa jos hän näin haluaa.
 

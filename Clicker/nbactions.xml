@@ -72,4 +72,12 @@
                 
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-test and report</actionName>
+            <displayName>test and report</displayName>
+            <goals>
+                <goal>test</goal>
+                <goal>jacoco:report</goal>
+            </goals>
+        </action>
     </actions>

@@ -8,9 +8,11 @@ Tietokonepeli, jonka ideana on käytännössä vain tuhlata käyttäjän aikaa. 
 
 ## Releaset
 
-[Viikko 5](https://github.com/GourmetHunter/otm-harjoitustyo/releases/tag/viikko5)
+[Version 1.0](https://github.com/GourmetHunter/otm-harjoitustyo/releases/tag/v1.0)
 
 [Viikko 6](https://github.com/GourmetHunter/otm-harjoitustyo/releases/tag/viikko6)
+
+[Viikko 5](https://github.com/GourmetHunter/otm-harjoitustyo/releases/tag/viikko5)
 
 ## Ongelmat
 
