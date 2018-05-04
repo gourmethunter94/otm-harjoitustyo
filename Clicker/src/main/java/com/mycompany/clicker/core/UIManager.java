@@ -17,7 +17,6 @@ import com.mycompany.clicker.utility.Settings;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
 /**

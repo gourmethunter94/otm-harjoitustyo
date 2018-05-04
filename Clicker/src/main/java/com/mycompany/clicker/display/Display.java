@@ -194,6 +194,7 @@ public class Display extends Application {
     /**
      * Reconstruct the game, used mainly for chaning to fullscreen.
      *
+     * @param save Save
      * @throws Exception call from only same thread.
      */
     public void buildNewStage(boolean save) throws Exception {

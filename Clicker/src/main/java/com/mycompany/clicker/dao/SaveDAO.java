@@ -101,9 +101,9 @@ public class SaveDAO {
             stm.setInt(6, stage);
             stm.setInt(7, activeMonster);
             stm.setString(8, newSouls.toString());
-            
+
             stm.execute();
-            
+
             stm.close();
         }
 

@@ -5,11 +5,8 @@
  */
 package com.mycompany.clicker.utility;
 
-import com.mycompany.clicker.dao.Database;
-import com.mycompany.clicker.dao.SettingsDAO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.File;
 import java.sql.SQLException;
 
 /**
@@ -99,7 +96,7 @@ public class Settings {
         }
         return false;
     }
-    
+
     public static void changeSoundsState(boolean value) throws SQLException {
         if (sounds != value) {
             sounds = value;

@@ -27,7 +27,7 @@ public class UIPanel extends UIElement {
     // Constructor -------------------------------------------------------------
     /**
      * Constructor with text
-     * 
+     *
      * @param handler Handler
      * @param view Node
      * @param text String
@@ -52,7 +52,7 @@ public class UIPanel extends UIElement {
 
     /**
      * Constructor without a text.
-     * 
+     *
      * @param handler Handler
      * @param view Node
      * @param x int

@@ -5,7 +5,6 @@
  */
 package com.mycompany.clicker.domain;
 
-import com.mycompany.clicker.utility.Commons;
 import java.math.BigInteger;
 
 /**

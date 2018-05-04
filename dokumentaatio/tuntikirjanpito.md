@@ -20,4 +20,5 @@
 | 3.5.18  | 1    | Loading näkymä. |
 | 4.5.18  | 1½   | Aloitettu grafiikat ulkoisista tiedostoista. |
 | 4.5.18  | 3    | resourcen lataaminen getClass().getResourceAsStream avulla, kuvien parempi lataamis metodi |
-| Summa   | 57½  |
+| 4.5.18  | 3    | Dokumentaatioita ja testiä. |
+| Summa   | 60½  |

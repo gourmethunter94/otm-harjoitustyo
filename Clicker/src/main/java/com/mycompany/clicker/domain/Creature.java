@@ -34,7 +34,7 @@ public class Creature {
      * @param handler Handler
      * @param name String
      * @param width int
-     * @param height int 
+     * @param height int
      * @param color Color (JavaFX)
      * @param hitPoints BigInteger
      * @param bounty BigInteger

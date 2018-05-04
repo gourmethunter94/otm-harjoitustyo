@@ -6,9 +6,7 @@
 package com.mycompany.clicker.assets;
 
 import com.mycompany.clicker.utility.ImageLoader;
-import java.io.File;
 import java.net.MalformedURLException;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**

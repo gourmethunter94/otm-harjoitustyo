@@ -6,7 +6,6 @@
 package com.mycompany.clicker.core;
 
 import com.mycompany.clicker.utility.SoundLoader;
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import javafx.scene.media.Media;
