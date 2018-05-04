@@ -21,4 +21,5 @@
 | 4.5.18  | 1½   | Aloitettu grafiikat ulkoisista tiedostoista. |
 | 4.5.18  | 3    | resourcen lataaminen getClass().getResourceAsStream avulla, kuvien parempi lataamis metodi |
 | 4.5.18  | 3    | Dokumentaatioita ja testiä. |
-| Summa   | 60½  |
+| 5.5.18  | 1½   | Dokumentaation hiomista, gameplayn hiomista, pieni korjaus simulaation oikeellisuuteen. |
+| Summa   | 63   |

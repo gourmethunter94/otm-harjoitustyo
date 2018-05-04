@@ -192,14 +192,14 @@ public class Loader {
                 if (monsters * kTime < time) { // can the simulation clear the stage
                     time -= (monsters * kTime); // remove required amount of time from the simulation
                     bounty = bounty.add(game.monsterMoney(level).multiply(new BigInteger(monsters + ""))); // add to the bounty
+                    stageLimit++; // increase stageLimit
+                    level++; // increase level
                     if (stageLimit == 100) {
                         newSouls = BigInteger.ONE;
                     } else if (stageLimit > 100 && (stageLimit % 5 == 0)) {
                         int multiplier = Math.max(1, stageLimit / 250);
                         newSouls = newSouls.add(new BigInteger((stageLimit / 50) + "").multiply(new BigInteger(multiplier + "")));
                     }
-                    stageLimit++; // increase stageLimit
-                    level++; // increase level
                     currentMonster = 1;
                 } else {
                     long kills = time / kTime; // how many kills the simulation can do in the time
