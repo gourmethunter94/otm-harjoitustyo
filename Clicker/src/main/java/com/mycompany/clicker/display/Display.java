@@ -11,6 +11,7 @@ import com.mycompany.clicker.domain.Save;
 import com.mycompany.clicker.utility.Commons;
 import com.mycompany.clicker.utility.Settings;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,7 +127,7 @@ public class Display extends Application {
         stage.setScene(scene);
 
         stage.setTitle("Clicker");
-
+        stage.setResizable(false);
         stage.show();
 
         this.game = new Game(this);

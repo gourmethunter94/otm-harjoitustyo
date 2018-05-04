@@ -43,16 +43,15 @@ public class Assets {
         setProperClickDamage();
         setProperDamagePerSecond();
     }
-    
+
     private static void initializeSoulShop() throws SQLException {
         soulUpgradesCount = 1;
         soulUpgrades = new HashMap<>();
         soulUpgrades.put(0, new Upgrade("All damage", new BigInteger("10"), " multiplies all damage by 2"));
         Commons.soulUpgradeDao.loadSoulUpgrades();
         setProperAllDamageMultiplier();
-        
     }
-    
+
     public static void levelUpUpgrade(int value, Handler handler, boolean increase) {
         Upgrade upg = upgrades.get(value);
         upg.increaseLevel(BigInteger.ONE);
@@ -62,7 +61,7 @@ public class Assets {
             upgrades.put(value, increaseDamagePerSecondLevel(upg, handler, increase));
         }
     }
-    
+
     public static void levelUpSoulUpgrade(int value, Handler handler, boolean increase) {
         Upgrade upg = soulUpgrades.get(value);
         upg.increaseLevel(BigInteger.ONE);
@@ -70,7 +69,7 @@ public class Assets {
             soulUpgrades.put(value, increaseAllDamageLevel(upg, handler, increase));
         }
     }
-    
+
     private static Upgrade increaseClickDamageLevel(Upgrade upg, Handler handler, boolean increase) {
         BigInteger level = upg.getLevel();
         BigInteger newDamage = getClickDamage(level);
@@ -85,16 +84,16 @@ public class Assets {
         }
         return upg;
     }
-    
+
     private static BigInteger getClickDamage(BigInteger level) {
         BigInteger levelPower = level.multiply(level.divide(new BigInteger("10"))).add(BigInteger.ONE);
         BigInteger base = level.subtract(BigInteger.ONE).multiply(level).add(BigInteger.ONE);
         return base.multiply(levelPower).add(BigInteger.ONE);
     }
-    
+
     private static Upgrade increaseDamagePerSecondLevel(Upgrade upg, Handler handler, boolean increase) {
         BigInteger level = upg.getLevel();
-        
+
         BigInteger newDamage = getDPS(level);
         BigInteger nextDamage = getDPS(level.add(BigInteger.ONE));
         BigInteger pricePower = level.multiply(level.divide(new BigInteger("10"))).add(BigInteger.ONE);
@@ -107,13 +106,13 @@ public class Assets {
         }
         return upg;
     }
-    
+
     private static BigInteger getDPS(BigInteger level) {
         BigInteger levelPower = level.multiply(level.divide(new BigInteger("10"))).add(BigInteger.ONE).add(level.multiply(new BigInteger("2")));
         BigInteger base = level.subtract(BigInteger.ONE).multiply(level).add(BigInteger.ONE);
         return base.multiply(levelPower).add(BigInteger.ONE);
     }
-    
+
     private static Upgrade increaseAllDamageLevel(Upgrade upg, Handler handler, boolean increase) {
         BigInteger level = upg.getLevel();
         BigInteger newMultiplier = level.add(new BigInteger("1"));
@@ -128,20 +127,20 @@ public class Assets {
         }
         return upg;
     }
-    
+
     private static void setProperClickDamage() {
         upgrades.get(0).setLevel(upgrades.get(0).getLevel().subtract(BigInteger.ONE));
         levelUpUpgrade(0, null, false);
     }
-    
+
     private static void setProperDamagePerSecond() {
         upgrades.get(1).setLevel(upgrades.get(1).getLevel().subtract(BigInteger.ONE));
         levelUpUpgrade(1, null, false);
     }
-    
+
     private static void setProperAllDamageMultiplier() {
         soulUpgrades.get(0).setLevel(soulUpgrades.get(0).getLevel().subtract(BigInteger.ONE));
         levelUpSoulUpgrade(0, null, false);
     }
-    
+
 }

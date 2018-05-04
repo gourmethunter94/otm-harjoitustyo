@@ -18,4 +18,6 @@
 | 31.4.18 | 3    | Koodin päivitystä siten että se noudattaa checkstyleä, javadocin luontia. |
 | 3.5.18  | 7    | SoundPlayer, sound setting, reset, soul shop, soulit simulaatioon ja SoulUpgradeDAO. |
 | 3.5.18  | 1    | Loading näkymä. |
-| Summa   | 53   |
+| 4.5.18  | 1½   | Aloitettu grafiikat ulkoisista tiedostoista. |
+| 4.5.18  | 3    | resourcen lataaminen getClass().getResourceAsStream avulla, kuvien parempi lataamis metodi |
+| Summa   | 57½  |

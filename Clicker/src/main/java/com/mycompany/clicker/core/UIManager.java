@@ -6,6 +6,7 @@
 package com.mycompany.clicker.core;
 
 import com.mycompany.clicker.assets.Assets;
+import com.mycompany.clicker.assets.Graphics;
 import com.mycompany.clicker.display.Display;
 import com.mycompany.clicker.ui.UI;
 import com.mycompany.clicker.ui.UIButton;
@@ -296,25 +297,13 @@ public class UIManager {
         this.gDPSPanel = new UIPanel(handler, new Rectangle(154, 20, Color.WHITE), "Damage per Second: " + Commons.getGameValue(game.getDPS().toString()), 158, 48);
         this.gStagePanel = new UIPanel(handler, new Rectangle(154, 16, Color.GRAY), "Stage: " + game.getStage(), (int) (Commons.baseWidth / 2 - 77), (int) (Commons.baseHeight / 2 - 157));
         this.gMonsterPanel = new UIPanel(handler, new Rectangle(154, 16, Color.GRAY), "Monster: " + game.getActiveMonster() + " / 10", (int) (Commons.baseWidth / 2 - 77), (int) (Commons.baseHeight / 2 - 141));
-        this.gBtnNShop = new UIButton(handler, new Rectangle(50, 50, Color.AZURE), "Shop", 2, 25, 50, 50);
-        this.gBtnSShop = new UIButton(handler, new Rectangle(50, 50, Color.PINK), "Soul", 54, 25, 50, 50);
-        this.gBtnSet = new UIButton(handler, new Rectangle(50, 50, Color.BISQUE), "Settings", 106, 25, 50, 50);
+        this.gBtnNShop = new UIButton(handler, Graphics.shopButton, "", 2, 25, 50, 50);
+        this.gBtnSShop = new UIButton(handler, Graphics.soulShopButton, "", 54, 25, 50, 50);
+        this.gBtnSet = new UIButton(handler, Graphics.settingsButton, "", 106, 25, 50, 50);
         this.gHPBack = new UIPanel(handler, new Rectangle(154, 37, Color.GRAY), display.getWidth() / 2 - 77, display.getHeight() / 2 - 125);
         this.gHPFront = new UIPanel(handler, new Rectangle(150, 33, Color.RED), game.monsterHP(game.getStage()) + "", display.getWidth() / 2 - 75, display.getHeight() / 2 - 123);
-        this.buildNext();
-        this.buildPrev();
-    }
-
-    private void buildNext() {
-        Polygon tempLeft = new Polygon(new double[]{0.0, 0.0, 50.0, 34.5, 0.0, 69.0});
-        tempLeft.setFill(Color.GRAY);
-        this.gCSNext = new UIButton(handler, tempLeft, "", (int) (Commons.baseWidth / 2 + 80), (int) (Commons.baseHeight / 2 - 157), 50, 69);
-    }
-
-    private void buildPrev() {
-        Polygon tempRight = new Polygon(new double[]{0.0, 34.5, 50, 0.0, 50.0, 69.0});
-        tempRight.setFill(Color.GRAY);
-        this.gCSPrev = new UIButton(handler, tempRight, "", (int) (Commons.baseWidth / 2 - 130), (int) (Commons.baseHeight / 2 - 157), 50, 69);
+        this.gCSNext = new UIButton(handler, Graphics.nextStageButton, "", (int) (Commons.baseWidth / 2 + 80), (int) (Commons.baseHeight / 2 - 157), 50, 69);
+        this.gCSPrev = new UIButton(handler, Graphics.prevStageButton, "", (int) (Commons.baseWidth / 2 - 130), (int) (Commons.baseHeight / 2 - 157), 50, 69);
     }
 
     private void initializeGameUIAddObjects() {

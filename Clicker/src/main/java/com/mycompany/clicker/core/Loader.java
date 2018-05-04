@@ -6,9 +6,10 @@
 package com.mycompany.clicker.core;
 
 import com.mycompany.clicker.assets.Assets;
+import com.mycompany.clicker.assets.Graphics;
 import com.mycompany.clicker.domain.Save;
-import java.lang.reflect.Method;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
@@ -27,14 +28,12 @@ public class Loader {
     private Save save;
     private boolean loaded;
     private boolean simulated;
-    private long outTime;
 
     public Loader(Game game, Save save) {
         this.game = game;
         this.save = save;
         this.loaded = false;
         this.simulated = false;
-        this.outTime = 0;
     }
 
     /**
@@ -78,8 +77,11 @@ public class Loader {
             @Override
             public void run() {
                 try {
+                    Graphics.initialize();
                     game.initializeAllUI();
                     game.loading = false;
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(Loader.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     latch.countDown();
                 }
@@ -145,7 +147,6 @@ public class Loader {
     }
 
     private void simulation(long time) throws SQLException {
-        outTime = time;
         int stageLimit = save.getStage();
 
         BigInteger dpsM = new BigInteger("0");
@@ -180,8 +181,6 @@ public class Loader {
         BigInteger newSouls = save.getNewSouls();
 
         while (time >= kTime) { // if time remaining is larger than the time it takes to kill one monster
-
-            outTime = time;
 
             if (level < stageLimit) { // if level being simulated is lower then the level limit
                 long kills = time / kTime; // how many kills the simulation can do in the time

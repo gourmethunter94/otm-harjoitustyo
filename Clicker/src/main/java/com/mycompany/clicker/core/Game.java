@@ -12,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 
 /**
+ * Some if lines in the code are there for the sake of more effecient testing,
+ * these lines usually check for null values in uiManager and uiManager.gUI
  *
  * @author Olli K. Kärki
  */
@@ -58,6 +60,7 @@ public class Game {
      *
      * @param save Save
      * @throws java.sql.SQLException correcly initialize database in commons.
+     * @throws java.net.MalformedURLException
      */
     public void initialize(Save save) throws SQLException, MalformedURLException {
         clickDamage = save.getClickDamage();
@@ -102,7 +105,7 @@ public class Game {
             }
             clicks = clicks + display.getMouseClicks();
             // Updating UI ---------------------------------------------------------
-            if (uiManager != null) {
+            if (uiManager != null && uiManager.gUI != null) { // <- Exists for the sake of more effecient testing.
                 uiManager.updateUI();
             }
             // Updating the game proper --------------------------------------------
@@ -179,7 +182,7 @@ public class Game {
             }
         }
         currentCreature = creature;
-        if (uiManager != null) {
+        if (uiManager != null && uiManager.gUI != null) {
             if (uiManager.gUI.getActive()) {
                 currentCreature.getView().setActive(true);
             }
@@ -230,6 +233,7 @@ public class Game {
     /**
      * Restarts the application.
      *
+     * @param save Save
      * @throws java.lang.Exception correcly initialize database in commons.
      */
     public void restart(boolean save) throws Exception {
