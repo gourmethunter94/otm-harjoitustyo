@@ -63,9 +63,11 @@ mvn package
 
 Generoi hakemistoon _target_ suoritettavan jar tiedoston _Clicker-1.0-SNAPSHOT.jar_.
 
-Ohjelman testit testaavat myös threadeja, ja on teoreettisesti mahdollista, että testit on hylätty, liiallisen ajan käytön takia thread testeissä.
+Ohjelman testit testaavat myös threadeja, joten on teoreettisesti mahdollista, että testit on hylätty liiallisen ajankäytön takia thread testeissä.
 
-Jos testit epäonnistuvat on silti mahdollista, että generoitu ohjelma voisi toimia, käytä halutessasi seuraavaa komentoa
+Jos testit epäonnistuvat on silti mahdollista, että generoitu ohjelma voisi toimia. 
+
+Käytä halutessasi seuraavaa komentoa
 
 ```
 mvn package -Dmaven.test.skip=true
