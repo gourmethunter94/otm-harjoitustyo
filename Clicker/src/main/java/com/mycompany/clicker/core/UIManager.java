@@ -67,6 +67,7 @@ public class UIManager {
     public UIButton ssResetRun;
     public UIPanel ssSoulsExplainedFst;
     public UIPanel ssSoulsExplainedSnd;
+    public UIPanel ssSoulsExplainedTrd;
     public UIPanel[] ssUpgradePanels;
     public UIButton[] ssUpgradeButtons;
     // -------------------------------------------------------------------------
@@ -350,12 +351,14 @@ public class UIManager {
         this.ssResetRun = new UIButton(handler, new Rectangle(34, 14, Color.LIGHTBLUE), "Reset", 402, 102, 34, 14);
         this.ssSoulsExplainedFst = new UIPanel(handler, new Rectangle(436, 18, Color.CORNFLOWERBLUE), "You gain souls every 5 stages, first time at the 100th stage.", 2, 120);
         this.ssSoulsExplainedSnd = new UIPanel(handler, new Rectangle(436, 18, Color.CORNFLOWERBLUE), "Reset nulls all progress, except the soul related stuff.", 2, 140);
+        this.ssSoulsExplainedTrd = new UIPanel(handler, new Rectangle(436, 18, Color.CORNFLOWERBLUE), "You'll gain 100 % increased money for every 20 soul you currently hold.", 2, 160);
         ssUI.addElement(ssPanel);
         ssUI.addElement(ssClose);
         ssUI.addElement(ssThisRunSouls);
         ssUI.addElement(ssResetRun);
         ssUI.addElement(ssSoulsExplainedFst);
         ssUI.addElement(ssSoulsExplainedSnd);
+        ssUI.addElement(ssSoulsExplainedTrd);
         this.sShopInitializeItems();
     }
 
@@ -364,9 +367,9 @@ public class UIManager {
         this.ssUpgradeButtons = new UIButton[Assets.soulUpgradesCount];
         for (int i = 0; i < Assets.soulUpgradesCount; i++) {
             String upgradeValue = Assets.soulUpgrades.get(i).toString();
-            this.ssUpgradePanels[i] = new UIPanel(handler, new Rectangle(436, 18, Color.ALICEBLUE), Assets.soulUpgrades.get(i).getName() + ": " + upgradeValue, 2, 160 + i * 20);
+            this.ssUpgradePanels[i] = new UIPanel(handler, new Rectangle(436, 18, Color.ALICEBLUE), Assets.soulUpgrades.get(i).getName() + ": " + upgradeValue, 2, 180 + i * 20);
             this.ssUpgradeButtons[i] = new UIButton(handler, new Rectangle(108, 14, Color.LIGHTBLUE),
-                    "Buy: " + Commons.getGameValue(Assets.soulUpgrades.get(i).getNextLevelPrice().toString()), 328, 162 + i * 20, 108, 14);
+                    "Buy: " + Commons.getGameValue(Assets.soulUpgrades.get(i).getNextLevelPrice().toString()), 328, 182 + i * 20, 108, 14);
             ssUI.addElement(ssUpgradePanels[i]);
             ssUI.addElement(ssUpgradeButtons[i]);
         }

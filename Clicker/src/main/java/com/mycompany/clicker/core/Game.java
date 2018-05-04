@@ -113,7 +113,7 @@ public class Game {
             this.updateGameProper(applyDPS);
         }
     }
-
+    
     private void lastInitialization() {
         this.simulationFinished = true;
         this.updateMoney(BigInteger.ZERO);
@@ -123,7 +123,7 @@ public class Game {
         this.setCdM();
         this.setDpsM();
     }
-
+    
     private void updateGameProper(boolean applyDPS) throws SQLException {
         BigInteger damage = new BigInteger("" + clicks).multiply(clickDamage).multiply(cdM);
         if (applyDPS) {
@@ -137,13 +137,14 @@ public class Game {
         this.updateCreatureDeath();
         clicks = 0;
     }
-
+    
     private void updateCreatureDeath() throws SQLException {
         if (currentCreature.getDead()) {
             if (Settings.sounds) {
                 soundPlayer.playMonsterDeath();
             }
-            this.updateMoney(currentCreature.getBounty());
+            BigInteger multiplier = this.souls.divide(new BigInteger("20")).add(BigInteger.ONE);
+            this.updateMoney(currentCreature.getBounty().multiply(multiplier));
             if (activeStage == stage) {
                 activeMonster += 1;
             }
@@ -156,7 +157,7 @@ public class Game {
             this.newMonster();
         }
     }
-
+    
     private void addNewSouls() {
         if (stage == 100) {
             this.newSouls = BigInteger.ONE;
@@ -377,7 +378,7 @@ public class Game {
     public void removeNode(Node node) {
         this.display.removeNode(node);
     }
-
+    
     public void addToNewSouls(BigInteger value) {
         this.newSouls = newSouls.add(value);
     }
@@ -386,91 +387,91 @@ public class Game {
     public int getWidth() {
         return display.getWidth();
     }
-
+    
     public int getHeight() {
         return display.getHeight();
     }
-
+    
     public void setDPS(BigInteger value) {
         this.damagePerSecond = value;
     }
-
+    
     public void setCD(BigInteger value) {
         this.clickDamage = value;
     }
-
+    
     public int getClicks() {
         return clicks;
     }
-
+    
     public void setClicks(int value) {
         this.clicks = value;
     }
-
+    
     public double getMouseX() {
         return this.display.getMouseX();
     }
-
+    
     public double getMouseY() {
         return this.display.getMouseY();
     }
-
+    
     public BigInteger getClickDamage() {
         return this.clickDamage;
     }
-
+    
     public BigInteger getDPS() {
         return this.damagePerSecond;
     }
-
+    
     public Creature getCurrentCreature() {
         return currentCreature;
     }
-
+    
     public BigInteger getMoney() {
         return money;
     }
-
+    
     public BigInteger getSouls() {
         return souls;
     }
-
+    
     public int getStage() {
         return stage;
     }
-
+    
     public int getActiveStage() {
         return activeStage;
     }
-
+    
     public int getActiveMonster() {
         return activeMonster;
     }
-
+    
     public int getMonsterLimit() {
         return monsterLimit;
     }
-
+    
     public UIManager getUiManager() {
         return uiManager;
     }
-
+    
     public void setActiveStage(int activeStage) {
         this.activeStage = activeStage;
     }
-
+    
     public void setMoney(BigInteger money) {
         this.money = money;
     }
-
+    
     public BigInteger getNewSouls() {
         return newSouls;
     }
-
+    
     public void setNewSouls(BigInteger newSouls) {
         this.newSouls = newSouls;
     }
-
+    
     public void setSouls(BigInteger souls) {
         this.souls = souls;
     }
@@ -483,7 +484,7 @@ public class Game {
             ((Rectangle) this.uiManager.gHPFront.getView()).setWidth(size);
         }
     }
-
+    
     private void updateStageAndMonsterPanel(int s) {
         if (Settings.notTesting) {
             this.uiManager.gStagePanel.getText().setText("Stage: " + s);
