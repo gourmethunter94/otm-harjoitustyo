@@ -19,6 +19,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
@@ -128,6 +129,9 @@ public class Display extends Application {
 
         stage.setTitle("Clicker");
         stage.setResizable(false);
+        
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/gfx/icon.png")));
+        
         stage.show();
 
         this.game = new Game(this);
@@ -143,8 +147,6 @@ public class Display extends Application {
         if (!Commons.soulUpgradeDao.soulUpgradesExist()) {
             Commons.soulUpgradeDao.initializeSoulUpgrades();
         }
-
-        Assets.initialize();
 
         Save save = Commons.saveDao.loadGame();
 

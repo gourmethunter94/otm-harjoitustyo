@@ -78,9 +78,12 @@ public class Loader {
             public void run() {
                 try {
                     Graphics.initialize();
+                    Assets.initialize();
                     game.initializeAllUI();
                     game.loading = false;
                 } catch (MalformedURLException ex) {
+                    Logger.getLogger(Loader.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
                     Logger.getLogger(Loader.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     latch.countDown();
@@ -220,6 +223,8 @@ public class Loader {
         int newLevel = Math.max(level, stageLimit);
         save.setStage(newLevel);
         save.setActiveMonster(currentMonster);
+        BigInteger multiplier = save.getsMoney().divide(new BigInteger("20")).add(BigInteger.ONE);
+        bounty = bounty.multiply(multiplier);
         save.setMoney(save.getMoney().add(bounty));
         save.setNewSouls(newSouls);
         game.saveGame(save);
