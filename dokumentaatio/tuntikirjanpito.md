@@ -22,4 +22,5 @@
 | 4.5.18  | 3    | resourcen lataaminen getClass().getResourceAsStream avulla, kuvien parempi lataamis metodi |
 | 4.5.18  | 3    | Dokumentaatioita ja testiä. |
 | 5.5.18  | 1½   | Dokumentaation hiomista, gameplayn hiomista, pieni korjaus simulaation oikeellisuuteen. |
+| 6.5.18  | ½    | Korjattu simulaatiota, lisätty peli iconi. |
 | Summa   | 63   |
