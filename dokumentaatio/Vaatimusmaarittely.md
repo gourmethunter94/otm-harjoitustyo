@@ -45,7 +45,7 @@ Sieluilla voi ostaa lisää vahinko päivityksiä, ja pelkkä sielujen tallessap
   - Kauppa 2; Pelin resettaamalla kerättävä raha
   - Asetukset
 
-## Jatkokehitys ideoita
+## Jatkokehitysideoita
 
 - Lisätään peliin 3 reset vaihtoehto, joka antaa taas uutta valuuttaa sen perusteella, miten paljon pelaajalla on ollut normaali reset valuuttaa -> 4... 5... 6... 7 vaihtoehto.
 - Lisää erilaisia asetuksia resoluutioille pelkän fullscreen skaalauksen sijaan.
