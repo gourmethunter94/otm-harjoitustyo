@@ -29,7 +29,8 @@ public class SoulUpgradeDAO {
     }
 
     /**
-     * Checks if date for upgrades exist in database.
+     * Checks if data for upgrades exist in database. Returns true if data
+     * exists, else return false.
      *
      * @return boolean
      * @throws SQLException correcly initialize database in commons.

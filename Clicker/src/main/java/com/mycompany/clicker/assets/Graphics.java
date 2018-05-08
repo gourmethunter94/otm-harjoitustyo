@@ -21,6 +21,12 @@ public class Graphics {
     public static ImageView soulShopButton;
     public static ImageView settingsButton;
 
+    /**
+     * Initializes the Graphics class, call variables only after the
+     * initialization.
+     *
+     * @throws MalformedURLException This shouldn't be a problem.
+     */
     public static void initialize() throws MalformedURLException {
         ImageLoader imageLoader = new ImageLoader();
         prevStageButton = imageLoader.loadImageView("/gfx/btn_prevStage.png");

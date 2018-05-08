@@ -57,6 +57,9 @@ public class Display extends Application {
     private long time;
 
     // build the display -------------------------------------------------------
+    /**
+     * Call to create the root node that is linked to the Stage.
+     */
     public void createContent() {
         root = new Pane();
 
@@ -129,9 +132,9 @@ public class Display extends Application {
 
         stage.setTitle("Clicker");
         stage.setResizable(false);
-        
+
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/gfx/icon.png")));
-        
+
         stage.show();
 
         this.game = new Game(this);

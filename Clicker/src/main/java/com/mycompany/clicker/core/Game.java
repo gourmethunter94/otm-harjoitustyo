@@ -61,7 +61,8 @@ public class Game {
      *
      * @param save Save
      * @throws java.sql.SQLException correcly initialize database in commons.
-     * @throws java.net.MalformedURLException
+     * @throws java.net.MalformedURLException This shouldn't be a problem.
+     * @throws java.net.URISyntaxException This shouldn't be a problem.
      */
     public void initialize(Save save) throws SQLException, MalformedURLException, URISyntaxException {
         clickDamage = save.getClickDamage();

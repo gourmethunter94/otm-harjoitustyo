@@ -29,7 +29,8 @@ public class UpgradeDAO {
     }
 
     /**
-     * Checks if date for upgrades exist in database.
+     * Checks if data for upgrades exist in database. Returns true if the data
+     * exists, else returns false.
      *
      * @return boolean
      * @throws SQLException correcly initialize database in commons.

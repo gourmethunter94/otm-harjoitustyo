@@ -14,6 +14,13 @@ import javafx.scene.media.Media;
  */
 public class SoundLoader {
 
+    /**
+     * Loads a soundfile as and resource from the given path.
+     * 
+     * @param path String
+     * @return Media
+     * @throws URISyntaxException 
+     */
     public Media loadMedia(String path) throws URISyntaxException {
         return new Media(getClass().getResource(path).toURI().toString());
     }

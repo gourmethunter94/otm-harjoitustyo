@@ -14,6 +14,12 @@ import javafx.scene.image.ImageView;
  */
 public class ImageLoader {
 
+    /**
+     * Loads image as an ResourceStream from given path.
+     *
+     * @param path String
+     * @return ImagaView
+     */
     public ImageView loadImageView(String path) {
         Image image = new Image(getClass().getResourceAsStream(path));
         return new ImageView(image);

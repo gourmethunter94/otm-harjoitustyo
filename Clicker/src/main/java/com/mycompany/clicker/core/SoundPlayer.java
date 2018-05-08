@@ -34,6 +34,9 @@ public class SoundPlayer {
     }
 
     // Public methods ----------------------------------------------------------
+    /**
+     * Stops the previously played deathsound, and starts a new one.
+     */
     public void playMonsterDeath() {
         monsterDeathPlayer.stop();
         monsterDeathPlayer.play();

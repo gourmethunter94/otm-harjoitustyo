@@ -52,6 +52,14 @@ public class Assets {
         setProperAllDamageMultiplier();
     }
 
+    /**
+     * Increases level of soul upgrade determined by the first parameter. Call
+     * only after calling initialize().
+     *
+     * @param value - int
+     * @param handler - handler (can be null of next parameter is false)
+     * @param increase
+     */
     public static void levelUpUpgrade(int value, Handler handler, boolean increase) {
         Upgrade upg = upgrades.get(value);
         upg.increaseLevel(BigInteger.ONE);
@@ -62,6 +70,14 @@ public class Assets {
         }
     }
 
+    /**
+     * Increases level of an upgrade determined by the first parameter. Call
+     * only after calling initialize().
+     *
+     * @param value - int
+     * @param handler - handler (can be null of next parameter is false)
+     * @param increase
+     */
     public static void levelUpSoulUpgrade(int value, Handler handler, boolean increase) {
         Upgrade upg = soulUpgrades.get(value);
         upg.increaseLevel(BigInteger.ONE);
